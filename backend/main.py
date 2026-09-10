@@ -529,7 +529,7 @@ def cancel_booking(req: CancelBookingRequest, db: Session = Depends(get_db)):
         # Decrease booked_count on slot
         slot = db.query(Slot).filter(Slot.slot_id == booking.slot_id).first()
         if slot and slot.booked_count and slot.booked_count > 0:
-            slot.booked_count = slot.booked_count - 1
+            slot.booked_count = int(str(slot.booked_count)) - 1
 
         # Update queue status
         queue = db.query(QueueStatus).filter(
