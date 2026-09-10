@@ -228,7 +228,7 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     try:
         password_matches = bcrypt.checkpw(
             req.password.encode("utf-8"),
-            account.password_hash.encode("utf-8")
+            str(account.password_hash).encode("utf-8")
         )
     except Exception:
         raise HTTPException(status_code=500, detail="पासवर्ड तपासणीत त्रुटी.")
@@ -452,7 +452,7 @@ def create_booking(req: BookingRequest, db: Session = Depends(get_db)):
                 "expected_quantity": float(str(booking.expected_quantity)),
                 "token_number": booking.token_number,
                 "booking_status": booking.booking_status,
-                "created_at": booking.created_at.isoformat()
+                "created_at": str(booking.created_at) if booking.created_at else None
             }
         }
 
@@ -502,7 +502,7 @@ def get_bookings(
                 "expected_quantity": float(str(booking.expected_quantity)),
                 "token_number": booking.token_number,
                 "booking_status": booking.booking_status,
-                "created_at": booking.created_at.isoformat() if booking.created_at else None
+                "created_at": str(booking.created_at) if booking.created_at else None
             })
 
         return {"success": True, "bookings": bookings_list}
