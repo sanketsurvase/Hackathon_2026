@@ -1,18 +1,19 @@
 const menuItems = [
-    { id: "home", icon: "⌂", label: "मुख्यपृष्ठ" },
-    { id: "profile", icon: "♙", label: "माझी माहिती" },
+    { id: "home", icon: "🏠", label: "मुख्यपृष्ठ" },
+    { id: "profile", icon: "👤", label: "माझी माहिती" },
     { id: "crops", icon: "🌱", label: "पिकांची माहिती" },
-    { id: "market", icon: "📊", label: "लाईव्ह बाजार" },
-    { id: "facility", icon: "🧺", label: "माझी सुविधा" },
-    { id: "rates", icon: "₹", label: "लाईव्ह भाव" },
-    { id: "purchase", icon: "🛒", label: "खरेदीची स्थिती" },
-    { id: "payment", icon: "💳", label: "देयक स्थिती" },
+    { id: "booking", icon: "🧾", label: "स्लॉट बुकिंग" },
+    { id: "myBooking", icon: "🧺", label: "माझी बुकिंग" },
+    { id: "liveQueue", icon: "📄", label: "लाईव्ह रांग" },
+    { id: "purchase", icon: "⏱️", label: "खरेदीची स्थिती" },
+    { id: "payment", icon: "📍", label: "देयक स्थिती" },
     { id: "notification", icon: "🔔", label: "सूचना" },
     { id: "complaint", icon: "📝", label: "तक्रार / अभिप्राय" },
     { id: "help", icon: "❓", label: "मदत व संपर्क" }
 ];
 
 let activeTab = "home";
+
 
 const defaultUser = {
     userId: "KS10245",
@@ -26,22 +27,31 @@ const defaultUser = {
 // ========================================
 
 function getUser() {
+
     try {
-        const savedUser = localStorage.getItem("loggedInUser");
+
+        const savedUser =
+            localStorage.getItem("loggedInUser");
 
         if (savedUser) {
+
             return {
                 ...defaultUser,
                 ...JSON.parse(savedUser)
             };
+
         }
 
         return defaultUser;
 
     } catch (error) {
+
         return defaultUser;
+
     }
+
 }
+
 
 const user = getUser();
 
@@ -52,49 +62,94 @@ const user = getUser();
 
 function updateUserUI() {
 
-    const profileName = document.getElementById("profileName");
-    const profileUserId = document.getElementById("profileUserId");
-    const profileInfoUserId = document.getElementById("profileInfoUserId");
-    const profileMobile = document.getElementById("profileMobile");
+    const profileName =
+        document.getElementById("profileName");
 
-    const drawerName = document.getElementById("drawerName");
-    const drawerUserId = document.getElementById("drawerUserId");
+    const profileUserId =
+        document.getElementById("profileUserId");
 
-    const welcomeName = document.getElementById("welcomeName");
-    const welcomeUserId = document.getElementById("welcomeUserId");
+    const profileInfoUserId =
+        document.getElementById("profileInfoUserId");
+
+    const profileMobile =
+        document.getElementById("profileMobile");
+
+    const drawerName =
+        document.getElementById("drawerName");
+
+    const drawerUserId =
+        document.getElementById("drawerUserId");
+
+    const welcomeName =
+        document.getElementById("welcomeName");
+
+    const welcomeUserId =
+        document.getElementById("welcomeUserId");
 
 
     if (profileName) {
-        profileName.textContent = user.name;
+
+        profileName.textContent =
+            user.name;
+
     }
+
 
     if (profileUserId) {
-        profileUserId.textContent = user.userId;
+
+        profileUserId.textContent =
+            user.userId;
+
     }
+
 
     if (profileInfoUserId) {
-        profileInfoUserId.textContent = user.userId;
+
+        profileInfoUserId.textContent =
+            user.userId;
+
     }
+
 
     if (profileMobile) {
-        profileMobile.textContent = user.mobile;
+
+        profileMobile.textContent =
+            user.mobile;
+
     }
+
 
     if (drawerName) {
-        drawerName.textContent = user.name;
+
+        drawerName.textContent =
+            user.name;
+
     }
+
 
     if (drawerUserId) {
-        drawerUserId.textContent = user.userId;
+
+        drawerUserId.textContent =
+            user.userId;
+
     }
+
 
     if (welcomeName) {
-        welcomeName.textContent = user.name;
+
+        welcomeName.textContent =
+            user.name;
+
     }
 
+
     if (welcomeUserId) {
-        welcomeUserId.textContent = user.userId;
+
+        welcomeUserId.textContent =
+            user.userId;
+
     }
+
 }
 
 
@@ -104,26 +159,38 @@ function updateUserUI() {
 
 function createDrawerMenu() {
 
-    const drawerMenu = document.getElementById("drawerMenu");
+    const drawerMenu =
+        document.getElementById("drawerMenu");
+
 
     if (!drawerMenu) {
+
         return;
+
     }
+
 
     drawerMenu.innerHTML = "";
 
 
     menuItems.forEach(function (item) {
 
-        const button = document.createElement("button");
+        const button =
+            document.createElement("button");
+
 
         button.type = "button";
 
-        button.className = "drawer-item";
+        button.className =
+            "drawer-item";
+
 
         if (activeTab === item.id) {
+
             button.classList.add("active");
+
         }
+
 
         button.setAttribute(
             "data-menu-id",
@@ -131,29 +198,45 @@ function createDrawerMenu() {
         );
 
 
-        const icon = document.createElement("span");
-
-        icon.className = "drawer-item-icon";
-
-        icon.textContent = item.icon;
+        const icon =
+            document.createElement("span");
 
 
-        const label = document.createElement("span");
-
-        label.className = "drawer-item-label";
-
-        label.textContent = item.label;
+        icon.className =
+            "drawer-item-icon";
 
 
-        const arrow = document.createElement("span");
+        icon.textContent =
+            item.icon;
 
-        arrow.className = "drawer-item-arrow";
+
+        const label =
+            document.createElement("span");
+
+
+        label.className =
+            "drawer-item-label";
+
+
+        label.textContent =
+            item.label;
+
+
+        const arrow =
+            document.createElement("span");
+
+
+        arrow.className =
+            "drawer-item-arrow";
+
 
         arrow.textContent = "›";
 
 
         button.appendChild(icon);
+
         button.appendChild(label);
+
         button.appendChild(arrow);
 
 
@@ -162,9 +245,11 @@ function createDrawerMenu() {
             function (event) {
 
                 event.preventDefault();
+
                 event.stopPropagation();
 
                 handleMenuClick(item.id);
+
             }
         );
 
@@ -174,14 +259,20 @@ function createDrawerMenu() {
     });
 
 
+    // ========================================
     // LOGOUT BUTTON
+    // ========================================
 
-    const logoutButton = document.createElement("button");
+    const logoutButton =
+        document.createElement("button");
+
 
     logoutButton.type = "button";
 
+
     logoutButton.className =
         "drawer-item logout-item";
+
 
     logoutButton.innerHTML = `
         <span class="drawer-item-icon">🚪</span>
@@ -195,14 +286,17 @@ function createDrawerMenu() {
         function (event) {
 
             event.preventDefault();
+
             event.stopPropagation();
 
             handleLogout();
+
         }
     );
 
 
     drawerMenu.appendChild(logoutButton);
+
 }
 
 
@@ -215,42 +309,51 @@ function openMenu() {
     const overlay =
         document.getElementById("menuOverlay");
 
+
     const drawer =
         document.getElementById("sideDrawer");
 
 
     if (!overlay || !drawer) {
+
         return;
+
     }
 
 
-    // Remove hidden
     overlay.hidden = false;
 
-
-    // Make visible
     overlay.style.display = "block";
 
     drawer.style.display = "block";
 
 
-    // Force drawer to left side
+    // Force drawer to LEFT side
+
     drawer.style.left = "0";
-    drawer.style.transform = "translateX(0)";
+
+    drawer.style.right = "auto";
+
+    drawer.style.transform =
+        "translateX(0)";
 
 
-    // Prevent background scrolling
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow =
+        "hidden";
 
 
-    // Animation
     requestAnimationFrame(function () {
 
-        overlay.classList.add("menu-visible");
+        overlay.classList.add(
+            "menu-visible"
+        );
 
-        drawer.classList.add("drawer-visible");
+        drawer.classList.add(
+            "drawer-visible"
+        );
 
     });
+
 }
 
 
@@ -263,18 +366,26 @@ function closeMenu() {
     const overlay =
         document.getElementById("menuOverlay");
 
+
     const drawer =
         document.getElementById("sideDrawer");
 
 
     if (!overlay || !drawer) {
+
         return;
+
     }
 
 
-    drawer.classList.remove("drawer-visible");
+    drawer.classList.remove(
+        "drawer-visible"
+    );
 
-    overlay.classList.remove("menu-visible");
+
+    overlay.classList.remove(
+        "menu-visible"
+    );
 
 
     setTimeout(function () {
@@ -290,6 +401,7 @@ function closeMenu() {
         document.body.style.overflow = "";
 
     }, 200);
+
 }
 
 
@@ -302,50 +414,71 @@ function handleMenuClick(id) {
     activeTab = id;
 
 
-    // Update active button
+    // Update active menu
+
     createDrawerMenu();
 
 
     // Close drawer
+
     closeMenu();
 
 
+    // ========================================
     // HOME
+    // ========================================
+
     if (id === "home") {
 
         window.scrollTo({
+
             top: 0,
+
             behavior: "smooth"
+
         });
 
         return;
+
     }
 
 
+    // ========================================
     // PROFILE
+    // ========================================
+
     if (id === "profile") {
 
         const popup =
-            document.getElementById("profilePopup");
+            document.getElementById(
+                "profilePopup"
+            );
+
 
         if (popup) {
 
             popup.hidden = false;
 
-            popup.style.display = "block";
+            popup.style.display =
+                "block";
 
         }
 
         return;
+
     }
 
 
+    // ========================================
     // OTHER TABS
+    // ========================================
 
     const selected =
         menuItems.find(
             function (item) {
+
                 return item.id === id;
+
             }
         );
 
@@ -358,6 +491,7 @@ function handleMenuClick(id) {
         );
 
     }
+
 }
 
 
@@ -367,13 +501,16 @@ function handleMenuClick(id) {
 
 function handleLogout() {
 
-    const confirmLogout = confirm(
-        "तुम्हाला खात्री आहे का की तुम्हाला लॉगआउट करायचे आहे?"
-    );
+    const confirmLogout =
+        confirm(
+            "तुम्हाला खात्री आहे का की तुम्हाला लॉगआउट करायचे आहे?"
+        );
 
 
     if (!confirmLogout) {
+
         return;
+
     }
 
 
@@ -386,14 +523,17 @@ function handleLogout() {
 
 
     const popup =
-        document.getElementById("profilePopup");
+        document.getElementById(
+            "profilePopup"
+        );
 
 
     if (popup) {
 
         popup.hidden = true;
 
-        popup.style.display = "none";
+        popup.style.display =
+            "none";
 
     }
 
@@ -404,6 +544,7 @@ function handleLogout() {
 
 
     window.location.reload();
+
 }
 
 
@@ -474,7 +615,8 @@ if (menuOverlay) {
         function (event) {
 
             if (
-                event.target === menuOverlay
+                event.target ===
+                menuOverlay
             ) {
 
                 closeMenu();
@@ -513,7 +655,9 @@ if (profileButton) {
 
 
             if (!popup) {
+
                 return;
+
             }
 
 
@@ -521,13 +665,15 @@ if (profileButton) {
 
                 popup.hidden = false;
 
-                popup.style.display = "block";
+                popup.style.display =
+                    "block";
 
             } else {
 
                 popup.hidden = true;
 
-                popup.style.display = "none";
+                popup.style.display =
+                    "none";
 
             }
 
@@ -542,7 +688,9 @@ if (profileButton) {
 // ========================================
 
 const profileClose =
-    document.getElementById("profileClose");
+    document.getElementById(
+        "profileClose"
+    );
 
 
 if (profileClose) {
@@ -561,7 +709,8 @@ if (profileClose) {
 
                 popup.hidden = true;
 
-                popup.style.display = "none";
+                popup.style.display =
+                    "none";
 
             }
 
@@ -623,12 +772,15 @@ if (viewProfileButton) {
 
                 popup.hidden = true;
 
-                popup.style.display = "none";
+                popup.style.display =
+                    "none";
 
             }
 
 
-            handleMenuClick("profile");
+            handleMenuClick(
+                "profile"
+            );
 
         }
     );
@@ -649,6 +801,7 @@ document.querySelectorAll(
         function (event) {
 
             event.preventDefault();
+
 
             const tab =
                 button.getAttribute(
@@ -691,7 +844,8 @@ document.addEventListener(
 
                 popup.hidden = true;
 
-                popup.style.display = "none";
+                popup.style.display =
+                    "none";
 
             }
 
@@ -710,8 +864,15 @@ updateUserUI();
 createDrawerMenu();
 
 
-// Save default user if no user exists
-if (!localStorage.getItem("loggedInUser")) {
+// ========================================
+// SAVE DEFAULT USER
+// ========================================
+
+if (
+    !localStorage.getItem(
+        "loggedInUser"
+    )
+) {
 
     localStorage.setItem(
         "loggedInUser",
