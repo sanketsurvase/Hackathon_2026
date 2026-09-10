@@ -381,8 +381,8 @@ def get_slots(
                     "slot_date": str(s.slot_date),
                     "start_time": str(s.start_time)[:5],
                     "end_time": str(s.end_time)[:5],
-                    "capacity": s.capacity,
-                    "booked_count": s.booked_count or 0
+                    "capacity": int(str(s.capacity)) if s.capacity else 0,
+                    "booked_count": int(str(s.booked_count)) if s.booked_count else 0
                 }
                 for s in slots
             ]
@@ -399,8 +399,9 @@ def create_booking(req: BookingRequest, db: Session = Depends(get_db)):
     if not slot:
         raise HTTPException(status_code=404, detail="निवडलेला स्लॉट आढळला नाही.")
 
-    booked = slot.booked_count or 0
-    if booked >= slot.capacity:
+    booked = int(str(slot.booked_count)) if slot.booked_count else 0
+    capacity = int(str(slot.capacity)) if slot.capacity else 0
+    if booked >= capacity:
         raise HTTPException(status_code=400, detail="हा स्लॉट पूर्ण झाला आहे. कृपया दुसरा वेळ निवडा.")
 
     # Verify farmer exists
@@ -427,7 +428,7 @@ def create_booking(req: BookingRequest, db: Session = Depends(get_db)):
         db.flush()  # get booking_id
 
         # Update slot booked_count
-        slot.booked_count = booked + 1
+        slot.booked_count = booked + 1  # booked is already int
 
         # Add to queue_status
         queue_entry = QueueStatus(
@@ -528,8 +529,10 @@ def cancel_booking(req: CancelBookingRequest, db: Session = Depends(get_db)):
 
         # Decrease booked_count on slot
         slot = db.query(Slot).filter(Slot.slot_id == booking.slot_id).first()
-        if slot and slot.booked_count and slot.booked_count > 0:
-            slot.booked_count = int(str(slot.booked_count)) - 1
+        if slot and slot.booked_count:
+            current_count = int(str(slot.booked_count))
+            if current_count > 0:
+                slot.booked_count = current_count - 1
 
         # Update queue status
         queue = db.query(QueueStatus).filter(
@@ -586,8 +589,8 @@ def live_queue(
                 "expected_quantity": float(str(booking.expected_quantity)),
                 "start_time": str(slot.start_time)[:5],
                 "end_time": str(slot.end_time)[:5],
-                "queue_position": queue.queue_position if queue else 99,
-                "queue_status": queue.status if queue else "waiting"
+                "queue_position": int(str(queue.queue_position)) if queue and queue.queue_position else 99,
+                "queue_status": str(queue.status) if queue and queue.status else "waiting"
             }
 
             if queue and queue.status == "serving":
