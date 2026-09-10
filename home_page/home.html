@@ -3,12 +3,19 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#087a43">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#08783f">
 
-  <title>किसानसेवा</title>
+  <title>किसानसेतू | शेतकरी डिजिटल सेवा</title>
 
-  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts - POPPINS & MUKTA (Matching Login & Sign Up Theme) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap"
+    rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css?v=1.4">
 </head>
 
 <body>
@@ -24,12 +31,12 @@
       <div class="brand-section">
 
         <div class="brand-logo">
-          🌱
+          <img src="assets/farmer_logo.jpg" alt="किसानसेतू शेतकरी लोगो" class="farmer-brand-img">
         </div>
 
         <div class="brand-details">
 
-          <h1>किसानसेवा</h1>
+          <h1>किसानसेतू</h1>
 
           <p>
             शेतकऱ्यांसाठी डिजिटल सेवा
@@ -42,19 +49,11 @@
 
       <div class="header-actions">
 
-        <button
-          class="header-button"
-          id="notificationBtn"
-          aria-label="सूचना"
-          type="button">
+        <button class="header-button" id="notificationBtn" aria-label="सूचना" type="button" title="सूचना">
           🔔
         </button>
 
-        <button
-          class="profile-button"
-          id="profileBtn"
-          aria-label="प्रोफाइल"
-          type="button">
+        <button class="profile-button" id="profileBtn" aria-label="प्रोफाइल" type="button" title="माझी प्रोफाइल">
           👨🏻‍🌾
         </button>
 
@@ -69,11 +68,7 @@
 
     <div class="mobile-menu-bar">
 
-      <button
-        class="mobile-menu-button"
-        id="menuBtn"
-        aria-label="मेनू उघडा"
-        type="button">
+      <button class="mobile-menu-button" id="menuBtn" aria-label="मेनू उघडा" type="button">
         ☰
       </button>
 
@@ -86,15 +81,12 @@
          PROFILE POPUP
     ====================================== -->
 
-    <div
-      class="profile-popup"
-      id="profilePopup"
-      hidden>
+    <div class="profile-popup" id="profilePopup" hidden>
 
       <div class="profile-popup-header">
 
         <div class="profile-large-avatar">
-          👨🏻‍🌾
+          <img src="assets/farmer_logo.jpg" alt="शेतकरी" class="profile-farmer-img">
         </div>
 
         <div class="profile-popup-name">
@@ -112,10 +104,7 @@
 
         </div>
 
-        <button
-          class="profile-close"
-          id="profileClose"
-          type="button">
+        <button class="profile-close" id="profileClose" type="button" aria-label="बंद करा">
           ×
         </button>
 
@@ -152,10 +141,7 @@
       </div>
 
 
-      <button
-        class="view-profile-button"
-        id="viewProfileBtn"
-        type="button">
+      <button class="view-profile-button" id="viewProfileBtn" type="button">
 
         <span>
           माझी माहिती पहा
@@ -174,14 +160,9 @@
          LEFT MENU OVERLAY
     ====================================== -->
 
-    <div
-      class="menu-overlay"
-      id="menuOverlay"
-      hidden>
+    <div class="menu-overlay" id="menuOverlay" hidden>
 
-      <aside
-        class="side-drawer"
-        id="sideDrawer">
+      <aside class="side-drawer" id="sideDrawer">
 
 
         <!-- DRAWER HEADER -->
@@ -191,13 +172,13 @@
           <div class="drawer-brand">
 
             <div class="drawer-logo">
-              🌱
+              <img src="assets/farmer_logo.jpg" alt="शेतकरी" class="farmer-brand-img">
             </div>
 
             <div>
 
               <h2>
-                किसानसेवा
+                किसानसेतू
               </h2>
 
               <p>
@@ -209,10 +190,7 @@
           </div>
 
 
-          <button
-            class="drawer-close"
-            id="drawerClose"
-            type="button">
+          <button class="drawer-close" id="drawerClose" type="button" aria-label="मेनू बंद करा">
             ×
           </button>
 
@@ -224,7 +202,7 @@
         <div class="drawer-user">
 
           <div class="drawer-user-avatar">
-            👨🏻‍🌾
+            <img src="assets/farmer_logo.jpg" alt="शेतकरी" class="drawer-farmer-img">
           </div>
 
           <div class="drawer-user-details">
@@ -249,9 +227,7 @@
              ALL 12 MENU TABS ARE CREATED BY JS
         ====================================== -->
 
-        <div
-          class="drawer-menu"
-          id="drawerMenu">
+        <div class="drawer-menu" id="drawerMenu">
 
         </div>
 
@@ -261,7 +237,7 @@
         <div class="drawer-footer">
 
           <p>
-            किसानसेवा
+            किसानसेतू
           </p>
 
           <span>
@@ -289,7 +265,7 @@
         <div class="welcome-content">
 
           <p class="welcome-small">
-            किसानसेवामध्ये आपले स्वागत आहे
+            किसानसेतूमध्ये आपले स्वागत आहे
           </p>
 
           <h2>
@@ -332,7 +308,7 @@
 
 
         <div class="welcome-farmer">
-          👨🏻‍🌾
+          <img src="assets/farmer_logo.jpg" alt="शेतकरी" class="welcome-farmer-img">
         </div>
 
       </section>
@@ -362,10 +338,7 @@
 
           <!-- PIKANCHI MAHITI -->
 
-          <button
-            class="service-card"
-            data-tab="crops"
-            type="button">
+          <button class="service-card" data-tab="crops" type="button">
 
             <div class="service-icon green">
               🌱
@@ -392,10 +365,7 @@
 
           <!-- SLOT BOOKING -->
 
-          <button
-            class="service-card"
-            data-tab="slotBooking"
-            type="button">
+          <button class="service-card" data-tab="slotBooking" type="button">
 
             <div class="service-icon yellow">
               🧾
@@ -422,10 +392,7 @@
 
           <!-- MY BOOKING -->
 
-          <button
-            class="service-card"
-            data-tab="myBooking"
-            type="button">
+          <button class="service-card" data-tab="myBooking" type="button">
 
             <div class="service-icon blue">
               🧺
@@ -452,10 +419,7 @@
 
           <!-- LIVE QUEUE -->
 
-          <button
-            class="service-card"
-            data-tab="liveQueue"
-            type="button">
+          <button class="service-card" data-tab="liveQueue" type="button">
 
             <div class="service-icon purple">
               📄
@@ -494,10 +458,7 @@
 
         <!-- PURCHASE STATUS -->
 
-        <button
-          class="small-service-card"
-          data-tab="purchase"
-          type="button">
+        <button class="small-service-card" data-tab="purchase" type="button">
 
           <div class="small-service-icon">
             ⏱️
@@ -524,10 +485,7 @@
 
         <!-- PAYMENT STATUS -->
 
-        <button
-          class="small-service-card"
-          data-tab="payment"
-          type="button">
+        <button class="small-service-card" data-tab="payment" type="button">
 
           <div class="small-service-icon notification">
             📍

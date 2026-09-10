@@ -1,860 +1,645 @@
-@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+/* =========================================================
+   KISANSETU (किसानसेतू) - HOME PAGE STYLESHEET
+   Unified Theme with Login & Sign-Up Portals
+   Typography: Poppins & Mukta (Google Fonts)
+   Mobile First & Fully Responsive
+   ========================================================= */
 
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap');
 
-/* =========================================
-   RESET
-========================================= */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', 'Mukta', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
+:root {
+    --brand-green: #08783f;
+    --brand-dark: #045229;
+    --brand-darker: #033d1e;
+    --brand-light: #e8f5ec;
+    --brand-mint: #d7edd8;
+    --brand-yellow: #f5b016;
+    --text-dark: #122117;
+    --text-muted: #53695b;
+    --border-color: #d1e2d7;
+    --border-light: #e5ede7;
+    --border-focus: #08783f;
+    --card-bg: #ffffff;
+    --page-bg: #eef6f0;
+    --danger: #dc2626;
+    --danger-light: #fef2f2;
+    --success: #16a34a;
+    
+    --shadow-card: 0 20px 45px rgba(5, 54, 28, 0.08);
+    --shadow-hover: 0 12px 28px rgba(8, 120, 63, 0.12);
+    --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.04);
+    
+    --radius-card: 24px;
+    --radius-subcard: 16px;
+    --radius-input: 12px;
+    --radius-btn: 12px;
+    --radius-pill: 9999px;
+    --transition-fast: 0.2s ease;
+    --transition-smooth: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
 html {
-  scroll-behavior: smooth;
+    scroll-behavior: smooth;
 }
-
 
 body {
-  margin: 0;
-
-  background: #f3f8f5;
-
-  /*
-    Poppins does not contain Marathi characters.
-    Mukta is used for Marathi/Devanagari.
-  */
-
-  font-family: "Mukta", sans-serif;
-
-  color: #173b2b;
+    /* Softened Farm Background with Muted Dark Gradient to Reduce High Greenness */
+    background:
+        linear-gradient(
+            180deg,
+            rgba(10, 26, 17, 0.84) 0%,
+            rgba(16, 38, 25, 0.75) 40%,
+            rgba(8, 22, 14, 0.88) 100%
+        ),
+        url('assets/new_farm_bg.jpg') no-repeat center center / cover fixed;
+    background-color: #0c2014;
+    background-attachment: fixed;
+    color: var(--text-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    -webkit-tap-highlight-color: transparent;
+    line-height: 1.5;
 }
-
 
 button {
-  font-family: inherit;
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: inherit;
+    outline: none;
 }
 
-
-/* English / Numbers */
-
-.user-id-card strong,
-.profile-popup-name p,
-.profile-info-item strong,
-.drawer-user-details span,
-.service-arrow,
-.small-service-card > span {
-  font-family: "Poppins", sans-serif;
-}
-
-
-/* =========================================
-   APP
-========================================= */
-
+/* =========================================================
+   1. APP CONTAINER
+   ========================================================= */
 .app {
-  min-height: 100vh;
-
-  background: #f3f8f5;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
-
-/* =========================================
-   TOP HEADER
-========================================= */
-
+/* =========================================================
+   2. HEADER (MOBILE HEADER)
+   ========================================================= */
 .mobile-header {
-  width: 100%;
-
-  height: 68px;
-
-  background: #ffffff;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-
-  padding: 7px 13px;
-
-  position: sticky;
-
-  top: 0;
-
-  z-index: 100;
-
-  border-bottom: 1px solid #e1ebe5;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    height: 72px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e3ede6;
+    box-shadow: 0 2px 12px rgba(4, 82, 41, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
-
-
-/* =========================================
-   BRAND
-========================================= */
 
 .brand-section {
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-
 
 .brand-logo {
-  width: 43px;
-
-  height: 43px;
-
-  background: #e4f5e9;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 23px;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--brand-light);
+    border: 1.5px solid #cce5d4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+    padding: 2px;
+    box-shadow: 0 3px 8px rgba(8, 120, 63, 0.10);
+    transition: transform var(--transition-fast);
 }
 
+.brand-section:hover .brand-logo {
+    transform: scale(1.06);
+}
+
+.farmer-brand-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9px;
+}
+
+.brand-details {
+    display: flex;
+    flex-direction: column;
+}
 
 .brand-details h1 {
-  margin: 0;
-
-  color: #087a43;
-
-  font-size: 21px;
-
-  line-height: 1.1;
-
-  font-weight: 800;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--brand-dark);
+    letter-spacing: -0.3px;
+    line-height: 1.15;
 }
-
 
 .brand-details p {
-  margin-top: 2px;
-
-  color: #718078;
-
-  font-size: 9px;
-
-  line-height: 1;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-muted);
+    letter-spacing: 0.2px;
 }
-
-
-/* =========================================
-   HEADER BUTTONS
-========================================= */
 
 .header-actions {
-  display: flex;
-
-  align-items: center;
-
-  gap: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
-
 
 .header-button,
 .profile-button {
-  border: none;
-
-  cursor: pointer;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1.5px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    color: var(--text-dark);
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
 }
 
-
-.header-button {
-  width: 36px;
-
-  height: 36px;
-
-  border-radius: 50%;
-
-  background: #f2f6f3;
-
-  font-size: 16px;
+.header-button:hover,
+.profile-button:hover {
+    border-color: var(--brand-green);
+    background: var(--brand-light);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(8, 120, 63, 0.12);
 }
 
-
-.profile-button {
-  width: 38px;
-
-  height: 38px;
-
-  border-radius: 50%;
-
-  background: #e4f4e8;
-
-  font-size: 21px;
-}
-
-
-/* =========================================
-   MENU BAR
-========================================= */
-
+/* =========================================================
+   3. MENU BAR (MOBILE MENU BAR)
+   ========================================================= */
 .mobile-menu-bar {
-  width: 100%;
-
-  height: 48px;
-
-  background: #ffffff;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: flex-start;
-
-  padding: 6px 13px;
-
-  gap: 9px;
-
-  border-bottom: 1px solid #e1ebe5;
-
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04);
-
-  position: sticky;
-
-  top: 68px;
-
-  z-index: 90;
+    width: 100%;
+    max-width: 960px;
+    margin: 14px auto 0 auto;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-
 
 .mobile-menu-button {
-  width: 37px;
-
-  height: 36px;
-
-  border: none;
-
-  border-radius: 9px;
-
-  background: #087a43;
-
-  color: white;
-
-  font-family: "Poppins", sans-serif;
-
-  font-size: 21px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  cursor: pointer;
-
-  transition: 0.2s;
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1.5px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: var(--brand-green);
+    font-weight: 700;
+    transition: all var(--transition-fast);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-
-.mobile-menu-button:active {
-  transform: scale(0.92);
+.mobile-menu-button:hover {
+    background: var(--brand-light);
+    border-color: var(--brand-green);
+    transform: translateY(-1px);
 }
-
 
 .mobile-menu-bar span {
-  color: #173d2b;
-
-  font-size: 13px;
-
-  font-weight: 700;
+    font-size: 14px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    background: rgba(4, 82, 41, 0.75);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 4px 14px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.35);
 }
 
-
-/* =========================================
-   PROFILE POPUP
-========================================= */
-
-.profile-popup {
-  position: fixed;
-
-  top: 76px;
-
-  right: 10px;
-
-  width: calc(100% - 20px);
-
-  max-width: 400px;
-
-  background: white;
-
-  border-radius: 17px;
-
-  padding: 16px;
-
-  z-index: 300;
-
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
-
-  border: 1px solid #e1ebe5;
-}
-
-
-.profile-popup-header {
-  display: flex;
-
-  align-items: center;
-
-  gap: 11px;
-}
-
-
-.profile-large-avatar {
-  width: 52px;
-
-  height: 52px;
-
-  background: #e5f5e9;
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 28px;
-}
-
-
-.profile-popup-name {
-  flex: 1;
-}
-
-
-.profile-popup-name h3 {
-  color: #183e2d;
-
-  font-size: 17px;
-
-  font-weight: 700;
-}
-
-
-.profile-popup-name p {
-  color: #75827b;
-
-  font-size: 9px;
-
-  margin-top: 2px;
-}
-
-
-.profile-close {
-  width: 31px;
-
-  height: 31px;
-
-  border: none;
-
-  border-radius: 50%;
-
-  background: #f2f5f3;
-
-  font-size: 20px;
-
-  cursor: pointer;
-}
-
-
-.profile-info {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 9px;
-
-  margin-top: 15px;
-}
-
-
-.profile-info-item {
-  background: #f5f9f6;
-
-  border-radius: 9px;
-
-  padding: 10px;
-}
-
-
-.profile-info-item span {
-  display: block;
-
-  color: #748078;
-
-  font-size: 10px;
-}
-
-
-.profile-info-item strong {
-  display: block;
-
-  color: #087a43;
-
-  font-size: 10px;
-
-  margin-top: 4px;
-}
-
-
-.view-profile-button {
-  width: 100%;
-
-  margin-top: 11px;
-
-  border: none;
-
-  background: #087a43;
-
-  color: white;
-
-  border-radius: 9px;
-
-  padding: 11px;
-
-  cursor: pointer;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
-}
-
-
-/* =========================================
-   MAIN
-========================================= */
-
+/* =========================================================
+   4. MAIN CONTENT
+   ========================================================= */
 .main-content {
-  width: 100%;
-
-  max-width: 650px;
-
-  margin: auto;
-
-  padding: 14px;
-
-  padding-bottom: 35px;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 16px 16px 40px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
 }
 
-
-/* =========================================
-   WELCOME CARD
-========================================= */
-
+/* =========================================================
+   5. WELCOME CARD (FARM GRADIENT BACKGROUND & FARMER LOGO)
+   ========================================================= */
 .welcome-card {
-  min-height: 205px;
-
-  border-radius: 18px;
-
-  padding: 19px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #dff3e5,
-      #f8fcf8
-    );
-
-  position: relative;
-
-  overflow: hidden;
+    background:
+        linear-gradient(135deg, rgba(3, 42, 20, 0.94) 0%, rgba(6, 68, 35, 0.90) 55%, rgba(10, 75, 38, 0.92) 100%),
+        url('assets/new_farm_bg.jpg') no-repeat center / cover;
+    border-radius: var(--radius-card);
+    padding: 30px 32px;
+    color: #ffffff;
+    box-shadow: 0 20px 45px rgba(4, 82, 41, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    border: 1.5px solid rgba(255, 255, 255, 0.22);
+    position: relative;
+    overflow: hidden;
 }
 
+.welcome-card::before {
+    content: "";
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 360px;
+    height: 360px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
 
 .welcome-content {
-  position: relative;
-
-  z-index: 2;
-
-  max-width: 76%;
+    position: relative;
+    z-index: 2;
+    flex: 1;
 }
-
 
 .welcome-small {
-  color: #087a43;
-
-  font-size: 11px;
-
-  font-weight: 700;
-
-  margin-bottom: 5px;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.20);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: #ffffff;
+    font-size: 12.5px;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 50px;
+    margin-bottom: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
 }
-
 
 .welcome-content h2 {
-  color: #123c29;
-
-  font-size: 24px;
-
-  line-height: 1.35;
-
-  font-weight: 800;
+    font-size: 28px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    line-height: 1.25;
+    margin-bottom: 8px;
+    color: #ffffff;
 }
 
+.welcome-content h2 span {
+    color: #fef08a;
+}
 
 .welcome-description {
-  color: #65746c;
-
-  font-size: 11px;
-
-  line-height: 1.6;
-
-  margin-top: 5px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.94);
+    margin-bottom: 20px;
+    max-width: 540px;
 }
-
-
-/* =========================================
-   USER ID
-========================================= */
 
 .user-id-card {
-  display: inline-flex;
-
-  align-items: center;
-
-  gap: 8px;
-
-  background: white;
-
-  border-radius: 9px;
-
-  padding: 8px 11px;
-
-  margin-top: 13px;
-
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    padding: 8px 16px;
+    border-radius: 12px;
 }
-
 
 .user-id-icon {
-  font-size: 17px;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.22);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
 }
 
+.user-id-card div {
+    display: flex;
+    flex-direction: column;
+}
 
 .user-id-card span {
-  display: block;
-
-  color: #75827b;
-
-  font-size: 9px;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.80);
+    font-weight: 600;
 }
-
 
 .user-id-card strong {
-  display: block;
-
-  color: #087a43;
-
-  font-size: 11px;
-
-  margin-top: 2px;
+    font-size: 15px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+    font-family: 'Poppins', sans-serif !important;
 }
 
-
-/* =========================================
-   FARMER
-========================================= */
-
+/* Farmer Logo Box in Welcome Card (Matching User Screenshot) */
 .welcome-farmer {
-  position: absolute;
-
-  right: -4px;
-
-  bottom: -9px;
-
-  font-size: 92px;
-
-  line-height: 1;
+    width: 88px;
+    height: 88px;
+    border-radius: 24px;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px solid rgba(255, 255, 255, 0.40);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.20);
+    transition: transform var(--transition-fast);
 }
 
+.welcome-farmer:hover {
+    transform: scale(1.05);
+}
 
-/* =========================================
-   SERVICES
-========================================= */
+.welcome-farmer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 18px;
+}
 
+/* =========================================================
+   6. SERVICES SECTION
+   ========================================================= */
 .services-section {
-  margin-top: 23px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
+.section-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.4);
+    padding-bottom: 8px;
+}
 
 .section-heading h2 {
-  color: #163d2b;
-
-  font-size: 21px;
-
-  font-weight: 800;
+    font-size: 21px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: -0.3px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
-
 
 .section-heading p {
-  color: #77847d;
-
-  font-size: 10px;
-
-  margin-top: 0;
+    font-size: 13.5px;
+    color: #e8f5ec;
+    font-weight: 600;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
 }
-
 
 .service-list {
-  display: flex;
-
-  flex-direction: column;
-
-  gap: 10px;
-
-  margin-top: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
 }
-
 
 .service-card {
-  width: 100%;
-
-  min-height: 82px;
-
-  border: 1px solid #e1ebe5;
-
-  background: white;
-
-  border-radius: 14px;
-
-  padding: 11px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 11px;
-
-  text-align: left;
-
-  cursor: pointer;
-
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
-
-  transition: 0.2s;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 20px;
+    padding: 20px 18px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px rgba(4, 82, 41, 0.04);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
 }
 
-
-.service-card:active {
-  transform: scale(0.98);
+.service-card:hover {
+    transform: translateY(-3px);
+    border-color: #a7d8ba;
+    background: #ffffff;
+    box-shadow: 0 12px 28px rgba(8, 120, 63, 0.12);
 }
-
 
 .service-icon {
-  width: 50px;
-
-  height: 50px;
-
-  min-width: 50px;
-
-  border-radius: 12px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 22px;
-
-  font-weight: 800;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 22px;
+    transition: transform var(--transition-fast);
 }
 
+.service-card:hover .service-icon {
+    transform: scale(1.08);
+}
 
 .service-icon.green {
-  background: #e2f5e8;
+    background: #e8f5ec;
+    border: 1px solid #c8e6d2;
 }
-
 
 .service-icon.yellow {
-  background: #fff1d8;
-
-  color: #b76c00;
+    background: #fef8e7;
+    border: 1px solid #fde7ad;
 }
-
 
 .service-icon.blue {
-  background: #e3f1f8;
+    background: #e9f4ff;
+    border: 1px solid #bfe1ff;
 }
-
 
 .service-icon.purple {
-  background: #eee7f7;
+    background: #f4ecff;
+    border: 1px solid #dfc7ff;
 }
-
 
 .service-content {
-  flex: 1;
+    flex: 1;
+    min-width: 0;
 }
-
 
 .service-content h3 {
-  color: #183e2d;
-
-  font-size: 14px;
-
-  font-weight: 700;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+    line-height: 1.25;
 }
-
 
 .service-content p {
-  color: #77847d;
-
-  font-size: 9px;
-
-  margin-top: 1px;
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.35;
 }
-
 
 .service-arrow {
-  color: #087a43;
-
-  font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f4faf6;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--brand-green);
+    font-size: 15px;
+    font-weight: 700;
+    flex-shrink: 0;
+    font-family: 'Poppins', sans-serif !important;
+    transition: all var(--transition-fast);
 }
 
+.service-card:hover .service-arrow {
+    background: var(--brand-green);
+    color: #ffffff;
+    border-color: var(--brand-green);
+    transform: translateX(3px);
+}
 
-/* =========================================
-   SMALL SERVICES
-========================================= */
-
+/* =========================================================
+   7. SMALL SERVICES
+   ========================================================= */
 .small-services {
-  display: grid;
-
-  grid-template-columns: 1fr 1fr;
-
-  gap: 9px;
-
-  margin-top: 11px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
 }
-
 
 .small-service-card {
-  min-height: 102px;
-
-  background: white;
-
-  border: 1px solid #e1ebe5;
-
-  border-radius: 13px;
-
-  padding: 12px;
-
-  text-align: left;
-
-  cursor: pointer;
-
-  position: relative;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 18px;
+    padding: 16px 18px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 14px rgba(4, 82, 41, 0.03);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+    text-align: left;
 }
 
+.small-service-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--brand-green);
+    background: #ffffff;
+    box-shadow: var(--shadow-hover);
+}
 
 .small-service-icon {
-  width: 38px;
-
-  height: 38px;
-
-  background: #e4f5e9;
-
-  border-radius: 10px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 18px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: var(--brand-light);
+    border: 1px solid #c8e6d2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    flex-shrink: 0;
+    position: relative;
 }
 
-
-.small-service-icon.notification {
-  background: #fff1d9;
+.small-service-icon.notification::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    border: 1.5px solid #ffffff;
 }
 
+.small-service-card div {
+    flex: 1;
+}
 
 .small-service-card h3 {
-  color: #193f2e;
-
-  font-size: 12px;
-
-  margin-top: 7px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
 }
-
 
 .small-service-card p {
-  color: #7a867f;
-
-  font-size: 8px;
-
-  margin-top: 1px;
+    font-size: 12px;
+    color: var(--text-muted);
 }
-
 
 .small-service-card > span {
-  position: absolute;
-
-  right: 11px;
-
-  bottom: 10px;
-
-  color: #087a43;
-
-  font-size: 18px;
+    font-size: 16px;
+    color: var(--brand-green);
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif !important;
+    transition: transform var(--transition-fast);
 }
 
+.small-service-card:hover > span {
+    transform: translateX(3px);
+}
 
-/* =========================================
-   FARMER BANNER
-========================================= */
-
+/* =========================================================
+   8. FARMER BANNER
+   ========================================================= */
 .farmer-banner {
-  height: 145px;
-
-  margin-top: 17px;
-
-  border-radius: 15px;
-
-  background:
-    linear-gradient(
-      120deg,
-      #dff2e4,
-      #f7fbf5,
-      #d9eedc
-    );
-
-  position: relative;
-
-  overflow: hidden;
-
-  display: flex;
-
-  align-items: center;
-
-  padding: 10px 14px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(244, 250, 246, 0.94) 100%);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--radius-card);
+    padding: 24px 28px;
+    border: 1.5px solid #cde5d5;
+    box-shadow: var(--shadow-card);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
-
 
 .banner-farmer {
   align-self: stretch;
@@ -876,606 +661,479 @@ button {
   display: block;
 }
 
+.banner-farmer-img,
+.profile-farmer-img,
+.drawer-farmer-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: inherit;
+}
 
 .banner-text {
-  margin-left: 7px;
-
-  z-index: 2;
+    flex: 1;
 }
-
 
 .banner-text h2 {
-  color: #12643c;
-
-  font-size: 19px;
-
-  line-height: 1.35;
-
-  font-weight: 800;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--brand-dark);
+    line-height: 1.25;
+    margin-bottom: 4px;
 }
-
 
 .banner-text p {
-  color: #687a70;
-
-  font-size: 9px;
-
-  line-height: 1.5;
-
-  margin-top: 4px;
-
-  max-width: 175px;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.35;
 }
-
 
 .banner-plants {
-  position: absolute;
-
-  right: 0;
-
-  bottom: 0;
-
-  font-size: 34px;
+    font-size: 28px;
+    letter-spacing: 3px;
+    opacity: 0.9;
 }
 
-
-/* =========================================
-   MENU HINT
-========================================= */
-
+/* =========================================================
+   9. MENU HINT
+   ========================================================= */
 .menu-hint {
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
-
-  margin-top: 17px;
-
-  padding: 11px;
-
-  border-radius: 10px;
-
-  background: #e9f5ed;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: var(--shadow-subtle);
 }
-
 
 .menu-hint span {
-  width: 30px;
-
-  height: 30px;
-
-  background: #087a43;
-
-  color: white;
-
-  border-radius: 8px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-family: "Poppins", sans-serif;
-
-  font-size: 17px;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--brand-light);
+    color: var(--brand-green);
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
 }
-
 
 .menu-hint p {
-  color: #527064;
-
-  font-size: 10px;
-
-  line-height: 1.5;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 600;
+    line-height: 1.35;
 }
 
+/* =========================================================
+   10. PROFILE POPUP MODAL
+   ========================================================= */
+.profile-popup {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    width: 320px;
+    max-width: 90vw;
+    background: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px rgba(5, 54, 28, 0.16);
+    border: 1px solid var(--border-color);
+    padding: 22px 20px;
+    z-index: 1000;
+    display: none;
+    animation: popupFade 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
 
-/* =========================================
-   OVERLAY
-========================================= */
+@keyframes popupFade {
+    from {
+        opacity: 0;
+        transform: translateY(-8px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
 
+.profile-popup-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--border-light);
+    position: relative;
+}
+
+.profile-large-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--brand-light);
+    border: 2px solid var(--brand-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.profile-popup-name h3 {
+    font-size: 16.5px;
+    font-weight: 800;
+    color: var(--brand-dark);
+    line-height: 1.2;
+}
+
+.profile-popup-name p {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-top: 2px;
+}
+
+.profile-close {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #f4faf6;
+    border: 1px solid var(--border-color);
+    font-size: 18px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
+}
+
+.profile-close:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+}
+
+.profile-info {
+    padding: 14px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f8fbf9;
+    border-radius: 10px;
+    border: 1px solid var(--border-light);
+}
+
+.profile-info-item span {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    font-weight: 600;
+}
+
+.profile-info-item strong {
+    font-size: 13.5px;
+    color: var(--text-dark);
+    font-weight: 700;
+}
+
+.view-profile-button {
+    width: 100%;
+    background: var(--brand-green);
+    color: #ffffff !important;
+    padding: 11px 16px;
+    border-radius: var(--radius-btn);
+    font-size: 13.5px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all var(--transition-fast);
+    box-shadow: 0 4px 12px rgba(8, 120, 63, 0.2);
+}
+
+.view-profile-button:hover {
+    background: var(--brand-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(8, 120, 63, 0.28);
+}
+
+/* =========================================================
+   11. LEFT SIDE DRAWER & OVERLAY
+   ========================================================= */
 .menu-overlay {
-  position: fixed;
-
-  inset: 0;
-
-  background: rgba(0, 0, 0, 0.45);
-
-  z-index: 500;
-
-  animation: overlayIn 0.2s ease;
-}
-
-
-@keyframes overlayIn {
-
-  from {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(4, 38, 20, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 999;
     opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-
+    visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-
-/* =========================================
-   LEFT SIDE DRAWER
-========================================= */
+.menu-overlay.menu-visible {
+    opacity: 1;
+    visibility: visible;
+}
 
 .side-drawer {
-  position: absolute;
-
-  top: 0;
-
-  left: 0;
-
-  bottom: 0;
-
-  width: 88%;
-
-  max-width: 390px;
-
-  background: white;
-
-  overflow-y: auto;
-
-  box-shadow: 8px 0 30px rgba(0, 0, 0, 0.18);
-
-  animation: drawerIn 0.25s ease;
-}
-
-
-@keyframes drawerIn {
-
-  from {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 310px;
+    max-width: 85vw;
+    height: 100vh;
+    background: #ffffff;
+    z-index: 1000;
+    box-shadow: 10px 0 35px rgba(0, 0, 0, 0.16);
+    display: flex;
+    flex-direction: column;
     transform: translateX(-100%);
-  }
-
-  to {
-    transform: translateX(0);
-  }
-
+    transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow-y: auto;
 }
 
-
-/* =========================================
-   DRAWER HEADER
-========================================= */
+.side-drawer.drawer-visible {
+    transform: translateX(0);
+}
 
 .drawer-header {
-  min-height: 72px;
-
-  background: #087a43;
-
-  color: white;
-
-  padding: 12px 13px;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: space-between;
+    padding: 20px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border-light);
 }
-
 
 .drawer-brand {
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-
 
 .drawer-logo {
-  width: 43px;
-
-  height: 43px;
-
-  background: rgba(255, 255, 255, 0.16);
-
-  border-radius: 50%;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 22px;
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--brand-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid #cde8d5;
 }
-
 
 .drawer-brand h2 {
-  font-size: 20px;
-
-  font-weight: 800;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--brand-dark);
+    line-height: 1.1;
 }
-
 
 .drawer-brand p {
-  font-size: 9px;
-
-  opacity: 0.85;
-
-  margin-top: 1px;
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
 }
-
 
 .drawer-close {
-  width: 37px;
-
-  height: 37px;
-
-  border: 1px solid rgba(255, 255, 255, 0.35);
-
-  background: rgba(255, 255, 255, 0.12);
-
-  color: white;
-
-  border-radius: 50%;
-
-  font-size: 24px;
-
-  cursor: pointer;
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: #f4faf6;
+    border: 1px solid var(--border-color);
+    font-size: 20px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-fast);
 }
 
-
-/* =========================================
-   DRAWER USER
-========================================= */
+.drawer-close:hover {
+    background: var(--danger-light);
+    color: var(--danger);
+}
 
 .drawer-user {
-  margin: 13px;
-
-  padding: 11px;
-
-  border-radius: 12px;
-
-  background: #edf7f0;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 10px;
+    padding: 16px 18px;
+    background: linear-gradient(135deg, #f0fdf4 0%, #e8f5ec 100%);
+    border-bottom: 1px solid var(--border-light);
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
-
 
 .drawer-user-avatar {
-  width: 45px;
-
-  height: 45px;
-
-  border-radius: 50%;
-
-  background: white;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid var(--brand-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    flex-shrink: 0;
 }
-
-
-.drawer-user-details {
-  display: flex;
-
-  flex-direction: column;
-}
-
 
 .drawer-user-details strong {
-  color: #173d2b;
-
-  font-size: 14px;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--brand-dark);
+    display: block;
 }
-
 
 .drawer-user-details span {
-  color: #087a43;
-
-  font-size: 9px;
-
-  margin-top: 1px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
 }
-
-
-/* =========================================
-   DRAWER MENU
-========================================= */
 
 .drawer-menu {
-  padding: 2px 10px;
+    flex: 1;
+    padding: 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow-y: auto;
 }
-
 
 .drawer-item {
-  width: 100%;
-
-  min-height: 50px;
-
-  border: none;
-
-  background: transparent;
-
-  border-radius: 9px;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 11px;
-
-  padding: 7px 10px;
-
-  cursor: pointer;
-
-  color: #3d5147;
-
-  text-align: left;
-
-  margin-bottom: 2px;
-
-  transition: 0.18s;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border-radius: 12px;
+    color: #26382e;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all var(--transition-fast);
+    text-align: left;
 }
-
-
-.drawer-item:active {
-  transform: scale(0.98);
-}
-
 
 .drawer-item:hover {
-  background: #f0f7f2;
+    background: #f0f8f3;
+    color: var(--brand-green);
+    transform: translateX(3px);
 }
-
 
 .drawer-item.active {
-  background: #e2f4e8;
-
-  color: #087a43;
-
-  font-weight: 700;
+    background: var(--brand-light);
+    color: var(--brand-dark);
+    font-weight: 700;
+    border-left: 3.5px solid var(--brand-green);
 }
-
 
 .drawer-item-icon {
-  width: 32px;
-
-  height: 32px;
-
-  min-width: 32px;
-
-  border-radius: 8px;
-
-  background: #f1f6f3;
-
-  display: flex;
-
-  align-items: center;
-
-  justify-content: center;
-
-  font-size: 16px;
+    font-size: 18px;
+    width: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-
-.drawer-item.active .drawer-item-icon {
-  background: #087a43;
-
-  color: white;
-}
-
 
 .drawer-item-label {
-  flex: 1;
-
-  font-size: 13px;
+    flex: 1;
 }
-
 
 .drawer-item-arrow {
-  font-family: "Poppins", sans-serif;
-
-  color: #9aa69f;
-
-  font-size: 19px;
+    font-size: 16px;
+    color: #94a3b8;
 }
-
-
-.drawer-item.active .drawer-item-arrow {
-  color: #087a43;
-}
-
-
-/* =========================================
-   LOGOUT
-========================================= */
 
 .logout-item {
-  margin-top: 8px;
-
-  border-top: 1px solid #e7eee9;
-
-  border-radius: 0;
-
-  padding-top: 12px;
-
-  color: #b43d31;
+    margin-top: 8px;
+    border-top: 1px solid var(--border-light);
+    color: var(--danger) !important;
+    padding-top: 14px;
 }
 
-
-.logout-item .drawer-item-icon {
-  background: #fff0ee;
+.logout-item:hover {
+    background: var(--danger-light);
 }
-
-
-.logout-item .drawer-item-arrow {
-  color: #b43d31;
-}
-
-
-/* =========================================
-   DRAWER FOOTER
-========================================= */
 
 .drawer-footer {
-  text-align: center;
-
-  padding: 20px 10px 25px;
-
-  color: #7c8982;
+    padding: 14px 18px;
+    background: #f8faf9;
+    border-top: 1px solid var(--border-light);
+    text-align: center;
 }
-
 
 .drawer-footer p {
-  color: #087a43;
-
-  font-size: 13px;
-
-  font-weight: 700;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--brand-dark);
 }
-
 
 .drawer-footer span {
-  font-size: 8px;
-
-  display: block;
-
-  margin-top: 2px;
-}
-
-
-/* =========================================
-   TABLET
-========================================= */
-
-@media (min-width: 650px) {
-
-  .main-content {
-    padding: 25px;
-
-    max-width: 700px;
-  }
-
-
-  .welcome-card {
-    min-height: 240px;
-  }
-
-
-  .welcome-content h2 {
-    font-size: 28px;
-  }
-
-
-  .welcome-description {
-    font-size: 12px;
-  }
-
-
-  .welcome-farmer {
-    font-size: 120px;
-  }
-
-
-  .service-list {
-    display: grid;
-
-    grid-template-columns: 1fr 1fr;
-  }
-
-}
-
-
-/* =========================================
-   SMALL MOBILE
-========================================= */
-
-@media (max-width: 360px) {
-
-  .mobile-header {
-    padding-left: 9px;
-
-    padding-right: 9px;
-  }
-
-
-  .brand-details h1 {
-    font-size: 18px;
-  }
-
-
-  .brand-details p {
-    font-size: 7px;
-  }
-
-
-  .header-actions {
-    gap: 3px;
-  }
-
-
-  .header-button {
-    width: 33px;
-
-    height: 33px;
-  }
-
-
-  .profile-button {
-    width: 35px;
-
-    height: 35px;
-  }
-
-
-  .main-content {
-    padding: 10px;
-  }
-
-
-  .welcome-card {
-    padding: 16px;
-  }
-
-
-  .welcome-content {
-    max-width: 78%;
-  }
-
-
-  .welcome-content h2 {
-    font-size: 21px;
-  }
-
-
-  .welcome-farmer {
-    font-size: 78px;
-  }
-
-
-  .small-service-card {
-    padding: 9px;
-  }
-
-
-  .small-service-card h3 {
     font-size: 11px;
-  }
+    color: var(--text-muted);
+}
 
+/* =========================================================
+   12. RESPONSIVE QUERIES
+   ========================================================= */
+@media (max-width: 640px) {
+    .mobile-header {
+        height: 66px;
+        padding: 0 16px;
+    }
 
-  .side-drawer {
-    width: 94%;
-  }
+    .brand-details h1 {
+        font-size: 20px;
+    }
 
+    .welcome-card {
+        padding: 22px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .welcome-farmer {
+        align-self: flex-end;
+        margin-top: -10px;
+    }
+
+    .welcome-content h2 {
+        font-size: 24px;
+    }
+
+    .service-list {
+        grid-template-columns: 1fr;
+    }
+
+    .small-services {
+        grid-template-columns: 1fr;
+    }
+
+    .farmer-banner {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 20px 18px;
+    }
+
+    .banner-plants {
+        display: none;
+    }
 }
