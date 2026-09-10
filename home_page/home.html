@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#087a43">
+  <title>किसानसेवा</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app">
+
+    <header class="mobile-header">
+      <div class="brand-section">
+        <div class="brand-logo">🌱</div>
+        <div class="brand-details">
+          <h1>किसानसेवा</h1>
+          <p>शेतकऱ्यांसाठी डिजिटल सेवा</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button class="header-button" id="notificationBtn" aria-label="सूचना">🔔</button>
+        <button class="profile-button" id="profileBtn" aria-label="प्रोफाइल">👨🏻‍🌾</button>
+      </div>
+    </header>
+
+    <div class="mobile-menu-bar">
+      <button class="mobile-menu-button" id="menuBtn" aria-label="मेनू उघडा">☰</button>
+      <span>मेनू</span>
+    </div>
+
+    <div class="profile-popup" id="profilePopup" hidden>
+      <div class="profile-popup-header">
+        <div class="profile-large-avatar">👨🏻‍🌾</div>
+        <div class="profile-popup-name">
+          <h3 id="profileName">संकट पाटील</h3>
+          <p>User ID: <span id="profileUserId">KS10245</span></p>
+        </div>
+        <button class="profile-close" id="profileClose">×</button>
+      </div>
+
+      <div class="profile-info">
+        <div class="profile-info-item">
+          <span>🆔 User ID</span>
+          <strong id="profileInfoUserId">KS10245</strong>
+        </div>
+        <div class="profile-info-item">
+          <span>📱 मोबाईल नंबर</span>
+          <strong id="profileMobile">9876543210</strong>
+        </div>
+      </div>
+
+      <button class="view-profile-button" id="viewProfileBtn">
+        <span>माझी माहिती पहा</span>
+        <span>→</span>
+      </button>
+    </div>
+
+    <div class="menu-overlay" id="menuOverlay" hidden>
+      <aside class="side-drawer" id="sideDrawer">
+
+        <div class="drawer-header">
+          <div class="drawer-brand">
+            <div class="drawer-logo">🌱</div>
+            <div>
+              <h2>किसानसेवा</h2>
+              <p>शेतकऱ्यांसाठी डिजिटल सेवा</p>
+            </div>
+          </div>
+          <button class="drawer-close" id="drawerClose">×</button>
+        </div>
+
+        <div class="drawer-user">
+          <div class="drawer-user-avatar">👨🏻‍🌾</div>
+          <div class="drawer-user-details">
+            <strong id="drawerName">संकट पाटील</strong>
+            <span>ID: <span id="drawerUserId">KS10245</span></span>
+          </div>
+        </div>
+
+        <div class="drawer-menu" id="drawerMenu"></div>
+
+        <div class="drawer-footer">
+          <p>किसानसेवा</p>
+          <span>शेतकऱ्यांसाठी • शेतकऱ्यांकडून</span>
+        </div>
+      </aside>
+    </div>
+
+    <main class="main-content">
+
+      <section class="welcome-card">
+        <div class="welcome-content">
+          <p class="welcome-small">किसानसेवामध्ये आपले स्वागत आहे</p>
+          <h2>नमस्कार, <span id="welcomeName">संकट पाटील</span>! 👋</h2>
+          <p class="welcome-description">
+            आपल्या शेतीसाठी आवश्यक असलेल्या
+            सर्व डिजिटल सेवांचा लाभ एका ठिकाणी घ्या.
+          </p>
+
+          <div class="user-id-card">
+            <div class="user-id-icon">🆔</div>
+            <div>
+              <span>आपला User ID</span>
+              <strong id="welcomeUserId">KS10245</strong>
+            </div>
+          </div>
+        </div>
+
+        <div class="welcome-farmer">👨🏻‍🌾</div>
+      </section>
+
+      <section class="services-section">
+        <div class="section-heading">
+          <h2>शेतकऱ्यांसाठी सेवा</h2>
+          <p>आवश्यक सेवा एका क्लिकवर</p>
+        </div>
+
+        <div class="service-list">
+          <button class="service-card" data-tab="crops">
+            <div class="service-icon green">🌱</div>
+            <div class="service-content">
+              <h3>पिकांची माहिती</h3>
+              <p>आपल्या पिकांची माहिती नोंदवा</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </button>
+
+          <button class="service-card" data-tab="rates">
+            <div class="service-icon yellow">₹</div>
+            <div class="service-content">
+              <h3>लाईव्ह भाव</h3>
+              <p>आजचे बाजार भाव पहा</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </button>
+
+          <button class="service-card" data-tab="market">
+            <div class="service-icon blue">📊</div>
+            <div class="service-content">
+              <h3>लाईव्ह बाजार</h3>
+              <p>बाजारपेठेची माहिती मिळवा</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </button>
+
+          <button class="service-card" data-tab="purchase">
+            <div class="service-icon purple">🛒</div>
+            <div class="service-content">
+              <h3>खरेदीची स्थिती</h3>
+              <p>आपल्या खरेदीची सद्यस्थिती तपासा</p>
+            </div>
+            <span class="service-arrow">→</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="small-services">
+        <button class="small-service-card" data-tab="facility">
+          <div class="small-service-icon">🧺</div>
+          <div>
+            <h3>माझी सुविधा</h3>
+            <p>उपलब्ध सुविधा</p>
+          </div>
+          <span>→</span>
+        </button>
+
+        <button class="small-service-card" data-tab="notification">
+          <div class="small-service-icon notification">🔔</div>
+          <div>
+            <h3>नवीन सूचना</h3>
+            <p>महत्त्वाच्या सूचना</p>
+          </div>
+          <span>→</span>
+        </button>
+      </section>
+
+      <section class="farmer-banner">
+        <div class="banner-farmer">👨🏻‍🌾</div>
+        <div class="banner-text">
+          <h2>“समृद्ध शेतकरी<br>समृद्ध भारत”</h2>
+          <p>आधुनिक तंत्रज्ञानासोबत<br>शेतीला नवी दिशा.</p>
+        </div>
+        <div class="banner-plants">🌾🌱🌾</div>
+      </section>
+
+      <div class="menu-hint">
+        <span>☰</span>
+        <p>मेनू बटणावर क्लिक करून<br>सर्व सेवा पहा.</p>
+      </div>
+
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
