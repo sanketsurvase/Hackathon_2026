@@ -1,27 +1,26 @@
 import os
 
-from dotenv import load_dotenv  # type: ignore
-from sqlalchemy import create_engine  # type: ignore
-from sqlalchemy.orm import sessionmaker  # type: ignore
+from dotenv import load_dotenv
+from sqlalchemy import create_engine, text
+from sqlalchemy.orm import sessionmaker
 
-from pathlib import Path
+load_dotenv()
 
-env_path = Path(__file__).resolve().parent / ".env"
-load_dotenv(dotenv_path=env_path)
-load_dotenv()  # also check current working dir
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-DB_HOST = os.getenv("DB_HOST", "localhost")
-DB_PORT = os.getenv("DB_PORT", "5432")
-DB_NAME = os.getenv("DB_NAME", "kisansetu_db")
-DB_USER = os.getenv("DB_USER", "postgres")
-DB_PASSWORD = os.getenv("DB_PASSWORD", "farmer")
+if not DATABASE_URL:
+    raise RuntimeError(
+        "DATABASE_URL environment variable is not set."
+    )
 
-DATABASE_URL = (
-    f"postgresql://{DB_USER}:{DB_PASSWORD}"
-    f"@{DB_HOST}:{DB_PORT}/{DB_NAME}"
+if "render.com" in DATABASE_URL and "sslmode" not in DATABASE_URL:
+    separator = "&" if "?" in DATABASE_URL else "?"
+    DATABASE_URL += f"{separator}sslmode=require"
+
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True
 )
-
-engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(
     autocommit=False,
@@ -31,7 +30,9 @@ SessionLocal = sessionmaker(
 
 try:
     with engine.connect() as connection:
+        connection.execute(text("SELECT 1"))
         print("PostgreSQL connected successfully!")
-except Exception as e:
-    print("Database connection failed!")
-    print(e)
+except Exception as error:
+    print("Database connection failed:")
+    print(error)
+    raise

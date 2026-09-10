@@ -245,6 +245,25 @@ function handleMenuClick(id) {
         return;
     }
 
+    // ========================================
+    // PAGE ROUTES
+    // ========================================
+    const pageRoutes = {
+        crops: "../crop_information/crop-information.html",
+        slotBooking: "../slot_booking/slot-booking.html",
+        booking: "../slot_booking/slot-booking.html",
+        myBooking: "../my_booking/my-booking.html",
+        liveQueue: "../live_queue/live-queue.html",
+        purchase: "../procurement_status/procurement-status.html",
+        payment: "../payment_status/payment-status.html",
+        notification: "../notifications/notifications.html"
+    };
+
+    if (pageRoutes[id]) {
+        window.location.href = pageRoutes[id];
+        return;
+    }
+
     const selected = menuItems.find(item => item.id === id);
     const serviceName = selected ? selected.label : id;
 
