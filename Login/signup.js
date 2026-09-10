@@ -3,6 +3,8 @@
    FASTAPI + POSTGRESQL
    ========================================================= */
 
+const API_BASE_URL = "http://127.0.0.1:8000";
+
 let currentStep = 1;
 const totalSteps = 4;
 
@@ -58,10 +60,6 @@ function handleBackAction() {
 }
 
 
-/* =========================================================
-   UPDATE STEP UI
-   ========================================================= */
-
 function updateStepUI() {
 
     for (let i = 1; i <= totalSteps; i++) {
@@ -74,7 +72,6 @@ function updateStepUI() {
 
 
         if (formStep) {
-
             formStep.classList.remove("active");
 
             if (i === currentStep) {
@@ -136,20 +133,6 @@ function updateStepUI() {
     if (currentStep === 4) {
         updateReview();
     }
-
-
-    const activeStep =
-        document.getElementById(
-            "formStep" + currentStep
-        );
-
-    if (activeStep) {
-
-        activeStep.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-    }
 }
 
 
@@ -196,8 +179,6 @@ function validateStep(step) {
                 "error"
             );
 
-            document.getElementById("fullName").focus();
-
             return false;
         }
 
@@ -208,8 +189,6 @@ function validateStep(step) {
                 "कृपया वडिलांचे किंवा पतीचे नाव प्रविष्ट करा.",
                 "error"
             );
-
-            document.getElementById("fatherSpouseName").focus();
 
             return false;
         }
@@ -222,8 +201,6 @@ function validateStep(step) {
                 "error"
             );
 
-            document.getElementById("mobile").focus();
-
             return false;
         }
 
@@ -234,8 +211,6 @@ function validateStep(step) {
                 "कृपया जन्मतारीख निवडा.",
                 "error"
             );
-
-            document.getElementById("dob").focus();
 
             return false;
         }
@@ -280,8 +255,6 @@ function validateStep(step) {
                 "error"
             );
 
-            document.getElementById("address").focus();
-
             return false;
         }
 
@@ -292,8 +265,6 @@ function validateStep(step) {
                 "कृपया जिल्हा निवडा.",
                 "error"
             );
-
-            document.getElementById("district").focus();
 
             return false;
         }
@@ -306,8 +277,6 @@ function validateStep(step) {
                 "error"
             );
 
-            document.getElementById("taluka").focus();
-
             return false;
         }
 
@@ -319,8 +288,6 @@ function validateStep(step) {
                 "error"
             );
 
-            document.getElementById("village").focus();
-
             return false;
         }
 
@@ -331,8 +298,6 @@ function validateStep(step) {
                 "कृपया योग्य 6 अंकी पिन कोड प्रविष्ट करा.",
                 "error"
             );
-
-            document.getElementById("pincode").focus();
 
             return false;
         }
@@ -360,8 +325,6 @@ function validateStep(step) {
                 "error"
             );
 
-            document.getElementById("crop").focus();
-
             return false;
         }
 
@@ -376,8 +339,6 @@ function validateStep(step) {
                 "error"
             );
 
-            document.getElementById("farmArea").focus();
-
             return false;
         }
 
@@ -391,8 +352,6 @@ function validateStep(step) {
                 "कृपया योग्य अंदाजित उत्पादन प्रविष्ट करा.",
                 "error"
             );
-
-            document.getElementById("quantity").focus();
 
             return false;
         }
@@ -414,66 +373,72 @@ function updateReview() {
             'input[name="gender"]:checked'
         );
 
-    const fullName =
-        document.getElementById("fullName").value;
-
-    const fatherSpouseName =
-        document.getElementById("fatherSpouseName").value;
-
-    const mobile =
-        document.getElementById("mobile").value;
-
-    const dob =
-        document.getElementById("dob").value;
-
-    const email =
-        document.getElementById("email").value.trim();
-
-    const address =
-        document.getElementById("address").value;
-
-    const district =
-        document.getElementById("district").value;
-
-    const taluka =
-        document.getElementById("taluka").value;
-
-    const village =
-        document.getElementById("village").value;
-
-    const pincode =
-        document.getElementById("pincode").value;
-
     const farmArea =
         document.getElementById("farmArea").value;
 
     const areaUnit =
         document.getElementById("areaUnit").value;
 
-    const crop =
-        document.getElementById("crop").value;
-
     const quantity =
         document.getElementById("quantity").value;
-
-    const centre =
-        document.getElementById("centre").value;
 
 
     const values = [
 
-        ["पूर्ण नाव", fullName],
-        ["वडिलांचे / पतीचे नाव", fatherSpouseName],
-        ["मोबाईल क्रमांक", mobile],
-        ["जन्मतारीख", dob],
-        ["ईमेल", email || "-"],
-        ["लिंग", gender ? gender.value : "-"],
+        [
+            "पूर्ण नाव",
+            document.getElementById("fullName").value
+        ],
 
-        ["पत्ता", address],
-        ["जिल्हा", district],
-        ["तालुका", taluka],
-        ["गाव", village],
-        ["पिन कोड", pincode],
+        [
+            "वडिलांचे / पतीचे नाव",
+            document.getElementById("fatherSpouseName").value
+        ],
+
+        [
+            "मोबाईल क्रमांक",
+            document.getElementById("mobile").value
+        ],
+
+        [
+            "जन्मतारीख",
+            document.getElementById("dob").value
+        ],
+
+        [
+            "ईमेल",
+            document.getElementById("email").value || "-"
+        ],
+
+        [
+            "लिंग",
+            gender ? gender.value : "-"
+        ],
+
+        [
+            "पत्ता",
+            document.getElementById("address").value
+        ],
+
+        [
+            "जिल्हा",
+            document.getElementById("district").value
+        ],
+
+        [
+            "तालुका",
+            document.getElementById("taluka").value
+        ],
+
+        [
+            "गाव",
+            document.getElementById("village").value
+        ],
+
+        [
+            "पिन कोड",
+            document.getElementById("pincode").value
+        ],
 
         [
             "शेती क्षेत्र",
@@ -482,7 +447,10 @@ function updateReview() {
                 : "-"
         ],
 
-        ["मुख्य पीक", crop],
+        [
+            "मुख्य पीक",
+            document.getElementById("crop").value
+        ],
 
         [
             "अंदाजित उत्पादन",
@@ -493,7 +461,7 @@ function updateReview() {
 
         [
             "पसंतीचे खरेदी केंद्र",
-            centre || "-"
+            document.getElementById("centre").value || "-"
         ]
     ];
 
@@ -515,7 +483,6 @@ function updateReview() {
     const reviewBox =
         document.getElementById("reviewBox");
 
-
     if (reviewBox) {
         reviewBox.innerHTML = html;
     }
@@ -523,254 +490,309 @@ function updateReview() {
 
 
 /* =========================================================
-   FINAL REGISTRATION
+   REGISTRATION
    ========================================================= */
 
-registerForm.addEventListener(
-    "submit",
-    async function (event) {
+if (registerForm) {
 
-        event.preventDefault();
+    registerForm.addEventListener(
+        "submit",
+        async function (event) {
 
-        clearMessage();
+            event.preventDefault();
 
+            clearMessage();
 
-        const password =
-            document.getElementById("password").value;
 
-        const confirmPassword =
-            document.getElementById("confirmPassword").value;
+            const password =
+                document.getElementById("password").value;
 
-        const terms =
-            document.getElementById("terms").checked;
+            const confirmPassword =
+                document.getElementById("confirmPassword").value;
 
+            const terms =
+                document.getElementById("terms").checked;
 
-        if (password.length < 6) {
 
-            showMessage(
-                "पासवर्ड किमान 6 अक्षरांचा असावा.",
-                "error"
-            );
+            if (password.length < 6) {
 
-            document.getElementById("password").focus();
-
-            return;
-        }
-
-
-        if (password !== confirmPassword) {
-
-            showMessage(
-                "दोन्ही पासवर्ड समान नाहीत.",
-                "error"
-            );
-
-            document.getElementById("confirmPassword").focus();
-
-            return;
-        }
-
-
-        if (!terms) {
-
-            showMessage(
-                "कृपया नियम व अटी स्वीकारा.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        const gender =
-            document.querySelector(
-                'input[name="gender"]:checked'
-            );
-
-
-        if (!gender) {
-
-            showMessage(
-                "कृपया लिंग निवडा.",
-                "error"
-            );
-
-            return;
-        }
-
-
-        /* =====================================================
-           DATA SENT TO FASTAPI
-           ===================================================== */
-
-        const farmerData = {
-
-            /* PERSONAL INFO */
-
-            full_name:
-                document.getElementById("fullName").value.trim(),
-
-            father_spouse_name:
-                document.getElementById("fatherSpouseName").value.trim(),
-
-            mobile_number:
-                document.getElementById("mobile").value.trim(),
-
-            date_of_birth:
-                document.getElementById("dob").value,
-
-            email:
-                document.getElementById("email").value.trim() || null,
-
-            gender:
-                gender.value,
-
-
-            /* ADDRESS */
-
-            full_address:
-                document.getElementById("address").value.trim(),
-
-            district:
-                document.getElementById("district").value,
-
-            taluka:
-                document.getElementById("taluka").value.trim(),
-
-            village:
-                document.getElementById("village").value.trim(),
-
-            pincode:
-                document.getElementById("pincode").value.trim(),
-
-
-            /* FARMING */
-
-            farm_area:
-                Number(
-                    document.getElementById("farmArea").value || 0
-                ),
-
-            area_unit:
-                document.getElementById("areaUnit").value || "एकर",
-
-            crop_name:
-                document.getElementById("crop").value,
-
-            expected_quantity:
-                Number(
-                    document.getElementById("quantity").value || 0
-                ),
-
-            preferred_centre:
-                document.getElementById("centre").value || null,
-
-
-            /* ACCOUNT */
-
-            password:
-                password
-        };
-
-
-        submitBtn.disabled = true;
-
-        const originalBtnText =
-            submitBtn.innerHTML;
-
-        submitBtn.innerHTML =
-            "नोंदणी प्रक्रिया सुरू आहे...";
-
-
-        showMessage(
-            "कृपया प्रतीक्षा करा, आपली नोंदणी प्रक्रिया सुरू आहे...",
-            "success"
-        );
-
-
-        try {
-
-            const response =
-                await fetch(
-                    "http://127.0.0.1:8000/api/register",
-                    {
-                        method: "POST",
-
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-
-                        body:
-                            JSON.stringify(farmerData)
-                    }
+                showMessage(
+                    "पासवर्ड किमान 6 अक्षरांचा असावा.",
+                    "error"
                 );
 
-
-            let result = {};
-
-
-            try {
-
-                result =
-                    await response.json();
-
-            } catch (error) {
-
-                result = {};
+                return;
             }
 
 
-            if (!response.ok) {
+            if (password !== confirmPassword) {
 
-                throw new Error(
-                    result.detail ||
-                    "नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा."
+                showMessage(
+                    "दोन्ही पासवर्ड समान नाहीत.",
+                    "error"
                 );
+
+                return;
             }
 
 
+            if (!terms) {
+
+                showMessage(
+                    "कृपया नियम व अटी स्वीकारा.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const gender =
+                document.querySelector(
+                    'input[name="gender"]:checked'
+                );
+
+
+            if (!gender) {
+
+                showMessage(
+                    "कृपया लिंग निवडा.",
+                    "error"
+                );
+
+                return;
+            }
+
+
+            const farmerData = {
+
+                full_name:
+                    document
+                        .getElementById("fullName")
+                        .value
+                        .trim(),
+
+                father_spouse_name:
+                    document
+                        .getElementById("fatherSpouseName")
+                        .value
+                        .trim(),
+
+                mobile_number:
+                    document
+                        .getElementById("mobile")
+                        .value
+                        .trim(),
+
+                date_of_birth:
+                    document
+                        .getElementById("dob")
+                        .value,
+
+                email:
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim() || null,
+
+                gender:
+                    gender.value,
+
+
+                full_address:
+                    document
+                        .getElementById("address")
+                        .value
+                        .trim(),
+
+                district:
+                    document
+                        .getElementById("district")
+                        .value,
+
+                taluka:
+                    document
+                        .getElementById("taluka")
+                        .value
+                        .trim(),
+
+                village:
+                    document
+                        .getElementById("village")
+                        .value
+                        .trim(),
+
+                pincode:
+                    document
+                        .getElementById("pincode")
+                        .value
+                        .trim(),
+
+
+                farm_area:
+                    Number(
+                        document
+                            .getElementById("farmArea")
+                            .value || 0
+                    ),
+
+                area_unit:
+                    document
+                        .getElementById("areaUnit")
+                        .value || "एकर",
+
+                crop_name:
+                    document
+                        .getElementById("crop")
+                        .value,
+
+                expected_quantity:
+                    Number(
+                        document
+                            .getElementById("quantity")
+                            .value || 0
+                    ),
+
+                preferred_centre:
+                    document
+                        .getElementById("centre")
+                        .value || null,
+
+
+                password:
+                    password
+            };
+
+
+            const originalBtnText =
+                submitBtn.innerHTML;
+
+
+            submitBtn.disabled = true;
+
+            submitBtn.innerHTML =
+                "नोंदणी प्रक्रिया सुरू आहे...";
+
+
             showMessage(
-                "नोंदणी यशस्वी झाली! आता आपण लॉगिन करू शकता.",
+                "कृपया प्रतीक्षा करा...",
                 "success"
             );
 
 
-            registerForm.reset();
+            try {
+
+                const response =
+                    await fetch(
+                        `${API_BASE_URL}/api/register`,
+                        {
+                            method: "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(
+                                    farmerData
+                                )
+                        }
+                    );
 
 
-            setTimeout(
-                function () {
-
-                    window.location.href =
-                        "login.html";
-                },
-
-                1800
-            );
+                let result = {};
 
 
-        } catch (error) {
+                try {
 
-            console.error(
-                "Registration Error:",
-                error
-            );
+                    result =
+                        await response.json();
 
+                } catch (jsonError) {
 
-            showMessage(
-                error.message ||
-                "सेवेशी संपर्क साधता आला नाही. कृपया काही वेळाने पुन्हा प्रयत्न करा.",
-                "error"
-            );
+                    result = {};
+                }
 
 
-            submitBtn.disabled = false;
+                if (!response.ok) {
 
-            submitBtn.innerHTML =
-                originalBtnText;
+                    throw new Error(
+                        result.detail ||
+                        "नोंदणी पूर्ण करता आली नाही."
+                    );
+                }
+
+
+                if (!result.success) {
+
+                    throw new Error(
+                        "नोंदणी पूर्ण करता आली नाही."
+                    );
+                }
+
+
+                showMessage(
+                    "नोंदणी यशस्वी झाली! आता आपण लॉगिन करू शकता.",
+                    "success"
+                );
+
+
+                registerForm.reset();
+
+
+                setTimeout(
+                    function () {
+
+                        window.location.href =
+                            "login.html";
+
+                    },
+                    1500
+                );
+
+
+            } catch (error) {
+
+                console.error(
+                    "Registration Error:",
+                    error
+                );
+
+
+                let errorMessage =
+                    "नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा.";
+
+
+                if (
+                    error instanceof TypeError ||
+                    error.message === "Failed to fetch"
+                ) {
+
+                    errorMessage =
+                        "सेवेशी संपर्क साधता आला नाही. कृपया काही वेळाने पुन्हा प्रयत्न करा.";
+
+                } else if (error.message) {
+
+                    errorMessage =
+                        error.message;
+                }
+
+
+                showMessage(
+                    errorMessage,
+                    "error"
+                );
+
+
+                submitBtn.disabled = false;
+
+                submitBtn.innerHTML =
+                    originalBtnText;
+            }
         }
-    }
-);
+    );
+}
 
 
 /* =========================================================
@@ -787,11 +809,6 @@ function showMessage(text, type) {
 
     message.className =
         "alert-message " + type;
-
-    message.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-    });
 }
 
 
