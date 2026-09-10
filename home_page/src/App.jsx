@@ -1,439 +1,766 @@
-import React from "react";
+import React, { useState } from "react";
+
+const menuItems = [
+  {
+    id: "home",
+    icon: "⌂",
+    label: "मुख्यपृष्ठ",
+  },
+  {
+    id: "profile",
+    icon: "♙",
+    label: "माझी माहिती",
+  },
+  {
+    id: "crops",
+    icon: "🌱",
+    label: "पिकांची माहिती",
+  },
+  {
+    id: "market",
+    icon: "📊",
+    label: "लाईव्ह बाजार",
+  },
+  {
+    id: "facility",
+    icon: "🧺",
+    label: "माझी सुविधा",
+  },
+  {
+    id: "rates",
+    icon: "₹",
+    label: "लाईव्ह भाव",
+  },
+  {
+    id: "purchase",
+    icon: "🛒",
+    label: "खरेदीची स्थिती",
+  },
+  {
+    id: "payment",
+    icon: "💳",
+    label: "देयक स्थिती",
+  },
+  {
+    id: "notification",
+    icon: "🔔",
+    label: "सूचना",
+  },
+  {
+    id: "complaint",
+    icon: "📝",
+    label: "तक्रार / अभिप्राय",
+  },
+  {
+    id: "help",
+    icon: "❓",
+    label: "मदत व संपर्क",
+  },
+];
 
 function App() {
-  const menuItems = [
-    { icon: "⌂", name: "मुख्यपृष्ठ" },
-    { icon: "♙", name: "माझी माहिती" },
-    { icon: "🌾", name: "पिकांची माहिती" },
-    { icon: "▣", name: "शेती मार्गदर्शन" },
-    { icon: "₹", name: "माझी सुविधा" },
-    { icon: "↗", name: "लाईव्ह भाव" },
-    { icon: "✓", name: "खरेदीची स्थिती" },
-    { icon: "☀", name: "हवामान" },
-    { icon: "🔔", name: "सूचना" },
-    { icon: "⚑", name: "तक्रार / अभिप्राय" },
-    { icon: "?", name: "मदत व संपर्क" },
-  ];
+  const [activeTab, setActiveTab] = useState("home");
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false);
 
-  const handleMenuClick = (name) => {
-    if (name === "मुख्यपृष्ठ") {
-      return;
-    }
+  /*
+    Login page वरून user information localStorage मध्ये
+    save केलेली असल्यास ती इथे मिळेल.
+  */
 
-    alert(`${name} विभाग लवकरच उपलब्ध होईल.`);
+  const user = JSON.parse(
+    localStorage.getItem("loggedInUser")
+  ) || {
+    userId: "KS10245",
+    name: "संकट पाटील",
+    mobile: "9876543210",
   };
+
+
+  /* =========================================
+     MENU CLICK
+  ========================================= */
+
+  const handleMenuClick = (id) => {
+    setActiveTab(id);
+    setMenuOpen(false);
+
+    if (id !== "home") {
+      alert("हा विभाग लवकरच उपलब्ध होईल.");
+    }
+  };
+
+
+  /* =========================================
+     LOGOUT
+  ========================================= */
+
+  const handleLogout = () => {
+    localStorage.removeItem("loggedInUser");
+
+    setMenuOpen(false);
+    setProfileOpen(false);
+
+    alert("आपण यशस्वीरित्या लॉगआउट झाला आहात.");
+  };
+
 
   return (
     <div className="app">
 
-      {/* ================= HEADER ================= */}
-      <header className="header">
+      {/* =========================================
+          TOP HEADER
+      ========================================= */}
 
-        <div className="logo-section">
-          <div className="logo-icon">
+      <header className="mobile-header">
+
+        <div className="brand-section">
+
+          <div className="brand-logo">
             🌱
           </div>
 
-          <div className="logo-text">
-            <h1>किसानसेवा</h1>
-            <p>शेतकऱ्यांसाठी माहिती, सेवा आणि सुविधा</p>
+          <div className="brand-details">
+
+            <h1>
+              किसानसेवा
+            </h1>
+
+            <p>
+              शेतकऱ्यांसाठी डिजिटल सेवा
+            </p>
+
           </div>
+
         </div>
 
-        <div className="header-right">
+
+        {/* HEADER RIGHT BUTTONS */}
+
+        <div className="header-actions">
 
           <button
-            className="notification-btn"
-            onClick={() => alert("सूचना विभाग लवकरच उपलब्ध होईल.")}
+            className="header-button"
+            onClick={() =>
+              handleMenuClick("notification")
+            }
+            aria-label="सूचना"
           >
             🔔
           </button>
 
-          <button
-            className="profile-btn"
-            onClick={() => alert("माझी माहिती विभाग लवकरच उपलब्ध होईल.")}
-          >
-            <div className="profile-photo">
-              👨🏻‍🌾
-            </div>
 
-            <div className="profile-text">
-              <strong>संकट पाटील</strong>
-              <span>शेतकरी</span>
-            </div>
+          <button
+            className="profile-button"
+            onClick={() =>
+              setProfileOpen(!profileOpen)
+            }
+            aria-label="प्रोफाइल"
+          >
+            👨🏻‍🌾
           </button>
 
         </div>
+
       </header>
 
 
-      {/* ================= MAIN BODY ================= */}
-      <div className="main-layout">
+      {/* =========================================
+          MENU BUTTON BELOW HEADER
+      ========================================= */}
 
-        {/* ================= SIDEBAR ================= */}
-        <aside className="sidebar">
+      <div className="mobile-menu-bar">
 
-          <div className="sidebar-menu">
+        <button
+          className="mobile-menu-button"
+          onClick={() => setMenuOpen(true)}
+          aria-label="मेनू उघडा"
+        >
+          ☰
+        </button>
 
-            {menuItems.map((item, index) => (
-              <button
-                key={index}
-                className={`menu-item ${
-                  index === 0 ? "active" : ""
-                }`}
-                onClick={() => handleMenuClick(item.name)}
-              >
+        <span>
+          मेनू
+        </span>
 
-                <span className="menu-icon">
-                  {item.icon}
-                </span>
+      </div>
 
-                <span className="menu-name">
-                  {item.name}
-                </span>
 
-              </button>
-            ))}
+      {/* =========================================
+          PROFILE POPUP
+      ========================================= */}
 
-          </div>
+      {profileOpen && (
 
+        <div className="profile-popup">
 
-          {/* Sidebar bottom */}
-          <div className="sidebar-bottom">
+          <div className="profile-popup-header">
 
-            <button
-              onClick={() =>
-                alert("खाते सेटिंग लवकरच उपलब्ध होईल.")
-              }
-            >
-              ⚙ खाते सेटिंग
-            </button>
-
-            <button
-              onClick={() =>
-                alert("लॉगआउट")
-              }
-            >
-              ⇥ लॉगआउट
-            </button>
-
-          </div>
-
-        </aside>
-
-
-        {/* ================= CONTENT ================= */}
-        <main className="content">
-
-          {/* Welcome section */}
-          <section className="welcome-card">
-
-            <div className="welcome-content">
-
-              <div className="step-circle">
-                १
-              </div>
-
-              <div className="welcome-small">
-                नमस्कार शेतकरी
-              </div>
-
-              <h2>
-                किसानसेवामध्ये
-                <br />
-                <span>आपले स्वागत आहे!</span>
-              </h2>
-
-              <p>
-                शेतीशी संबंधित माहिती, बाजार भाव,
-                हवामान आणि शेतकऱ्यांसाठी उपलब्ध
-                विविध सुविधांचा लाभ एका ठिकाणी घ्या.
-              </p>
-
-              <button
-                className="main-btn"
-                onClick={() =>
-                  alert("पिकांची माहिती विभाग लवकरच उपलब्ध होईल.")
-                }
-              >
-                माझी पिके पहा
-                <span>→</span>
-              </button>
-
-            </div>
-
-
-            {/* Farmer illustration area */}
-            <div className="farmer-area">
-
-              <div className="sun">
-                ☀️
-              </div>
-
-              <div className="cloud cloud-one">
-                ☁️
-              </div>
-
-              <div className="cloud cloud-two">
-                ☁️
-              </div>
-
-              <div className="mountain mountain-one">
-                ▲
-              </div>
-
-              <div className="mountain mountain-two">
-                ▲
-              </div>
-
-              <div className="farmer">
-                👨🏻‍🌾
-              </div>
-
-              <div className="crops">
-                🌱 🌾 🌱 🌾 🌱 🌾
-              </div>
-
-            </div>
-
-          </section>
-
-
-          {/* ================= SERVICES ================= */}
-          <section className="services-section">
-
-            <div className="section-heading">
-
-              <div>
-                <h3>
-                  आजच्या महत्त्वाच्या सेवा
-                </h3>
-
-                <p>
-                  खालील पर्यायावर क्लिक करून संबंधित
-                  माहिती पहा.
-                </p>
-              </div>
-
-            </div>
-
-
-            <div className="service-grid">
-
-              {/* Card 1 */}
-              <button
-                className="service-card"
-                onClick={() =>
-                  handleMenuClick("पिकांची माहिती")
-                }
-              >
-
-                <div className="service-icon">
-                  🌾
-                </div>
-
-                <div className="service-content">
-                  <strong>
-                    पिकांची माहिती
-                  </strong>
-
-                  <span>
-                    तुमच्या पिकांची नोंद व माहिती
-                  </span>
-                </div>
-
-                <span className="service-arrow">
-                  →
-                </span>
-
-              </button>
-
-
-              {/* Card 2 */}
-              <button
-                className="service-card"
-                onClick={() =>
-                  handleMenuClick("लाईव्ह भाव")
-                }
-              >
-
-                <div className="service-icon">
-                  💰
-                </div>
-
-                <div className="service-content">
-                  <strong>
-                    लाईव्ह बाजार भाव
-                  </strong>
-
-                  <span>
-                    आजचे बाजार भाव पहा
-                  </span>
-                </div>
-
-                <span className="service-arrow">
-                  →
-                </span>
-
-              </button>
-
-
-              {/* Card 3 */}
-              <button
-                className="service-card"
-                onClick={() =>
-                  handleMenuClick("हवामान")
-                }
-              >
-
-                <div className="service-icon">
-                  ☀️
-                </div>
-
-                <div className="service-content">
-                  <strong>
-                    हवामान
-                  </strong>
-
-                  <span>
-                    आजचे आणि पुढील हवामान
-                  </span>
-                </div>
-
-                <span className="service-arrow">
-                  →
-                </span>
-
-              </button>
-
-
-              {/* Card 4 */}
-              <button
-                className="service-card"
-                onClick={() =>
-                  handleMenuClick("खरेदीची स्थिती")
-                }
-              >
-
-                <div className="service-icon">
-                  📋
-                </div>
-
-                <div className="service-content">
-                  <strong>
-                    खरेदीची स्थिती
-                  </strong>
-
-                  <span>
-                    तुमच्या नोंदणीची स्थिती
-                  </span>
-                </div>
-
-                <span className="service-arrow">
-                  →
-                </span>
-
-              </button>
-
-            </div>
-
-          </section>
-
-
-          {/* ================= INFORMATION BOXES ================= */}
-          <section className="info-grid">
-
-            <div className="info-card green-card">
-
-              <div className="info-icon">
-                🌿
-              </div>
-
-              <div className="info-text">
-                <h4>
-                  शेती मार्गदर्शन
-                </h4>
-
-                <p>
-                  पिकांची लागवड, खत व्यवस्थापन
-                  आणि कीड नियंत्रणाची माहिती.
-                </p>
-              </div>
-
-              <button
-                onClick={() =>
-                  handleMenuClick("शेती मार्गदर्शन")
-                }
-              >
-                पहा →
-              </button>
-
-            </div>
-
-
-            <div className="info-card yellow-card">
-
-              <div className="info-icon">
-                📢
-              </div>
-
-              <div className="info-text">
-                <h4>
-                  नवीन सूचना
-                </h4>
-
-                <p>
-                  खरेदी, योजना आणि शेतकऱ्यांसाठी
-                  महत्त्वाच्या सूचना.
-                </p>
-              </div>
-
-              <button
-                onClick={() =>
-                  handleMenuClick("सूचना")
-                }
-              >
-                पहा →
-              </button>
-
-            </div>
-
-          </section>
-
-
-          {/* ================= FARMER QUOTE ================= */}
-          <section className="farmer-quote">
-
-            <div className="quote-farmer">
+            <div className="profile-large-avatar">
               👨🏻‍🌾
             </div>
 
-            <div className="quote-content">
-
-              <h2>
-                “समृद्ध शेतकरी”
-              </h2>
+            <div className="profile-popup-name">
 
               <h3>
-                “समृद्ध भारत”
+                {user.name}
               </h3>
 
               <p>
-                आधुनिक माहिती आणि योग्य मार्गदर्शनासोबत
-                आपल्या शेतीला नवी दिशा देऊया.
+                User ID: {user.userId}
               </p>
 
             </div>
 
-            <div className="field">
-              🌱 🌾 🌱 🌾 🌱 🌾 🌱
+            <button
+              className="profile-close"
+              onClick={() =>
+                setProfileOpen(false)
+              }
+            >
+              ×
+            </button>
+
+          </div>
+
+
+          <div className="profile-info">
+
+            <div className="profile-info-item">
+
+              <span>
+                🆔 User ID
+              </span>
+
+              <strong>
+                {user.userId}
+              </strong>
+
             </div>
 
-          </section>
 
-        </main>
+            <div className="profile-info-item">
 
-      </div>
+              <span>
+                📱 मोबाईल नंबर
+              </span>
+
+              <strong>
+                {user.mobile}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <button
+            className="view-profile-button"
+            onClick={() =>
+              handleMenuClick("profile")
+            }
+          >
+            माझी माहिती पहा
+
+            <span>
+              →
+            </span>
+
+          </button>
+
+        </div>
+
+      )}
+
+
+      {/* =========================================
+          LEFT SIDE MENU
+      ========================================= */}
+
+      {menuOpen && (
+
+        <div
+          className="menu-overlay"
+          onClick={() => setMenuOpen(false)}
+        >
+
+          <aside
+            className="side-drawer"
+            onClick={(e) =>
+              e.stopPropagation()
+            }
+          >
+
+            {/* DRAWER HEADER */}
+
+            <div className="drawer-header">
+
+              <div className="drawer-brand">
+
+                <div className="drawer-logo">
+                  🌱
+                </div>
+
+                <div>
+
+                  <h2>
+                    किसानसेवा
+                  </h2>
+
+                  <p>
+                    शेतकऱ्यांसाठी डिजिटल सेवा
+                  </p>
+
+                </div>
+
+              </div>
+
+
+              <button
+                className="drawer-close"
+                onClick={() =>
+                  setMenuOpen(false)
+                }
+              >
+                ×
+              </button>
+
+            </div>
+
+
+            {/* FARMER PROFILE */}
+
+            <div className="drawer-user">
+
+              <div className="drawer-user-avatar">
+                👨🏻‍🌾
+              </div>
+
+              <div className="drawer-user-details">
+
+                <strong>
+                  {user.name}
+                </strong>
+
+                <span>
+                  ID: {user.userId}
+                </span>
+
+              </div>
+
+            </div>
+
+
+            {/* ALL TABS */}
+
+            <div className="drawer-menu">
+
+              {menuItems.map((item) => (
+
+                <button
+                  key={item.id}
+                  className={
+                    activeTab === item.id
+                      ? "drawer-item active"
+                      : "drawer-item"
+                  }
+                  onClick={() =>
+                    handleMenuClick(item.id)
+                  }
+                >
+
+                  <span className="drawer-item-icon">
+                    {item.icon}
+                  </span>
+
+                  <span className="drawer-item-label">
+                    {item.label}
+                  </span>
+
+                  <span className="drawer-item-arrow">
+                    ›
+                  </span>
+
+                </button>
+
+              ))}
+
+
+              {/* LOGOUT */}
+
+              <button
+                className="drawer-item logout-item"
+                onClick={handleLogout}
+              >
+
+                <span className="drawer-item-icon">
+                  🚪
+                </span>
+
+                <span className="drawer-item-label">
+                  लॉगआउट
+                </span>
+
+                <span className="drawer-item-arrow">
+                  ›
+                </span>
+
+              </button>
+
+            </div>
+
+
+            {/* FOOTER */}
+
+            <div className="drawer-footer">
+
+              <p>
+                किसानसेवा
+              </p>
+
+              <span>
+                शेतकऱ्यांसाठी • शेतकऱ्यांकडून
+              </span>
+
+            </div>
+
+          </aside>
+
+        </div>
+
+      )}
+
+
+      {/* =========================================
+          MAIN CONTENT
+      ========================================= */}
+
+      <main className="main-content">
+
+
+        {/* WELCOME */}
+
+        <section className="welcome-card">
+
+          <div className="welcome-content">
+
+            <p className="welcome-small">
+              किसानसेवामध्ये आपले स्वागत आहे
+            </p>
+
+            <h2>
+              नमस्कार, {user.name}! 👋
+            </h2>
+
+            <p className="welcome-description">
+              आपल्या शेतीसाठी आवश्यक असलेल्या
+              सर्व डिजिटल सेवांचा लाभ एका ठिकाणी घ्या.
+            </p>
+
+
+            {/* USER ID */}
+
+            <div className="user-id-card">
+
+              <div className="user-id-icon">
+                🆔
+              </div>
+
+              <div>
+
+                <span>
+                  आपला User ID
+                </span>
+
+                <strong>
+                  {user.userId}
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div className="welcome-farmer">
+            👨🏻‍🌾
+          </div>
+
+        </section>
+
+
+        {/* =========================================
+            SERVICES
+        ========================================= */}
+
+        <section className="services-section">
+
+          <div className="section-heading">
+
+            <h2>
+              शेतकऱ्यांसाठी सेवा
+            </h2>
+
+            <p>
+              आवश्यक सेवा एका क्लिकवर
+            </p>
+
+          </div>
+
+
+          <div className="service-list">
+
+
+            {/* PIKANCHI MAHITI */}
+
+            <button
+              className="service-card"
+              onClick={() =>
+                handleMenuClick("crops")
+              }
+            >
+
+              <div className="service-icon green">
+                🌱
+              </div>
+
+              <div className="service-content">
+
+                <h3>
+                  पिकांची माहिती
+                </h3>
+
+                <p>
+                  आपल्या पिकांची माहिती नोंदवा
+                </p>
+
+              </div>
+
+              <span className="service-arrow">
+                →
+              </span>
+
+            </button>
+
+
+            {/* LIVE BHAV */}
+
+            <button
+              className="service-card"
+              onClick={() =>
+                handleMenuClick("rates")
+              }
+            >
+
+              <div className="service-icon yellow">
+                ₹
+              </div>
+
+              <div className="service-content">
+
+                <h3>
+                  लाईव्ह भाव
+                </h3>
+
+                <p>
+                  आजचे बाजार भाव पहा
+                </p>
+
+              </div>
+
+              <span className="service-arrow">
+                →
+              </span>
+
+            </button>
+
+
+            {/* LIVE BAZAR */}
+
+            <button
+              className="service-card"
+              onClick={() =>
+                handleMenuClick("market")
+              }
+            >
+
+              <div className="service-icon blue">
+                📊
+              </div>
+
+              <div className="service-content">
+
+                <h3>
+                  लाईव्ह बाजार
+                </h3>
+
+                <p>
+                  बाजारपेठेची माहिती मिळवा
+                </p>
+
+              </div>
+
+              <span className="service-arrow">
+                →
+              </span>
+
+            </button>
+
+
+            {/* PURCHASE */}
+
+            <button
+              className="service-card"
+              onClick={() =>
+                handleMenuClick("purchase")
+              }
+            >
+
+              <div className="service-icon purple">
+                🛒
+              </div>
+
+              <div className="service-content">
+
+                <h3>
+                  खरेदीची स्थिती
+                </h3>
+
+                <p>
+                  आपल्या खरेदीची सद्यस्थिती तपासा
+                </p>
+
+              </div>
+
+              <span className="service-arrow">
+                →
+              </span>
+
+            </button>
+
+          </div>
+
+        </section>
+
+
+        {/* =========================================
+            SMALL SERVICES
+        ========================================= */}
+
+        <section className="small-services">
+
+
+          <button
+            className="small-service-card"
+            onClick={() =>
+              handleMenuClick("facility")
+            }
+          >
+
+            <div className="small-service-icon">
+              🧺
+            </div>
+
+            <div>
+
+              <h3>
+                माझी सुविधा
+              </h3>
+
+              <p>
+                उपलब्ध सुविधा
+              </p>
+
+            </div>
+
+            <span>
+              →
+            </span>
+
+          </button>
+
+
+          <button
+            className="small-service-card"
+            onClick={() =>
+              handleMenuClick("notification")
+            }
+          >
+
+            <div className="small-service-icon notification">
+              🔔
+            </div>
+
+            <div>
+
+              <h3>
+                नवीन सूचना
+              </h3>
+
+              <p>
+                महत्त्वाच्या सूचना
+              </p>
+
+            </div>
+
+            <span>
+              →
+            </span>
+
+          </button>
+
+        </section>
+
+
+        {/* =========================================
+            FARMER BANNER
+        ========================================= */}
+
+        <section className="farmer-banner">
+
+          <div className="banner-farmer">
+            👨🏻‍🌾
+          </div>
+
+          <div className="banner-text">
+
+            <h2>
+              “समृद्ध शेतकरी
+              <br />
+              समृद्ध भारत”
+            </h2>
+
+            <p>
+              आधुनिक तंत्रज्ञानासोबत
+              शेतीला नवी दिशा.
+            </p>
+
+          </div>
+
+          <div className="banner-plants">
+            🌾🌱🌾
+          </div>
+
+        </section>
+
+
+        {/* MENU HINT */}
+
+        <div className="menu-hint">
+
+          <span>
+            ☰
+          </span>
+
+          <p>
+            मेनू बटणावर क्लिक करून
+            सर्व सेवा पहा.
+          </p>
+
+        </div>
+
+      </main>
 
     </div>
   );
