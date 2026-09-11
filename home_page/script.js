@@ -1,3 +1,22 @@
+// ========================================
+// AUTHENTICATION GUARD
+// ========================================
+
+function checkAuth() {
+    const isLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true" ||
+                       localStorage.getItem("loggedInUser") ||
+                       localStorage.getItem("kisanSetuUser");
+    if (!isLoggedIn) {
+        window.location.replace("../Login/login.html");
+    }
+}
+
+checkAuth();
+
+window.addEventListener("pageshow", function () {
+    checkAuth();
+});
+
 const menuItems = [
     { id: "home", icon: "🏠", label: "मुख्यपृष्ठ" },
     { id: "profile", icon: "👤", label: "माझी माहिती" },
@@ -600,7 +619,7 @@ function handleLogout() {
     localStorage.removeItem("loggedInUser");
     localStorage.removeItem("kisanSetuUser");
     localStorage.removeItem("kisanSetuLoggedIn");
-    window.location.href = "../Login/login.html";
+    window.location.replace("../Login/login.html");
 }
 
 
