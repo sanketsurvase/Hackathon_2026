@@ -470,40 +470,118 @@ function handleMenuClick(id) {
 
 
     // ========================================
-// CROP INFORMATION
-// ========================================
+    // CROP INFORMATION
+    // ========================================
 
-if (id === "crops") {
+    if (id === "crops") {
 
-    window.location.href = "crop_info/crop.html";
+        window.location.href = "../crop_information/crop-information.html";
 
-    return;
+        return;
 
-}
-
-
-// ========================================
-// OTHER TABS
-// ========================================
-
-const selected =
-    menuItems.find(
-        function (item) {
-
-            return item.id === id;
-
-        }
-    );
+    }
 
 
-if (selected) {
+    // ========================================
+    // SLOT BOOKING
+    // ========================================
 
-    alert(
-        selected.label +
-        " विभाग लवकरच उपलब्ध होईल."
-    );
+    if (id === "slotBooking" || id === "booking") {
 
-}
+        window.location.href = "../slot_booking/slot-booking.html";
+
+        return;
+
+    }
+
+
+    // ========================================
+    // MY BOOKING
+    // ========================================
+
+    if (id === "myBooking") {
+
+        window.location.href = "../my_booking/my-booking.html";
+
+        return;
+
+    }
+
+
+    // ========================================
+    // LIVE QUEUE
+    // ========================================
+
+    if (id === "liveQueue") {
+
+        window.location.href = "../live_queue/live-queue.html";
+
+        return;
+
+    }
+
+
+    // ========================================
+    // PURCHASE / PROCUREMENT STATUS
+    // ========================================
+
+    if (id === "purchase") {
+
+        window.location.href = "../procurement_status/procurement-status.html";
+
+        return;
+
+    }
+
+
+    // ========================================
+    // PAYMENT STATUS
+    // ========================================
+
+    if (id === "payment") {
+
+        window.location.href = "../payment_status/payment-status.html";
+
+        return;
+
+    }
+
+
+    // ========================================
+    // NOTIFICATIONS
+    // ========================================
+
+    if (id === "notification") {
+
+        window.location.href = "../notifications/notifications.html";
+
+        return;
+
+    }
+
+
+    // ========================================
+    // OTHER TABS (complaint, help, etc.)
+    // ========================================
+
+    const selected =
+        menuItems.find(
+            function (item) {
+
+                return item.id === id;
+
+            }
+        );
+
+
+    if (selected) {
+
+        alert(
+            selected.label +
+            " विभाग लवकरच उपलब्ध होईल."
+        );
+
+    }
 
 }
 
