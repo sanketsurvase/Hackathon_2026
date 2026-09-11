@@ -684,17 +684,20 @@
 
         @media (max-width: 900px) {
             .main-container {
-                grid-template-columns: 1fr;
-            }
-
-            .hero-section {
-                padding: 32px 5%;
+                display: flex;
+                flex-direction: column;
             }
 
             .form-section {
+                order: 1;
                 border-left: none;
-                border-top: 1px solid #ddeee3;
-                padding: 32px 5%;
+                border-bottom: 1px solid #ddeee3;
+                padding: 24px 5%;
+            }
+
+            .hero-section {
+                order: 2;
+                padding: 24px 5%;
             }
 
             .footer-pillars {
