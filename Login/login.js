@@ -12,7 +12,7 @@ const togglePasswordBtn = document.getElementById("togglePasswordBtn");
 const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
 const rememberMe = document.getElementById("rememberMe");
 
-const LOGIN_API = "http://127.0.0.1:8000/api/login";
+const LOGIN_API = `${KISANSETU_API_BASE}/api/login`;
 
 
 /* =========================================================

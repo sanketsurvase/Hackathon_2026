@@ -3,7 +3,7 @@
    FASTAPI + POSTGRESQL
    ========================================================= */
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = KISANSETU_API_BASE;
 
 let currentStep = 1;
 const totalSteps = 4;

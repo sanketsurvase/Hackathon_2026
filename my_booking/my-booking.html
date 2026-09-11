@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>किसानसेवा | माझी बुकिंग (My Bookings)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="my-booking.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- TOP HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
+        <div class="header-title">
+          <h1>माझी बुकिंग</h1>
+          <p>आपल्या सर्व नोंदणीकृत स्लॉट्सची यादी व स्थिती</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a href="../slot_booking/slot-booking.html" class="btn-new-slot">+ नवीन स्लॉट बुक करा</a>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+      <!-- SUMMARY METRICS -->
+      <section class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon green">📅</div>
+          <div class="stat-info">
+            <span class="stat-label">सक्रिय स्लॉट</span>
+            <strong class="stat-val" id="activeCount">1</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon blue">✅</div>
+          <div class="stat-info">
+            <span class="stat-label">पूर्ण झालेली विक्री</span>
+            <strong class="stat-val" id="completedCount">2</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon yellow">⚖️</div>
+          <div class="stat-info">
+            <span class="stat-label">एकूण शेतमाल</span>
+            <strong class="stat-val" id="totalQuantity">९५ क्विंटल</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- FILTER TABS -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-filter="all">सर्व बुकिंग (All)</button>
+        <button class="tab-btn" data-filter="active">सक्रिय / आगामी (Upcoming)</button>
+        <button class="tab-btn" data-filter="completed">पूर्ण झालेले (Completed)</button>
+      </div>
+
+      <!-- BOOKINGS LIST CONTAINER -->
+      <div class="bookings-list" id="bookingsContainer">
+        <!-- Rendered via my-booking.js -->
+      </div>
+    </main>
+
+    <!-- RECEIPT MODAL -->
+    <div class="modal-overlay" id="receiptModal" hidden>
+      <div class="modal-content receipt-modal">
+        <div class="modal-top">
+          <h3>अधिकृत बुकिंग पावती (Gate Pass)</h3>
+          <button class="modal-close-btn" id="closeModalBtn">×</button>
+        </div>
+        <div class="receipt-print-area" id="receiptPrintArea">
+          <!-- Dynamically filled -->
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-outline" id="printModalBtn">🖨️ प्रिंट / डाऊनलोड</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="my-booking.js"></script>
+</body>
+</html>

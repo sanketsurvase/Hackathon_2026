@@ -1,0 +1,379 @@
+/* ========================================================
+   KISANSETU - PAYMENT STATUS STYLESHEET
+   ======================================================== */
+
+:root {
+  --brand-green: #08783f;
+  --brand-dark: #054f2a;
+  --brand-light: #eaf6ee;
+  --text-dark: #122117;
+  --text-muted: #526759;
+  --border-color: #d1e2d7;
+  --card-bg: #ffffff;
+  --page-bg: #f3f8f5;
+  --shadow-sm: 0 2px 8px rgba(8, 120, 63, 0.06);
+  --shadow-md: 0 8px 24px rgba(8, 120, 63, 0.08);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Mukta', sans-serif;
+  background-color: var(--page-bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-btn {
+  text-decoration: none;
+  font-size: 24px;
+  color: var(--brand-green);
+  font-weight: 700;
+  background: var(--brand-light);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background: var(--brand-green);
+  color: #fff;
+}
+
+.header-title h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+
+.header-title p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.dbt-badge {
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  color: #166534;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* Page Content */
+.page-content {
+  padding: 20px 16px 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Financial Summary Cards */
+.fin-summary-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.fin-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: var(--shadow-sm);
+}
+
+.fin-card.total-paid {
+  border-left: 5px solid var(--brand-green);
+}
+
+.fin-card.pending-pay {
+  border-left: 5px solid #f59e0b;
+}
+
+.fin-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  background: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+}
+
+.fin-meta .fin-lbl {
+  display: block;
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.fin-amount {
+  font-family: 'Poppins', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-dark);
+  display: block;
+}
+
+.fin-meta small {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.text-green { color: var(--brand-green); }
+.text-amber { color: #d97706; }
+
+/* Bank Card */
+.bank-card {
+  background: linear-gradient(to bottom right, #ffffff, #f9fbf9);
+  border: 1.5px solid #bbf7d0;
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.bank-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bank-name {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bank-logo {
+  font-size: 28px;
+}
+
+.bank-name h3 {
+  font-size: 16px;
+  color: var(--brand-dark);
+  line-height: 1.2;
+}
+
+.bank-name p {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.verified-tag {
+  background: #dcfce7;
+  color: #15803d;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 16px;
+}
+
+.bank-details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px 14px;
+  background: #ffffff;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 1px solid #e2e8f0;
+}
+
+.bank-details-grid span {
+  display: block;
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.bank-details-grid strong {
+  font-size: 13.5px;
+  color: var(--text-dark);
+  font-family: 'Poppins', 'Mukta', sans-serif;
+}
+
+/* Filter Bar */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.filter-pill {
+  padding: 8px 18px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Mukta', sans-serif;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.filter-pill:hover {
+  border-color: var(--brand-green);
+  color: var(--brand-green);
+}
+
+.filter-pill.active {
+  background: var(--brand-green);
+  color: #ffffff;
+  border-color: var(--brand-green);
+}
+
+/* Transaction Cards */
+.transactions-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.txn-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.txn-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.txn-card.processing {
+  border-left: 5px solid #f59e0b;
+}
+
+.txn-card.credited {
+  border-left: 5px solid var(--brand-green);
+}
+
+.txn-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.txn-id {
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  color: var(--text-muted);
+  display: block;
+}
+
+.txn-left h4 {
+  font-size: 16px;
+  color: var(--brand-dark);
+}
+
+.txn-left p {
+  font-size: 12.5px;
+  color: var(--text-muted);
+}
+
+.txn-right {
+  text-align: right;
+}
+
+.txn-amt {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  display: block;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  margin-top: 4px;
+}
+
+.badge-credited { background: #dcfce7; color: #15803d; }
+.badge-processing { background: #fef3c7; color: #b45309; }
+
+.txn-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-slip {
+  background: none;
+  border: 1px solid var(--border-color);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 12.5px;
+  font-family: 'Mukta', sans-serif;
+  cursor: pointer;
+  color: var(--text-dark);
+  transition: all 0.2s;
+}
+
+.btn-slip:hover {
+  background: var(--brand-light);
+  border-color: var(--brand-green);
+}

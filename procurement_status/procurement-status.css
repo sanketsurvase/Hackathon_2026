@@ -1,0 +1,455 @@
+/* ========================================================
+   KISANSETU - PROCUREMENT STATUS STYLESHEET
+   ======================================================== */
+
+:root {
+  --brand-green: #08783f;
+  --brand-dark: #054f2a;
+  --brand-light: #eaf6ee;
+  --text-dark: #122117;
+  --text-muted: #526759;
+  --border-color: #d1e2d7;
+  --card-bg: #ffffff;
+  --page-bg: #f3f8f5;
+  --shadow-sm: 0 2px 8px rgba(8, 120, 63, 0.06);
+  --shadow-md: 0 8px 24px rgba(8, 120, 63, 0.08);
+  --radius-lg: 16px;
+  --radius-md: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Mukta', sans-serif;
+  background-color: var(--page-bg);
+  color: var(--text-dark);
+  min-height: 100vh;
+  line-height: 1.5;
+}
+
+.app-container {
+  max-width: 900px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================= HEADER ================= */
+.app-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.back-btn {
+  text-decoration: none;
+  font-size: 24px;
+  color: var(--brand-green);
+  font-weight: 700;
+  background: var(--brand-light);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background: var(--brand-green);
+  color: #fff;
+}
+
+.header-title h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--brand-dark);
+}
+
+.header-title p {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.user-chip {
+  background: var(--brand-light);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--brand-green);
+}
+
+/* ================= PAGE CONTENT ================= */
+.page-content {
+  padding: 20px 16px 40px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Active Lot Card */
+.active-lot-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.lot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.lot-lbl {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.lot-id {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--brand-green);
+}
+
+.status-pill.verified {
+  background: #dcfce7;
+  color: #15803d;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.lot-quick-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.lot-quick-meta strong {
+  color: var(--text-dark);
+}
+
+/* Stepper Component */
+.procurement-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  overflow-x: auto;
+  padding: 10px 0;
+}
+
+.step-point {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-width: 80px;
+  position: relative;
+  z-index: 2;
+}
+
+.step-circle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 6px;
+  transition: all 0.2s;
+}
+
+.step-point.done .step-circle {
+  background: var(--brand-green);
+  color: #ffffff;
+}
+
+.step-point.current .step-circle {
+  background: #f59e0b;
+  color: #ffffff;
+  box-shadow: 0 0 0 4px #fef3c7;
+}
+
+.step-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.step-point small {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+.step-line {
+  flex: 1;
+  height: 3px;
+  background: #e2e8f0;
+  margin: 0 -8px 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.step-line.done {
+  background: var(--brand-green);
+}
+
+.step-line.active {
+  background: linear-gradient(to right, var(--brand-green), #f59e0b);
+}
+
+/* Metrics Grid */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+  box-shadow: var(--shadow-sm);
+}
+
+.m-card-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 8px;
+}
+
+.m-icon {
+  font-size: 20px;
+}
+
+.m-card-top h3 {
+  font-size: 15px;
+  color: var(--brand-dark);
+  font-weight: 700;
+}
+
+.m-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.m-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13.5px;
+}
+
+.m-row.highlight {
+  background: #f0fdf4;
+  padding: 8px 10px;
+  border-radius: var(--radius-md);
+}
+
+.text-green {
+  color: var(--brand-green);
+  font-weight: 700;
+}
+
+.badge-good {
+  color: #15803d;
+  font-weight: 700;
+}
+
+/* Valuation Card */
+.valuation-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.val-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.val-header h3 {
+  font-size: 16px;
+  color: var(--brand-dark);
+}
+
+.val-rate {
+  font-size: 13px;
+  background: #fef3c7;
+  color: #b45309;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.val-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
+  padding: 12px 0;
+  border-top: 1px dashed var(--border-color);
+  border-bottom: 1px dashed var(--border-color);
+  margin-bottom: 12px;
+}
+
+.total-price {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: var(--brand-green);
+}
+
+.dbt-note {
+  font-size: 13px;
+  color: #166534;
+  background: #dcfce7;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  margin-bottom: 18px;
+}
+
+.val-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Mukta', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--brand-green);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--brand-dark);
+}
+
+.btn-outline {
+  border: 1.5px solid var(--brand-green);
+  color: var(--brand-green);
+  background: #fff;
+}
+
+.btn-outline:hover {
+  background: var(--brand-light);
+}
+
+/* History */
+.history-card {
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+.history-card h3 {
+  font-size: 16px;
+  color: var(--brand-dark);
+  margin-bottom: 14px;
+}
+
+.history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #fafcfb;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+}
+
+.hist-crop {
+  font-weight: 700;
+  font-size: 14px;
+  display: block;
+}
+
+.hist-left small {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.hist-amt {
+  font-family: 'Poppins', sans-serif;
+  font-size: 15px;
+  color: var(--brand-green);
+  display: block;
+  text-align: right;
+}
+
+.hist-status.paid {
+  font-size: 11px;
+  color: #15803d;
+  font-weight: 700;
+  display: block;
+  text-align: right;
+}
+
+@media (max-width: 640px) {
+  .val-actions {
+    flex-direction: column;
+  }
+}
