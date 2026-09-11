@@ -12,7 +12,8 @@ const togglePasswordBtn = document.getElementById("togglePasswordBtn");
 const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
 const rememberMe = document.getElementById("rememberMe");
 
-const LOGIN_API = `${KISANSETU_API_BASE}/api/login`;
+const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
+const LOGIN_API = `${API_BASE_URL}/api/login`;
 
 
 /* =========================================================

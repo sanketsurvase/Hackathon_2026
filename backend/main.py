@@ -428,7 +428,7 @@ def create_booking(req: BookingRequest, db: Session = Depends(get_db)):
         db.flush()  # get booking_id
 
         # Update slot booked_count
-        slot.booked_count = booked + 1  # booked is already int
+        slot.booked_count = int(booked) + 1  # type: ignore[assignment]
 
         # Add to queue_status
         queue_entry = QueueStatus(
@@ -525,22 +525,22 @@ def cancel_booking(req: CancelBookingRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="ही बुकिंग आधीच रद्द झाली आहे.")
 
     try:
-        booking.booking_status = "cancelled"
+        booking.booking_status = "cancelled"  # type: ignore[assignment]
 
         # Decrease booked_count on slot
         slot = db.query(Slot).filter(Slot.slot_id == booking.slot_id).first()
         if slot and slot.booked_count:
             current_count = int(str(slot.booked_count))
             if current_count > 0:
-                slot.booked_count = current_count - 1
+                slot.booked_count = current_count - 1  # type: ignore[assignment]
 
         # Update queue status
         queue = db.query(QueueStatus).filter(
             QueueStatus.booking_id == req.booking_id
         ).first()
         if queue:
-            queue.status = "cancelled"
-            queue.completed_at = datetime.utcnow()
+            queue.status = "cancelled"  # type: ignore[assignment]
+            queue.completed_at = datetime.utcnow()  # type: ignore[assignment]
 
         db.commit()
 

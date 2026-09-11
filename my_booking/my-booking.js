@@ -5,10 +5,35 @@
 (function () {
   'use strict';
 
+  const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
+
   // Seed sample initial bookings if empty
   function initSeedBookings() {
     // Only seed if localStorage is empty AND no DB farmer session exists
     const existing = localStorage.getItem("kisansetu_bookings");
+    if (!existing) {
+      const seedData = [
+        {
+          id: "BK001",
+          cropName: "गेहूं (Wheat)",
+          quantity: "50",
+          pricePerQuintal: "2200",
+          mandi: "Pune APMC",
+          slotDate: "2026-09-15",
+          slotTime: "09:00 AM",
+          status: "निश्चित (Confirmed)",
+          createdAt: new Date().toISOString()
+        },
+        {
+          id: "BK002",
+          cropName: "चावल (Rice)",
+          quantity: "30",
+          pricePerQuintal: "2800",
+          mandi: "Nashik APMC",
+          slotDate: "2026-09-18",
+          slotTime: "11:00 AM",
+          status: "पूर्ण (Completed)",
+          createdAt: new Date().toISOString()
         }
       ];
 
@@ -265,8 +290,8 @@
       } catch (e) { /* ignore */ }
 
       const url = farmerId
-        ? `${KISANSETU_API_BASE}/api/bookings?farmer_id=${farmerId}`
-        : `${KISANSETU_API_BASE}/api/bookings`;
+        ? `${API_BASE_URL}/api/bookings?farmer_id=${farmerId}`
+        : `${API_BASE_URL}/api/bookings`;
 
       const res = await fetch(url);
       const data = await res.json();

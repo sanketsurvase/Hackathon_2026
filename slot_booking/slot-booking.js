@@ -6,7 +6,8 @@
 (function () {
   'use strict';
 
-  const API_BASE = `${KISANSETU_API_BASE}/api`;
+  const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
+  const API_BASE = `${API_BASE_URL}/api`;
 
   // 1. Current Farmer
   const defaultUser = {

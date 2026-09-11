@@ -3,7 +3,7 @@
    FASTAPI + POSTGRESQL
    ========================================================= */
 
-const API_BASE_URL = KISANSETU_API_BASE;
+const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
 
 let currentStep = 1;
 const totalSteps = 4;
