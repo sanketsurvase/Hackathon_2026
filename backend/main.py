@@ -291,10 +291,20 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
             raise HTTPException(status_code=409, detail="हा ईमेल आधीच नोंदणीकृत आहे.")
 
     try:
-        # Resolve field aliases (frontend may send farm_area or land_area_acres; crop_name or primary_crop)
+        # Sync postgres sequences if out of sync
+        try:
+            db.execute(text("SELECT setval(pg_get_serial_sequence('farmers', 'farmer_id'), COALESCE((SELECT MAX(farmer_id) FROM farmers), 0) + 1, false)"))
+            db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_accounts', 'account_id'), COALESCE((SELECT MAX(account_id) FROM farmer_accounts), 0) + 1, false)"))
+            db.commit()
+        except Exception as seq_err:
+            print("Sequence sync warning:", seq_err)
+            db.rollback()
+
+        # Resolve field aliases
         resolved_area = req.land_area_acres or req.farm_area or 0
         resolved_crop = req.primary_crop or req.crop_name or ""
         father_name = (req.father_spouse_name or "").strip()
+        dob_val = (req.date_of_birth or "").strip() or None
 
         # Create farmer — pass all NOT NULL columns safely
         farmer = Farmer(
@@ -303,7 +313,7 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
             mobile_number=req.mobile_number.strip(),
             email=(req.email.strip() if req.email and req.email.strip() else None),
             gender=req.gender or "",
-            date_of_birth=req.date_of_birth or "",
+            date_of_birth=dob_val,
             role="farmer",
             status="active",
             created_at=datetime.utcnow()
@@ -322,30 +332,49 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
             password_hash=hashed
         )
         db.add(account)
+        db.flush()
 
-        # Address
+        # Address (nested savepoint so address issues never block registration)
         full_address = (req.full_address or "").strip()
         if any([req.village, req.taluka, req.district, full_address]):
-            address = FarmerAddress(
-                farmer_id=farmer.farmer_id,
-                village=req.village or "",
-                taluka=req.taluka or "",
-                district=req.district or "",
-                state=req.state or "Maharashtra",
-                pincode=req.pincode or ""
-            )
-            db.add(address)
+            try:
+                with db.begin_nested():
+                    try:
+                        db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_addresses', 'address_id'), COALESCE((SELECT MAX(address_id) FROM farmer_addresses), 0) + 1, false)"))
+                    except Exception:
+                        pass
+                    address = FarmerAddress(
+                        farmer_id=farmer.farmer_id,
+                        village=req.village or "",
+                        taluka=req.taluka or "",
+                        district=req.district or "",
+                        state=req.state or "Maharashtra",
+                        pincode=req.pincode or ""
+                    )
+                    db.add(address)
+                    db.flush()
+            except Exception as addr_err:
+                print("Address save warning:", addr_err)
 
-        # Farming details
+        # Farming details (nested savepoint)
         if any([resolved_crop, req.gat_number, resolved_area]):
-            details = FarmerFarmingDetail(
-                farmer_id=farmer.farmer_id,
-                land_area_acres=resolved_area,
-                primary_crop=resolved_crop,
-                secondary_crop=req.secondary_crop or "",
-                gat_number=req.gat_number or ""
-            )
-            db.add(details)
+            try:
+                with db.begin_nested():
+                    try:
+                        db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_farming_details', 'detail_id'), COALESCE((SELECT MAX(detail_id) FROM farmer_farming_details), 0) + 1, false)"))
+                    except Exception:
+                        pass
+                    details = FarmerFarmingDetail(
+                        farmer_id=farmer.farmer_id,
+                        land_area_acres=resolved_area,
+                        primary_crop=resolved_crop,
+                        secondary_crop=req.secondary_crop or "",
+                        gat_number=req.gat_number or ""
+                    )
+                    db.add(details)
+                    db.flush()
+            except Exception as farm_err:
+                print("Farming details save warning:", farm_err)
 
         db.commit()
         db.refresh(farmer)
@@ -361,10 +390,12 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
         raise
     except Exception as e:
         db.rollback()
+        import traceback
+        traceback.print_exc()
         print("Registration Error:", str(e))
         raise HTTPException(
             status_code=500,
-            detail="नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा."
+            detail=f"नोंदणी त्रुटी: {str(e)}"
         )
 
 

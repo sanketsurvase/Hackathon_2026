@@ -564,85 +564,26 @@ if (registerForm) {
             }
 
 
+            const getVal = (id) => {
+                const el = document.getElementById(id);
+                return el ? (el.value || "").trim() : "";
+            };
+
             const farmerData = {
-
-                full_name:
-                    document
-                        .getElementById("fullName")
-                        .value
-                        .trim(),
-
-                father_spouse_name:
-                    document
-                        .getElementById("fatherSpouseName")
-                        .value
-                        .trim(),
-
-                mobile_number:
-                    document
-                        .getElementById("mobile")
-                        .value
-                        .trim(),
-
-                date_of_birth:
-                    document
-                        .getElementById("dob")
-                        .value,
-
-                email:
-                    document
-                        .getElementById("email")
-                        .value
-                        .trim() || null,
-
-                gender:
-                    gender.value,
-
-
-                full_address:
-                    document
-                        .getElementById("address")
-                        .value
-                        .trim(),
-
-                district:
-                    document
-                        .getElementById("district")
-                        .value,
-
-                taluka:
-                    document
-                        .getElementById("taluka")
-                        .value
-                        .trim(),
-
-                village:
-                    document
-                        .getElementById("village")
-                        .value
-                        .trim(),
-
-                pincode:
-                    document
-                        .getElementById("pincode")
-                        .value
-                        .trim(),
-
-
-                land_area_acres:
-                    Number(
-                        document
-                            .getElementById("farmArea")
-                            .value || 0
-                    ),
-
-                primary_crop:
-                    document
-                        .getElementById("crop")
-                        .value,
-
-                password:
-                    password
+                full_name: getVal("fullName"),
+                father_spouse_name: getVal("fatherSpouseName"),
+                mobile_number: getVal("mobile"),
+                date_of_birth: getVal("dob") || null,
+                email: getVal("email") || null,
+                gender: gender ? gender.value : "other",
+                full_address: getVal("address"),
+                district: getVal("district"),
+                taluka: getVal("taluka"),
+                village: getVal("village"),
+                pincode: getVal("pincode"),
+                land_area_acres: Number(getVal("farmArea") || 0),
+                primary_crop: getVal("crop") || "इतर",
+                password: password
             };
 
 
