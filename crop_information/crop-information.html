@@ -1,171 +1,523 @@
 <!DOCTYPE html>
 <html lang="mr">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>किसानसेवा | पिकांची माहिती (Crop Information)</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="crop-information.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>पिकाची माहिती | किसानसेवा</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f4f8f4;
+            color: #222;
+        }
+
+        /* HEADER */
+        .header {
+            background: #008f4c;
+            color: white;
+            padding: 15px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .home-btn {
+            color: white;
+            text-decoration: none;
+            background: #08763f;
+            padding: 9px 16px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        /* MAIN */
+        .main {
+            max-width: 720px;
+            margin: 30px auto;
+            padding: 0 18px;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            margin: 0;
+            color: #087c42;
+            font-size: 27px;
+        }
+
+        .page-title p {
+            margin-top: 8px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* FORM CARD */
+        .form-card {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #087c42;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 7px;
+        }
+
+        .required {
+            color: red;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #d4d4d4;
+            border-radius: 8px;
+            font-size: 14px;
+            background: #fff;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #008f4c;
+            box-shadow: 0 0 0 2px rgba(0, 143, 76, 0.08);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* TWO COLUMN */
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        /* SMART INFO */
+        .smart-box {
+            background: #eaf8ed;
+            border-left: 4px solid #008f4c;
+            border-radius: 9px;
+            padding: 15px;
+            margin-top: 5px;
+            margin-bottom: 20px;
+        }
+
+        .smart-box-title {
+            color: #087c42;
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        .smart-box p {
+            margin: 0;
+            font-size: 13px;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        /* BUTTON */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            background: #008f4c;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #00763e;
+        }
+
+        /* RESULT */
+        .result-box {
+            display: none;
+            margin-top: 20px;
+            background: #f0fff4;
+            border: 1px solid #b8e6c5;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .result-box h3 {
+            color: #087c42;
+            margin-top: 0;
+        }
+
+        .result-item {
+            padding: 7px 0;
+            font-size: 14px;
+        }
+
+        /* CHATBOT */
+        .chatbot-float {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #008f4c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            font-size: 29px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
+            z-index: 9999;
+        }
+
+        .chatbot-float:hover {
+            transform: scale(1.08);
+        }
+
+        .chatbot-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* MOBILE */
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 14px 18px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .main {
+                margin-top: 20px;
+            }
+
+            .form-card {
+                padding: 20px 16px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .page-title h1 {
+                font-size: 23px;
+            }
+        }
+    </style>
 </head>
+
 <body>
-  <div class="app-container">
+
     <!-- HEADER -->
-    <header class="app-header">
-      <div class="header-left">
-        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
-        <div class="header-title">
-          <h1>पिकांची माहिती (Crop Details)</h1>
-          <p>आपली शेती, पीक नोंदणी व चालू हमीभाव</p>
+    <header class="header">
+
+        <div class="logo">
+            🌾 किसानसेवा
         </div>
-      </div>
-      <button class="btn-add-crop" id="openCropModalBtn">+ नवीन पीक नोंदवा</button>
+
+        <a href="home.html" class="home-btn">
+            🏠 मुख्यपृष्ठ
+        </a>
+
     </header>
 
-    <!-- CONTENT -->
-    <main class="page-content">
-      <!-- REGISTERED CROPS GRID -->
-      <section class="section-block">
-        <div class="section-title-row">
-          <h2>माझी नोंदणीकृत पिके (Registered Crops)</h2>
-          <span class="crop-count-tag" id="cropCountBadge">३ पिके नोंदणीकृत</span>
-        </div>
-        <div class="crop-cards-grid" id="cropCardsContainer">
-          <!-- Dynamically populated from JS -->
-        </div>
-      </section>
 
-      <!-- GOVT MSP RATES 2026 SECTION -->
-      <section class="section-block msp-section">
-        <div class="section-title-row">
-          <h2>शासकीय हमीभाव दर सूची २०२६ (Govt MSP Rates)</h2>
-          <span class="msp-badge">अधिकृत हमीभाव</span>
-        </div>
-        <div class="msp-table-wrap">
-          <table class="msp-table">
-            <thead>
-              <tr>
-                <th>शेतमाल / पीक</th>
-                <th>हंगाम</th>
-                <th>हमीभाव (प्रति क्विंटल)</th>
-                <th>मागील वर्षापेक्षा वाढ</th>
-                <th>कृती</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><strong>🫘 सोयाबीन (Soybean)</strong></td>
-                <td>खरीप २०२६</td>
-                <td class="price-highlight">₹ ४,८९२</td>
-                <td class="text-green">+ ₹२९२</td>
-                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
-              </tr>
-              <tr>
-                <td><strong>☁️ कापूस (Cotton - Long Staple)</strong></td>
-                <td>खरीप २०२६</td>
-                <td class="price-highlight">₹ ७,५२१</td>
-                <td class="text-green">+ ₹५०१</td>
-                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
-              </tr>
-              <tr>
-                <td><strong>🌾 तूर (Tur / Arhar)</strong></td>
-                <td>खरीप २०२६</td>
-                <td class="price-highlight">₹ ७,५५०</td>
-                <td class="text-green">+ ₹५५०</td>
-                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
-              </tr>
-              <tr>
-                <td><strong>🌱 हरभरा (Gram / Chana)</strong></td>
-                <td>रब्बी २०२६</td>
-                <td class="price-highlight">₹ ५,४४०</td>
-                <td class="text-green">+ ₹२१०</td>
-                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
-              </tr>
-              <tr>
-                <td><strong>🍞 गहू (Wheat)</strong></td>
-                <td>रब्बी २०२६</td>
-                <td class="price-highlight">₹ २,४२५</td>
-                <td class="text-green">+ ₹१५०</td>
-                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </section>
+    <!-- MAIN CONTENT -->
+    <main class="main">
 
-      <!-- EXPERT CROP ADVISORY -->
-      <section class="section-block advisory-block">
-        <div class="adv-card">
-          <div class="adv-header">
-            <span class="adv-icon">💡</span>
-            <div>
-              <h3>कृषी विद्यापीठ सल्लागार (Crop Advisory)</h3>
-              <p>सोलापूर व मराठवाडा विभाग - चालू आठवडा</p>
+        <div class="page-title">
+
+            <h1>🌱 पिकाची माहिती नोंदवा</h1>
+
+            <p>
+                आपल्या पिकाची माहिती भरा आणि खरेदीसाठी योग्य नियोजन करा.
+            </p>
+
+        </div>
+
+
+        <div class="form-card">
+
+            <div class="section-title">
+                📋 पिकाची माहिती
             </div>
-          </div>
-          <div class="adv-content">
-            <p>
-              • <strong>सोयाबीन:</strong> काढणी करताना दाण्यातील ओलावा १२% पेक्षा कमी असावा, जेणेकरून खरेदी केंद्रावर पूर्ण भाव मिळेल.
-            </p>
-            <p>
-              • <strong>कापूस:</strong> पहिल्या वेचणीचा कापूस कोरड्या जागेत साठवून ठेवावा, धूळ व पानांचा कचरा बाजूला करावा.
-            </p>
-          </div>
+
+
+            <!-- CROP TYPE -->
+            <div class="form-group">
+
+                <label>
+                    पिकाचा प्रकार <span class="required">*</span>
+                </label>
+
+                <select id="crop">
+
+                    <option value="">पीक निवडा</option>
+
+                    <option value="गहू">🌾 गहू</option>
+                    <option value="तांदूळ">🌾 तांदूळ</option>
+                    <option value="सोयाबीन">🌱 सोयाबीन</option>
+                    <option value="कापूस">🌿 कापूस</option>
+                    <option value="मका">🌽 मका</option>
+                    <option value="हरभरा">🫘 हरभरा</option>
+                    <option value="कांदा">🧅 कांदा</option>
+                    <option value="ऊस">🎋 ऊस</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- VARIETY -->
+            <div class="form-group">
+
+                <label>
+                    वाण (पर्यायी)
+                </label>
+
+                <input
+                    type="text"
+                    id="variety"
+                    placeholder="उदा. मालदांडी">
+            </div>
+
+
+            <!-- QUANTITY + UNIT -->
+            <div class="row">
+
+                <div class="form-group">
+
+                    <label>
+                        अपेक्षित प्रमाण <span class="required">*</span>
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantity"
+                        placeholder="उदा. 25"
+                        min="1">
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        एकक <span class="required">*</span>
+                    </label>
+
+                    <select id="unit">
+
+                        <option value="क्विंटल">क्विंटल</option>
+                        <option value="किलो">किलो</option>
+                        <option value="टन">टन</option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- EXPECTED DATE -->
+            <div class="form-group">
+
+                <label>
+                    अपेक्षित विक्री / काढणी तारीख
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="date"
+                    id="saleDate">
+
+            </div>
+
+
+            <!-- PROCUREMENT CENTER -->
+            <div class="form-group">
+
+                <label>
+                    खरेदी केंद्र <span class="required">*</span>
+                </label>
+
+                <select id="center">
+
+                    <option value="">खरेदी केंद्र निवडा</option>
+
+                    <option>कृषी उत्पन्न बाजार समिती</option>
+                    <option>शासकीय खरेदी केंद्र</option>
+                    <option>जवळचे उपलब्ध खरेदी केंद्र</option>
+
+                </select>
+
+            </div>
+
+
+            <!-- SMART SCHEDULING BOX -->
+            <div class="smart-box">
+
+                <div class="smart-box-title">
+                    🤖 स्मार्ट स्लॉट नियोजन
+                </div>
+
+                <p>
+                    तुमची पीक मात्रा, अपेक्षित तारीख आणि खरेदी केंद्राची
+                    उपलब्ध क्षमता लक्षात घेऊन प्रणाली योग्य स्लॉट
+                    सुचवेल आणि प्रतीक्षा वेळ कमी करण्यास मदत करेल.
+                </p>
+
+            </div>
+
+
+            <!-- ADDITIONAL INFORMATION -->
+            <div class="form-group">
+
+                <label>
+                    अतिरिक्त माहिती (पर्यायी)
+                </label>
+
+                <textarea
+                    id="additional"
+                    placeholder="उदा. पिकाची काढणी पूर्ण झाली आहे..."></textarea>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+            <button
+                class="submit-btn"
+                onclick="saveCrop()">
+
+                पिकाची माहिती जतन करा →
+            </button>
+
+
+            <!-- RESULT -->
+            <div class="result-box" id="result">
+
+                <h3>✅ माहिती यशस्वीरित्या नोंदवली!</h3>
+
+                <div class="result-item">
+                    <b>पीक:</b>
+                    <span id="resultCrop"></span>
+                </div>
+
+                <div class="result-item">
+                    <b>प्रमाण:</b>
+                    <span id="resultQuantity"></span>
+                </div>
+
+                <div class="result-item">
+                    <b>तारीख:</b>
+                    <span id="resultDate"></span>
+                </div>
+
+                <div class="result-item">
+                    पुढील टप्प्यात तुमच्यासाठी उपलब्ध
+                    खरेदी स्लॉट तपासता येतील.
+                </div>
+
+            </div>
+
         </div>
-      </section>
+
     </main>
 
-    <!-- NEW CROP REGISTRATION MODAL -->
-    <div class="modal-overlay" id="newCropModal" hidden>
-      <div class="modal-content">
-        <div class="modal-top">
-          <h3>नवीन पीक नोंदणी (Register Crop)</h3>
-          <button class="modal-close-btn" id="closeCropModal">×</button>
-        </div>
-        <form id="newCropForm">
-          <div class="form-group">
-            <label for="modalCropName">पिकाचे नाव <span class="req">*</span></label>
-            <select id="modalCropName" required>
-              <option value="सोयाबीन (Soybean)">सोयाबीन (Soybean)</option>
-              <option value="कापूस (Cotton)">कापूस (Cotton)</option>
-              <option value="तूर (Tur)">तूर (Tur)</option>
-              <option value="हरभरा (Chana)">हरभरा (Chana)</option>
-              <option value="गहू (Wheat)">गहू (Wheat)</option>
-              <option value="कांदा (Onion)">कांदा (Onion)</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="modalCropVariety">जात / व्हरायटी</label>
-            <input type="text" id="modalCropVariety" placeholder="उदा. JS 335 / फुले कल्याणी">
-          </div>
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="modalArea">क्षेत्र (एकर) <span class="req">*</span></label>
-              <input type="number" step="0.1" id="modalArea" placeholder="उदा. २.५" required>
-            </div>
-            <div class="form-group">
-              <label for="modalQty">अंदाजे उत्पादन (क्विंटल) <span class="req">*</span></label>
-              <input type="number" id="modalQty" placeholder="उदा. ४०" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="modalGatNo">७/१२ गट नंबर <span class="req">*</span></label>
-            <input type="text" id="modalGatNo" placeholder="उदा. १४२/२" required>
-          </div>
-          <div class="form-group">
-            <label for="modalSowingDate">पेरणी तारीख</label>
-            <input type="date" id="modalSowingDate">
-          </div>
-          <div class="modal-actions">
-            <button type="button" class="btn btn-secondary" id="cancelCropModal">रद्द करा</button>
-            <button type="submit" class="btn btn-primary">नोंदणी जतन करा (Save)</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
 
-  <script src="crop-information.js"></script>
+    <!-- FLOATING CHATBOT -->
+    <a
+        href="../home_page/chatbbot/chatbot.html"
+        class="chatbot-float"
+        title="किसान सहाय्यक">
+
+        <img src="../logo.png" alt="किसान सहाय्यक" class="chatbot-logo">
+
+    </a>
+
+
+    <script>
+
+        function saveCrop() {
+
+            const crop = document.getElementById("crop").value;
+            const quantity = document.getElementById("quantity").value;
+            const unit = document.getElementById("unit").value;
+            const saleDate = document.getElementById("saleDate").value;
+            const center = document.getElementById("center").value;
+
+            if (!crop || !quantity || !saleDate || !center) {
+
+                alert("कृपया सर्व आवश्यक माहिती भरा.");
+
+                return;
+            }
+
+
+            document.getElementById("resultCrop").innerText = crop;
+
+            document.getElementById("resultQuantity").innerText =
+                quantity + " " + unit;
+
+            document.getElementById("resultDate").innerText =
+                saleDate;
+
+
+            document.getElementById("result").style.display = "block";
+
+
+            document.getElementById("result").scrollIntoView({
+                behavior: "smooth"
+            });
+
+        }
+
+    </script>
+
 </body>
+
 </html>
