@@ -488,7 +488,8 @@ function handleMenuClick(id) {
 
     if (id === "crops") {
 
-        window.location.href = "../crop_information/crop-information.html";
+        window.location.href =
+            "../crop_information/crop-information.html";
 
         return;
 
@@ -501,7 +502,8 @@ function handleMenuClick(id) {
 
     if (id === "slotBooking" || id === "booking") {
 
-        window.location.href = "../slot_booking/slot-booking.html";
+        window.location.href =
+            "../slot_booking/slot-booking.html";
 
         return;
 
@@ -514,7 +516,8 @@ function handleMenuClick(id) {
 
     if (id === "myBooking") {
 
-        window.location.href = "../my_booking/my-booking.html";
+        window.location.href =
+            "../my_booking/my-booking.html";
 
         return;
 
@@ -527,7 +530,8 @@ function handleMenuClick(id) {
 
     if (id === "liveQueue") {
 
-        window.location.href = "../live_queue/live-queue.html";
+        window.location.href =
+            "../live_queue/live-queue.html";
 
         return;
 
@@ -540,7 +544,8 @@ function handleMenuClick(id) {
 
     if (id === "purchase") {
 
-        window.location.href = "../procurement_status/procurement-status.html";
+        window.location.href =
+            "../procurement_status/procurement-status.html";
 
         return;
 
@@ -553,7 +558,8 @@ function handleMenuClick(id) {
 
     if (id === "payment") {
 
-        window.location.href = "../payment_status/payment-status.html";
+        window.location.href =
+            "../payment_status/payment-status.html";
 
         return;
 
@@ -566,7 +572,8 @@ function handleMenuClick(id) {
 
     if (id === "notification") {
 
-        window.location.href = "../notifications/notifications.html";
+        window.location.href =
+            "../notifications/notifications.html";
 
         return;
 
@@ -579,7 +586,8 @@ function handleMenuClick(id) {
 
     if (id === "complaint") {
 
-        window.location.href = "complaints/complaint.html";
+        window.location.href =
+            "./complaints/complaint.html";
 
         return;
 
@@ -587,7 +595,21 @@ function handleMenuClick(id) {
 
 
     // ========================================
-    // OTHER TABS (complaint, help, etc.)
+    // HELP / CONTACT
+    // ========================================
+
+    if (id === "help") {
+
+        window.location.href =
+            "../help/help.html";
+
+        return;
+
+    }
+
+
+    // ========================================
+    // OTHER TABS
     // ========================================
 
     const selected =

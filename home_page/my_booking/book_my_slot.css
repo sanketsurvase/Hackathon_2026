@@ -1,0 +1,1005 @@
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    background: #f3f8f5;
+    color: #173b2b;
+    font-family: "Mukta", sans-serif;
+}
+
+
+button,
+input,
+select {
+    font-family: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+.app {
+    min-height: 100vh;
+}
+
+
+/* HEADER */
+
+.header {
+    height: 68px;
+    background: #ffffff;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 7px 15px;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 20;
+
+    border-bottom: 1px solid #e1ebe5;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+
+.brand-logo {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    background: #e4f5e9;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+}
+
+
+.brand-details h1 {
+    color: #087a43;
+
+    font-size: 21px;
+    font-weight: 800;
+
+    line-height: 1.1;
+}
+
+
+.brand-details p {
+    color: #718078;
+    font-size: 9px;
+}
+
+
+.home-button {
+    width: 39px;
+    height: 39px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #e4f4e8;
+
+    font-size: 19px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.home-button:hover {
+    background: #d5eddb;
+}
+
+
+/* MAIN */
+
+.main-content {
+    width: 100%;
+    max-width: 650px;
+
+    margin: auto;
+
+    padding: 16px 14px 40px;
+}
+
+
+/* PAGE HEADING */
+
+.page-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+
+.heading-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+.step-number {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    background: #087a43;
+
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 20px;
+    font-weight: 700;
+}
+
+
+.page-heading h2 {
+    color: #123c29;
+
+    font-size: 22px;
+    font-weight: 800;
+}
+
+
+.page-heading p {
+    color: #748078;
+    font-size: 10px;
+}
+
+
+.new-booking-button {
+    border: none;
+
+    background: #087a43;
+    color: white;
+
+    padding: 9px 11px;
+
+    border-radius: 9px;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+
+.new-booking-button:hover {
+    background: #056637;
+}
+
+
+/* CARDS */
+
+.booking-status-card,
+.card,
+.notification-card,
+.booking-form {
+
+    background: white;
+
+    border: 1px solid #e1ebe5;
+
+    border-radius: 15px;
+
+    padding: 14px;
+
+    margin-bottom: 12px;
+
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.025);
+}
+
+
+/* BOOKING STATUS */
+
+.booking-status-card {
+    display: flex;
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.booking-status-icon {
+    width: 49px;
+    height: 49px;
+
+    border-radius: 12px;
+
+    background: #e4f5e9;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+
+    flex-shrink: 0;
+}
+
+
+.booking-status-content {
+    flex: 1;
+}
+
+
+.booking-status-content span,
+.booking-date span {
+
+    display: block;
+
+    color: #77847d;
+
+    font-size: 9px;
+}
+
+
+.booking-status-content h3 {
+
+    color: #173d2b;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 15px;
+
+    margin: 2px 0 4px;
+}
+
+
+.booking-status-badge {
+
+    display: inline-block;
+
+    padding: 3px 7px;
+
+    border-radius: 20px;
+
+    background: #e2f4e8;
+
+    color: #087a43;
+
+    font-size: 9px;
+
+    font-weight: 700;
+}
+
+
+.booking-date {
+    text-align: right;
+}
+
+
+.booking-date strong {
+
+    color: #087a43;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 10px;
+
+    display: block;
+
+    margin-top: 3px;
+}
+
+
+/* CARD HEADING */
+
+.card-heading {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 11px;
+}
+
+
+.card-heading h3 {
+
+    color: #183e2d;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+.card-heading p {
+
+    color: #77847d;
+
+    font-size: 9px;
+}
+
+
+.live-badge {
+
+    color: #087a43 !important;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 9px !important;
+
+    font-weight: 700;
+}
+
+
+/* DETAILS */
+
+.details-grid {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+}
+
+
+.detail-box {
+
+    background: #f4f9f5;
+
+    border-radius: 10px;
+
+    padding: 10px;
+}
+
+
+.detail-box span {
+
+    display: block;
+
+    color: #77847d;
+
+    font-size: 9px;
+}
+
+
+.detail-box strong {
+
+    display: block;
+
+    color: #183e2d;
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+/* QUEUE */
+
+.queue-box {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    background: #edf8f0;
+
+    border-radius: 12px;
+
+    padding: 14px;
+}
+
+
+.queue-information span {
+
+    color: #68776f;
+
+    font-size: 10px;
+
+    display: block;
+}
+
+
+.queue-information strong {
+
+    color: #087a43;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 34px;
+
+    font-weight: 800;
+
+    line-height: 1.1;
+
+    display: block;
+}
+
+
+.queue-information small {
+
+    color: #718078;
+
+    font-size: 9px;
+}
+
+
+.waiting-circle {
+
+    width: 73px;
+    height: 73px;
+
+    border-radius: 50%;
+
+    border: 5px solid #bfe6cc;
+
+    background: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.waiting-circle strong {
+
+    color: #087a43;
+
+    font-family: "Poppins", sans-serif;
+
+    font-size: 19px;
+}
+
+
+.waiting-circle span {
+
+    color: #77847d;
+
+    font-size: 8px;
+}
+
+
+/* PROGRESS */
+
+.progress-section {
+    margin-top: 13px;
+}
+
+
+.progress-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    color: #69776f;
+
+    font-size: 9px;
+
+    margin-bottom: 5px;
+}
+
+
+.progress-header strong {
+
+    color: #087a43;
+
+    font-family: "Poppins", sans-serif;
+}
+
+
+.progress-bar {
+
+    width: 100%;
+
+    height: 8px;
+
+    background: #e5eee8;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+}
+
+
+.progress-fill {
+
+    height: 100%;
+
+    width: 40%;
+
+    background: #087a43;
+
+    border-radius: 20px;
+
+    transition: width 0.4s ease;
+}
+
+
+.queue-note {
+
+    margin-top: 9px;
+
+    color: #687a70;
+
+    background: #fff8e8;
+
+    border-radius: 8px;
+
+    padding: 7px;
+
+    font-size: 9px;
+}
+
+
+/* NOTIFICATION */
+
+.notification-card {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background: #fffaf0;
+
+    border-color: #f3e6c5;
+}
+
+
+.notification-icon {
+
+    width: 42px;
+    height: 42px;
+
+    border-radius: 10px;
+
+    background: #fff0c9;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+
+    flex-shrink: 0;
+}
+
+
+.notification-card h3 {
+
+    color: #604b18;
+
+    font-size: 13px;
+}
+
+
+.notification-card p {
+
+    color: #786b48;
+
+    font-size: 9px;
+
+    line-height: 1.4;
+}
+
+
+/* PROCUREMENT */
+
+.procurement-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+
+.procurement-icon {
+
+    width: 49px;
+    height: 49px;
+
+    border-radius: 12px;
+
+    background: #eee8f8;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 22px;
+}
+
+
+.procurement-header span {
+
+    color: #77847d;
+
+    font-size: 9px;
+}
+
+
+.procurement-header h3 {
+
+    color: #183e2d;
+
+    font-size: 15px;
+}
+
+
+.procurement-header p {
+
+    color: #7a867f;
+
+    font-size: 9px;
+}
+
+
+/* PAYMENT */
+
+.payment-badge {
+
+    background: #fff0d8;
+
+    color: #a86500;
+
+    padding: 3px 8px;
+
+    border-radius: 20px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+}
+
+
+.payment-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    padding: 8px 0;
+
+    border-top: 1px solid #edf1ee;
+
+    font-size: 10px;
+}
+
+
+.payment-row span {
+    color: #758078;
+}
+
+
+.payment-row strong {
+
+    color: #173d2b;
+
+    text-align: right;
+}
+
+
+/* ACTION BUTTONS */
+
+.actions {
+
+    display: grid;
+
+    gap: 9px;
+
+    margin-top: 5px;
+
+    margin-bottom: 15px;
+}
+
+
+.refresh-button,
+.cancel-button,
+.confirm-button {
+
+    width: 100%;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.refresh-button,
+.confirm-button {
+
+    border: none;
+
+    background: #087a43;
+
+    color: white;
+}
+
+
+.refresh-button:hover,
+.confirm-button:hover {
+
+    background: #056637;
+}
+
+
+.cancel-button {
+
+    border: 1px solid #d9e4dd;
+
+    background: white;
+
+    color: #b43d31;
+}
+
+
+.cancel-button:hover {
+
+    background: #fff4f2;
+}
+
+
+/* BOOKING FORM */
+
+.booking-form {
+
+    margin-top: 14px;
+}
+
+
+.form-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+
+.form-header h3 {
+
+    color: #183e2d;
+
+    font-size: 15px;
+
+    font-weight: 800;
+}
+
+
+.close-button {
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f5f2;
+
+    font-size: 20px;
+}
+
+
+.booking-form label {
+
+    display: block;
+
+    color: #41564b;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    margin: 9px 0 4px;
+}
+
+
+.booking-form input,
+.booking-form select {
+
+    width: 100%;
+
+    border: 1px solid #dce7e0;
+
+    border-radius: 8px;
+
+    padding: 10px;
+
+    background: white;
+
+    color: #173b2b;
+
+    outline: none;
+
+    font-size: 11px;
+}
+
+
+.booking-form input:focus,
+.booking-form select:focus {
+
+    border-color: #087a43;
+}
+
+
+.confirm-button {
+
+    margin-top: 14px;
+}
+
+
+/* TOAST */
+
+.toast {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 20px;
+
+    transform: translate(-50%, 80px);
+
+    background: #173d2b;
+
+    color: white;
+
+    padding: 11px 16px;
+
+    border-radius: 9px;
+
+    font-size: 10px;
+
+    z-index: 100;
+
+    opacity: 0;
+
+    transition: 0.3s;
+
+    pointer-events: none;
+
+    max-width: 90%;
+
+    text-align: center;
+}
+
+
+.toast.show {
+
+    transform: translate(-50%, 0);
+
+    opacity: 1;
+}
+
+
+[hidden] {
+    display: none !important;
+}
+
+
+/* TABLET */
+
+@media (min-width: 650px) {
+
+    .main-content {
+
+        max-width: 700px;
+
+        padding: 25px;
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 430px) {
+
+    .page-heading {
+
+        align-items: flex-start;
+    }
+
+
+    .page-heading h2 {
+
+        font-size: 19px;
+    }
+
+
+    .new-booking-button {
+
+        font-size: 9px;
+
+        padding: 8px;
+    }
+
+
+    .booking-date {
+
+        display: none;
+    }
+
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 360px) {
+
+    .main-content {
+
+        padding: 12px 10px 30px;
+    }
+
+
+    .details-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .waiting-circle {
+
+        width: 65px;
+
+        height: 65px;
+    }
+
+}

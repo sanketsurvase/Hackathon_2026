@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#087a43">
+
+    <title>माझी बुकिंग - किसानसेवा</title>
+
+    <link rel="stylesheet" href="book_my_slot.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- HEADER -->
+    <header class="header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                🌱
+            </div>
+
+            <div class="brand-details">
+                <h1>किसानसेवा</h1>
+                <p>शेतकऱ्यांसाठी डिजिटल सेवा</p>
+            </div>
+
+        </div>
+
+        <button class="home-button" id="homeBtn">
+            🏠
+        </button>
+
+    </header>
+
+
+    <!-- MAIN -->
+    <main class="main-content">
+
+        <!-- PAGE HEADING -->
+        <section class="page-heading">
+
+            <div class="heading-left">
+
+                <div class="step-number">
+                    4
+                </div>
+
+                <div>
+                    <h2>माझी बुकिंग</h2>
+
+                    <p>
+                        आपल्या स्लॉट बुकिंगची संपूर्ण माहिती पहा
+                    </p>
+                </div>
+
+            </div>
+
+            <button
+                class="new-booking-button"
+                id="newBookingBtn">
+
+                + नवीन स्लॉट
+
+            </button>
+
+        </section>
+
+
+        <!-- BOOKING STATUS -->
+        <section class="booking-status-card">
+
+            <div class="booking-status-icon">
+                🧾
+            </div>
+
+            <div class="booking-status-content">
+
+                <span>
+                    बुकिंग क्रमांक
+                </span>
+
+                <h3 id="bookingId">
+                    BK20261015
+                </h3>
+
+                <div
+                    class="booking-status-badge"
+                    id="bookingStatus">
+
+                    बुकिंग निश्चित
+
+                </div>
+
+            </div>
+
+            <div class="booking-date">
+
+                <span>
+                    बुकिंग तारीख
+                </span>
+
+                <strong id="bookingDate">
+                    10-09-2026
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- SLOT DETAILS -->
+        <section class="card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h3>
+                        📋 स्लॉटची माहिती
+                    </h3>
+
+                    <p>
+                        सध्याची बुकिंग
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="details-grid">
+
+                <div class="detail-box">
+
+                    <span>
+                        📅 स्लॉट तारीख
+                    </span>
+
+                    <strong id="slotDate">
+                        15-10-2026
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        ⏰ स्लॉट वेळ
+                    </span>
+
+                    <strong id="slotTime">
+                        10:00 AM - 12:00 PM
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        📍 खरेदी केंद्र
+                    </span>
+
+                    <strong id="centreName">
+                        कृषी उत्पन्न बाजार समिती
+                    </strong>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span>
+                        🌾 पीक
+                    </span>
+
+                    <strong id="cropName">
+                        ज्वारी
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- LIVE QUEUE -->
+        <section class="card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h3>
+                        📄 लाईव्ह रांग
+                    </h3>
+
+                    <p>
+                        खरेदी केंद्रावरील सद्यस्थिती
+                    </p>
+
+                </div>
+
+                <span class="live-badge">
+                    ● LIVE
+                </span>
+
+            </div>
+
+
+            <div class="queue-box">
+
+                <div class="queue-information">
+
+                    <span>
+                        आपला रांग क्रमांक
+                    </span>
+
+                    <strong id="queuePosition">
+                        25
+                    </strong>
+
+                    <small id="queueMessage">
+                        आपल्या आधी 24 शेतकरी
+                    </small>
+
+                </div>
+
+
+                <div class="waiting-circle">
+
+                    <strong id="estimatedTime">
+                        60
+                    </strong>
+
+                    <span>
+                        मिनिटे
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PROGRESS -->
+            <div class="progress-section">
+
+                <div class="progress-header">
+
+                    <span>
+                        रांगेतील प्रगती
+                    </span>
+
+                    <strong id="progressText">
+                        40%
+                    </strong>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        id="progressFill">
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="queue-note">
+
+                💡 रांगेतील बदलानुसार माहिती अपडेट केली जाईल.
+
+            </div>
+
+        </section>
+
+
+        <!-- NOTIFICATION -->
+        <section class="notification-card">
+
+            <div class="notification-icon">
+                🔔
+            </div>
+
+            <div>
+
+                <h3>
+                    महत्त्वाची सूचना
+                </h3>
+
+                <p id="notificationText">
+
+                    आपला स्लॉट निश्चित आहे.
+                    स्लॉटच्या वेळेपूर्वी खरेदी केंद्रावर पोहोचा.
+
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROCUREMENT STATUS -->
+        <section class="card">
+
+            <div class="procurement-header">
+
+                <div class="procurement-icon">
+                    🛒
+                </div>
+
+                <div>
+
+                    <span>
+                        खरेदी स्थिती
+                    </span>
+
+                    <h3 id="procurementStatus">
+                        खरेदीसाठी प्रतीक्षा
+                    </h3>
+
+                    <p>
+                        रांग पूर्ण झाल्यानंतर खरेदीची स्थिती अपडेट होईल.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- PAYMENT STATUS -->
+        <section class="card">
+
+            <div class="card-heading">
+
+                <div>
+
+                    <h3>
+                        💳 देयक स्थिती
+                    </h3>
+
+                </div>
+
+                <span
+                    class="payment-badge"
+                    id="paymentStatus">
+
+                    प्रलंबित
+
+                </span>
+
+            </div>
+
+
+            <div class="payment-row">
+
+                <span>
+                    अपेक्षित देयक
+                </span>
+
+                <strong id="paymentAmount">
+                    ₹ 0
+                </strong>
+
+            </div>
+
+
+            <div class="payment-row">
+
+                <span>
+                    देयक माहिती
+                </span>
+
+                <strong id="paymentText">
+                    खरेदी पूर्ण झाल्यानंतर रक्कम अपडेट होईल.
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- ACTION BUTTONS -->
+        <section class="actions">
+
+            <button
+                class="refresh-button"
+                id="refreshBtn">
+
+                🔄 लाईव्ह स्थिती अपडेट करा
+
+            </button>
+
+
+            <button
+                class="cancel-button"
+                id="cancelBtn">
+
+                बुकिंग रद्द करा
+
+            </button>
+
+        </section>
+
+
+        <!-- NEW BOOKING FORM -->
+        <section
+            class="booking-form"
+            id="bookingForm"
+            hidden>
+
+            <div class="form-header">
+
+                <h3>
+                    🧾 नवीन स्लॉट बुक करा
+                </h3>
+
+                <button
+                    class="close-button"
+                    id="closeFormBtn">
+
+                    ×
+
+                </button>
+
+            </div>
+
+
+            <label for="cropInput">
+                पीक निवडा
+            </label>
+
+            <select id="cropInput">
+
+                <option value="ज्वारी">
+                    ज्वारी
+                </option>
+
+                <option value="गहू">
+                    गहू
+                </option>
+
+                <option value="कापूस">
+                    कापूस
+                </option>
+
+                <option value="सोयाबीन">
+                    सोयाबीन
+                </option>
+
+                <option value="हरभरा">
+                    हरभरा
+                </option>
+
+            </select>
+
+
+            <label for="centreInput">
+                खरेदी केंद्र
+            </label>
+
+            <select id="centreInput">
+
+                <option value="कृषी उत्पन्न बाजार समिती">
+                    कृषी उत्पन्न बाजार समिती
+                </option>
+
+                <option value="शेतमाल खरेदी केंद्र - 1">
+                    शेतमाल खरेदी केंद्र - 1
+                </option>
+
+                <option value="शेतमाल खरेदी केंद्र - 2">
+                    शेतमाल खरेदी केंद्र - 2
+                </option>
+
+            </select>
+
+
+            <label for="dateInput">
+                स्लॉट तारीख
+            </label>
+
+            <input
+                type="date"
+                id="dateInput">
+
+
+            <label for="timeInput">
+                स्लॉट वेळ
+            </label>
+
+            <select id="timeInput">
+
+                <option value="08:00 AM - 10:00 AM">
+                    08:00 AM - 10:00 AM
+                </option>
+
+                <option value="10:00 AM - 12:00 PM">
+                    10:00 AM - 12:00 PM
+                </option>
+
+                <option value="12:00 PM - 02:00 PM">
+                    12:00 PM - 02:00 PM
+                </option>
+
+                <option value="02:00 PM - 04:00 PM">
+                    02:00 PM - 04:00 PM
+                </option>
+
+            </select>
+
+
+            <button
+                class="confirm-button"
+                id="bookSlotBtn">
+
+                स्लॉट बुक करा →
+
+            </button>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- TOAST -->
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script src="book_my_slot.js"></script>
+
+</body>
+</html>
