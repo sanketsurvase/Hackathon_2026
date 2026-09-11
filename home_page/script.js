@@ -16,9 +16,9 @@ let activeTab = "home";
 
 
 const defaultUser = {
-    userId: "KS10245",
-    name: "संकट पाटील",
-    mobile: "9876543210"
+    userId: "KS1001",
+    name: "शेतकरी मित्र",
+    mobile: ""
 };
 
 
@@ -27,33 +27,54 @@ const defaultUser = {
 // ========================================
 
 function getUser() {
-
     try {
+        let loggedIn = null;
+        let kisanUser = null;
 
-        const savedUser =
-            localStorage.getItem("loggedInUser");
-
-        if (savedUser) {
-
-            return {
-                ...defaultUser,
-                ...JSON.parse(savedUser)
-            };
-
+        const rawLoggedIn = localStorage.getItem("loggedInUser");
+        if (rawLoggedIn) {
+            try { loggedIn = JSON.parse(rawLoggedIn); } catch (e) {}
         }
 
-        return defaultUser;
+        const rawKisan = localStorage.getItem("kisanSetuUser");
+        if (rawKisan) {
+            try { kisanUser = JSON.parse(rawKisan); } catch (e) {}
+        }
+
+        let name = defaultUser.name;
+        let userId = defaultUser.userId;
+        let mobile = defaultUser.mobile;
+
+        if (loggedIn && loggedIn.name && loggedIn.name !== "संकट पाटील") {
+            name = loggedIn.name;
+        } else if (kisanUser && (kisanUser.full_name || kisanUser.name)) {
+            name = kisanUser.full_name || kisanUser.name;
+        } else if (loggedIn && loggedIn.name) {
+            name = loggedIn.name;
+        }
+
+        if (loggedIn && loggedIn.userId) {
+            userId = loggedIn.userId;
+        } else if (kisanUser && kisanUser.farmer_id) {
+            userId = "KS" + kisanUser.farmer_id;
+        }
+
+        if (loggedIn && loggedIn.mobile) {
+            mobile = loggedIn.mobile;
+        } else if (kisanUser && (kisanUser.mobile_number || kisanUser.mobile)) {
+            mobile = kisanUser.mobile_number || kisanUser.mobile;
+        }
+
+        return {
+            userId: userId,
+            name: name,
+            mobile: mobile
+        };
 
     } catch (error) {
-
         return defaultUser;
-
     }
-
 }
-
-
-const user = getUser();
 
 
 // ========================================
@@ -61,6 +82,7 @@ const user = getUser();
 // ========================================
 
 function updateUserUI() {
+    const currentUser = getUser();
 
     const profileName =
         document.getElementById("profileName");
@@ -88,68 +110,36 @@ function updateUserUI() {
 
 
     if (profileName) {
-
-        profileName.textContent =
-            user.name;
-
+        profileName.textContent = currentUser.name;
     }
-
 
     if (profileUserId) {
-
-        profileUserId.textContent =
-            user.userId;
-
+        profileUserId.textContent = currentUser.userId;
     }
-
 
     if (profileInfoUserId) {
-
-        profileInfoUserId.textContent =
-            user.userId;
-
+        profileInfoUserId.textContent = currentUser.userId;
     }
-
 
     if (profileMobile) {
-
-        profileMobile.textContent =
-            user.mobile;
-
+        profileMobile.textContent = currentUser.mobile || "-";
     }
-
 
     if (drawerName) {
-
-        drawerName.textContent =
-            user.name;
-
+        drawerName.textContent = currentUser.name;
     }
-
 
     if (drawerUserId) {
-
-        drawerUserId.textContent =
-            user.userId;
-
+        drawerUserId.textContent = currentUser.userId;
     }
-
 
     if (welcomeName) {
-
-        welcomeName.textContent =
-            user.name;
-
+        welcomeName.textContent = currentUser.name;
     }
-
 
     if (welcomeUserId) {
-
-        welcomeUserId.textContent =
-            user.userId;
-
+        welcomeUserId.textContent = currentUser.userId;
     }
-
 }
 
 
@@ -297,6 +287,18 @@ function createDrawerMenu() {
 
     drawerMenu.appendChild(logoutButton);
 
+}
+
+
+// ========================================
+// LOGOUT FUNCTION
+// ========================================
+
+function handleLogout() {
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("kisanSetuUser");
+    localStorage.removeItem("kisanSetuLoggedIn");
+    window.location.href = "../Login/login.html";
 }
 
 
@@ -968,19 +970,7 @@ updateUserUI();
 createDrawerMenu();
 
 
-// ========================================
-// SAVE DEFAULT USER
-// ========================================
-
-if (
-    !localStorage.getItem(
-        "loggedInUser"
-    )
-) {
-
-    localStorage.setItem(
-        "loggedInUser",
-        JSON.stringify(defaultUser)
-    );
-
-}
+// Listen for storage changes if updated in another tab/page
+window.addEventListener("storage", function () {
+    updateUserUI();
+});
