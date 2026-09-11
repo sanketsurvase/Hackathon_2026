@@ -22,12 +22,6 @@ const LOGIN_API = `${API_BASE_URL}/api/login`;
 
 window.addEventListener("DOMContentLoaded", function () {
 
-    const isLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true";
-    if (isLoggedIn) {
-        window.location.replace("../home_page/home.html");
-        return;
-    }
-
     const savedIdentifier =
         localStorage.getItem("kisanSetuRememberedIdentifier");
 
