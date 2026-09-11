@@ -58,8 +58,13 @@ class Farmer(Base):
     __tablename__ = "farmers"
     farmer_id = Column(Integer, primary_key=True, index=True)
     full_name = Column(String)
+    father_spouse_name = Column(String)
     mobile_number = Column(String)
     email = Column(String)
+    gender = Column(String)
+    date_of_birth = Column(String)
+    role = Column(String)
+    status = Column(String)
     created_at = Column(DateTime)
 
 
@@ -143,18 +148,29 @@ class LoginRequest(BaseModel):
 
 class RegisterRequest(BaseModel):
     full_name: str
+    father_spouse_name: Optional[str] = ""
     mobile_number: str
+    date_of_birth: Optional[str] = None
     email: Optional[str] = None
+    gender: Optional[str] = None
     password: str
+    # Address
+    full_address: Optional[str] = None
     village: Optional[str] = None
     taluka: Optional[str] = None
     district: Optional[str] = None
     state: Optional[str] = None
     pincode: Optional[str] = None
+    # Farm details
+    farm_area: Optional[float] = None
+    area_unit: Optional[str] = None
     land_area_acres: Optional[float] = None
     primary_crop: Optional[str] = None
+    crop_name: Optional[str] = None
     secondary_crop: Optional[str] = None
+    expected_quantity: Optional[float] = None
     gat_number: Optional[str] = None
+    preferred_centre: Optional[str] = None
 
 
 class BookingRequest(BaseModel):
@@ -250,32 +266,52 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
 # ─── REGISTER ────────────────────────────────────────────
 @app.post("/api/register")
 def register(req: RegisterRequest, db: Session = Depends(get_db)):
+    # Validate required fields
+    if not req.full_name or len(req.full_name.strip()) < 2:
+        raise HTTPException(status_code=422, detail="कृपया पूर्ण नाव प्रविष्ट करा.")
+
+    if not req.mobile_number or not req.mobile_number.strip().isdigit() or len(req.mobile_number.strip()) != 10:
+        raise HTTPException(status_code=422, detail="कृपया वैध 10 अंकी मोबाईल क्रमांक प्रविष्ट करा.")
+
+    if not req.password or len(req.password) < 6:
+        raise HTTPException(status_code=422, detail="पासवर्ड किमान 6 अक्षरांचा असावा.")
+
     # Check duplicate mobile
     existing = db.query(Farmer).filter(
-        Farmer.mobile_number == req.mobile_number
+        Farmer.mobile_number == req.mobile_number.strip()
     ).first()
     if existing:
         raise HTTPException(status_code=409, detail="हा मोबाईल क्रमांक आधीच नोंदणीकृत आहे.")
 
-    if req.email:
+    if req.email and req.email.strip():
         existing_email = db.query(Farmer).filter(
-            Farmer.email == req.email
+            Farmer.email == req.email.strip()
         ).first()
         if existing_email:
             raise HTTPException(status_code=409, detail="हा ईमेल आधीच नोंदणीकृत आहे.")
 
     try:
-        # Create farmer
+        # Resolve field aliases (frontend may send farm_area or land_area_acres; crop_name or primary_crop)
+        resolved_area = req.land_area_acres or req.farm_area or 0
+        resolved_crop = req.primary_crop or req.crop_name or ""
+        father_name = (req.father_spouse_name or "").strip()
+
+        # Create farmer — pass all NOT NULL columns safely
         farmer = Farmer(
-            full_name=req.full_name,
-            mobile_number=req.mobile_number,
-            email=req.email or None,
+            full_name=req.full_name.strip(),
+            father_spouse_name=father_name if father_name else "",
+            mobile_number=req.mobile_number.strip(),
+            email=(req.email.strip() if req.email and req.email.strip() else None),
+            gender=req.gender or "",
+            date_of_birth=req.date_of_birth or "",
+            role="farmer",
+            status="active",
             created_at=datetime.utcnow()
         )
         db.add(farmer)
         db.flush()  # get farmer_id
 
-        # Hash password
+        # Hash password with bcrypt
         hashed = bcrypt.hashpw(
             req.password.encode("utf-8"),
             bcrypt.gensalt()
@@ -288,7 +324,8 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
         db.add(account)
 
         # Address
-        if any([req.village, req.taluka, req.district]):
+        full_address = (req.full_address or "").strip()
+        if any([req.village, req.taluka, req.district, full_address]):
             address = FarmerAddress(
                 farmer_id=farmer.farmer_id,
                 village=req.village or "",
@@ -300,11 +337,11 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
             db.add(address)
 
         # Farming details
-        if any([req.primary_crop, req.gat_number, req.land_area_acres]):
+        if any([resolved_crop, req.gat_number, resolved_area]):
             details = FarmerFarmingDetail(
                 farmer_id=farmer.farmer_id,
-                land_area_acres=req.land_area_acres or 0,
-                primary_crop=req.primary_crop or "",
+                land_area_acres=resolved_area,
+                primary_crop=resolved_crop,
                 secondary_crop=req.secondary_crop or "",
                 gat_number=req.gat_number or ""
             )
@@ -320,10 +357,15 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
         }
 
     except HTTPException:
+        db.rollback()
         raise
     except Exception as e:
         db.rollback()
-        raise HTTPException(status_code=500, detail=f"नोंदणी प्रक्रियेत त्रुटी: {str(e)}")
+        print("Registration Error:", str(e))
+        raise HTTPException(
+            status_code=500,
+            detail="नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा."
+        )
 
 
 # ─── PROCUREMENT CENTRES ─────────────────────────────────
