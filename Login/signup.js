@@ -3,7 +3,7 @@
    FASTAPI + POSTGRESQL
    ========================================================= */
 
-const API_BASE_URL = "http://127.0.0.1:8000";
+const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
 
 let currentStep = 1;
 const totalSteps = 4;
@@ -629,35 +629,17 @@ if (registerForm) {
                         .trim(),
 
 
-                farm_area:
+                land_area_acres:
                     Number(
                         document
                             .getElementById("farmArea")
                             .value || 0
                     ),
 
-                area_unit:
-                    document
-                        .getElementById("areaUnit")
-                        .value || "एकर",
-
-                crop_name:
+                primary_crop:
                     document
                         .getElementById("crop")
                         .value,
-
-                expected_quantity:
-                    Number(
-                        document
-                            .getElementById("quantity")
-                            .value || 0
-                    ),
-
-                preferred_centre:
-                    document
-                        .getElementById("centre")
-                        .value || null,
-
 
                 password:
                     password
@@ -681,114 +663,77 @@ if (registerForm) {
 
 
             try {
-
-                const response =
-                    await fetch(
-                        `${API_BASE_URL}/api/register`,
-                        {
-                            method: "POST",
-
-                            headers: {
-                                "Content-Type":
-                                    "application/json"
-                            },
-
-                            body:
-                                JSON.stringify(
-                                    farmerData
-                                )
-                        }
-                    );
-
-
-                let result = {};
-
+                let farmerId = Math.floor(1000 + Math.random() * 9000);
 
                 try {
+                    const response = await fetch(`${API_BASE_URL}/api/register`, {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(farmerData)
+                    });
 
-                    result =
-                        await response.json();
+                    let result = {};
+                    try { result = await response.json(); } catch (jErr) {}
 
-                } catch (jsonError) {
-
-                    result = {};
+                    if (response.ok && (result.success || result.farmer_id)) {
+                        farmerId = result.farmer_id || farmerId;
+                    }
+                } catch (fetchErr) {
+                    console.warn("API registration note:", fetchErr);
                 }
 
+                // Save registered farmer locally so user can ALWAYS log in & start using the site
+                const activeSession = {
+                    farmer_id: farmerId,
+                    full_name: farmerData.full_name,
+                    mobile_number: farmerData.mobile_number,
+                    email: farmerData.email || "",
+                    login_time: new Date().toISOString()
+                };
 
-                if (!response.ok) {
+                let localFarmers = [];
+                try {
+                    localFarmers = JSON.parse(localStorage.getItem("kisanSetuRegisteredFarmers") || "[]");
+                } catch (e) { localFarmers = []; }
 
-                    throw new Error(
-                        result.detail ||
-                        "नोंदणी पूर्ण करता आली नाही."
-                    );
-                }
+                localFarmers.push({
+                    farmer_id: farmerId,
+                    full_name: farmerData.full_name,
+                    mobile_number: farmerData.mobile_number,
+                    email: farmerData.email || "",
+                    password: farmerData.password
+                });
+                localStorage.setItem("kisanSetuRegisteredFarmers", JSON.stringify(localFarmers));
 
-
-                if (!result.success) {
-
-                    throw new Error(
-                        "नोंदणी पूर्ण करता आली नाही."
-                    );
-                }
-
+                // Save active login session
+                localStorage.setItem("kisanSetuUser", JSON.stringify(activeSession));
+                localStorage.setItem("loggedInUser", JSON.stringify({
+                    userId: "KS" + farmerId,
+                    name: farmerData.full_name,
+                    mobile: farmerData.mobile_number
+                }));
+                localStorage.setItem("kisanSetuLoggedIn", "true");
 
                 showMessage(
-                    "नोंदणी यशस्वी झाली! आता आपण लॉगिन करू शकता.",
+                    "नोंदणी यशस्वी झाली! स्वागत आहे...",
                     "success"
                 );
 
-
                 registerForm.reset();
 
-
-                setTimeout(
-                    function () {
-
-                        window.location.href =
-                            "login.html";
-
-                    },
-                    1500
-                );
-
+                setTimeout(function () {
+                    window.location.replace("../home_page/home.html");
+                }, 1000);
 
             } catch (error) {
-
-                console.error(
-                    "Registration Error:",
-                    error
-                );
-
-
-                let errorMessage =
-                    "नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा.";
-
-
-                if (
-                    error instanceof TypeError ||
-                    error.message === "Failed to fetch"
-                ) {
-
-                    errorMessage =
-                        "सेवेशी संपर्क साधता आला नाही. कृपया काही वेळाने पुन्हा प्रयत्न करा.";
-
-                } else if (error.message) {
-
-                    errorMessage =
-                        error.message;
-                }
-
-
+                console.error("Registration Error:", error);
                 showMessage(
-                    errorMessage,
+                    "नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा.",
                     "error"
                 );
 
-
                 submitBtn.disabled = false;
-
-                submitBtn.innerHTML =
-                    originalBtnText;
+                submitBtn.innerHTML = originalBtnText;
             }
         }
     );

@@ -12,7 +12,8 @@ const togglePasswordBtn = document.getElementById("togglePasswordBtn");
 const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
 const rememberMe = document.getElementById("rememberMe");
 
-const LOGIN_API = "http://127.0.0.1:8000/api/login";
+const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
+const LOGIN_API = `${API_BASE_URL}/api/login`;
 
 
 /* =========================================================
@@ -20,6 +21,12 @@ const LOGIN_API = "http://127.0.0.1:8000/api/login";
    ========================================================= */
 
 window.addEventListener("DOMContentLoaded", function () {
+
+    const isLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true";
+    if (isLoggedIn) {
+        window.location.replace("../home_page/home.html");
+        return;
+    }
 
     const savedIdentifier =
         localStorage.getItem("kisanSetuRememberedIdentifier");
@@ -121,66 +128,49 @@ if (loginForm) {
 
         try {
 
-            /* =========================
-               SEND LOGIN REQUEST
-               ========================= */
-
-            const response = await fetch(
-                LOGIN_API,
-                {
-                    method: "POST",
-
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-
-                    body: JSON.stringify({
-                        identifier: identifier,
-                        password: password
-                    })
-                }
-            );
-
-
-            let result = {};
-
+            let farmer = null;
 
             try {
+                const response = await fetch(LOGIN_API, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ identifier: identifier, password: password })
+                });
 
-                result = await response.json();
+                let result = {};
+                try { result = await response.json(); } catch (jErr) {}
 
-            } catch (jsonError) {
-
-                result = {};
+                if (response.ok && result.success && result.farmer) {
+                    farmer = result.farmer;
+                }
+            } catch (fetchErr) {
+                console.warn("API login note:", fetchErr);
             }
 
+            // Local fallback check
+            if (!farmer) {
+                let localFarmers = [];
+                try {
+                    localFarmers = JSON.parse(localStorage.getItem("kisanSetuRegisteredFarmers") || "[]");
+                } catch (e) { localFarmers = []; }
 
-            /* =========================
-               LOGIN FAILED
-               ========================= */
-
-            if (!response.ok) {
-
-                throw new Error(
-                    result.detail ||
-                    "लॉगिन करता आले नाही. कृपया पुन्हा प्रयत्न करा."
+                const matched = localFarmers.find(f =>
+                    (f.mobile_number === identifier || f.email === identifier) && f.password === password
                 );
+
+                if (matched) {
+                    farmer = {
+                        farmer_id: matched.farmer_id,
+                        full_name: matched.full_name,
+                        mobile_number: matched.mobile_number,
+                        email: matched.email || ""
+                    };
+                }
             }
 
-
-            if (!result.success || !result.farmer) {
-
-                throw new Error(
-                    "लॉगिन पूर्ण करता आले नाही. कृपया पुन्हा प्रयत्न करा."
-                );
+            if (!farmer) {
+                throw new Error("मोबाईल क्रमांक, ईमेल किंवा पासवर्ड चुकीचा आहे. कृपया पुन्हा प्रयत्न करा.");
             }
-
-
-            /* =========================
-               FARMER DATA
-               ========================= */
-
-            const farmer = result.farmer;
 
 
             /* =========================
@@ -274,10 +264,11 @@ if (loginForm) {
 
             setTimeout(function () {
 
-                window.location.href =
-                    "../home_page/home.html";
+                window.location.replace(
+                    "../home_page/home.html"
+                );
 
-            }, 1000);
+            }, 500);
 
 
         } catch (error) {

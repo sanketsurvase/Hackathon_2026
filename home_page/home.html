@@ -3,19 +3,13 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-  <meta name="theme-color" content="#08783f">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>किसानसेतू | शेतकरी डिजिटल सेवा</title>
+  <meta name="theme-color" content="#087a43">
 
-  <!-- Google Fonts - POPPINS & MUKTA (Matching Login & Sign Up Theme) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap"
-    rel="stylesheet">
+  <title>किसानसेवा</title>
 
-  <link rel="stylesheet" href="style.css?v=1.4">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -31,12 +25,14 @@
       <div class="brand-section">
 
         <div class="brand-logo">
-          <img src="assets/farmer_banner.jpg" alt="किसानसेतू शेतकरी लोगो" class="farmer-brand-img">
+          🌱
         </div>
 
         <div class="brand-details">
 
-          <h1>किसानसेतू</h1>
+          <h1>
+            किसानसेवा
+          </h1>
 
           <p>
             शेतकऱ्यांसाठी डिजिटल सेवा
@@ -49,12 +45,25 @@
 
       <div class="header-actions">
 
-        <button class="header-button" id="notificationBtn" aria-label="सूचना" type="button" title="सूचना">
+        <button
+          class="header-button"
+          id="notificationBtn"
+          aria-label="सूचना"
+          type="button">
+
           🔔
+
         </button>
 
-        <button class="profile-button" id="profileBtn" aria-label="प्रोफाइल" type="button" title="माझी प्रोफाइल">
+
+        <button
+          class="profile-button"
+          id="profileBtn"
+          aria-label="प्रोफाइल"
+          type="button">
+
           👨🏻‍🌾
+
         </button>
 
       </div>
@@ -68,11 +77,19 @@
 
     <div class="mobile-menu-bar">
 
-      <button class="mobile-menu-button" id="menuBtn" aria-label="मेनू उघडा" type="button">
+      <button
+        class="mobile-menu-button"
+        id="menuBtn"
+        aria-label="मेनू उघडा"
+        type="button">
+
         ☰
+
       </button>
 
-      <span>मेनू</span>
+      <span>
+        मेनू
+      </span>
 
     </div>
 
@@ -81,18 +98,21 @@
          PROFILE POPUP
     ====================================== -->
 
-    <div class="profile-popup" id="profilePopup" hidden>
+    <div
+      class="profile-popup"
+      id="profilePopup"
+      hidden>
 
       <div class="profile-popup-header">
 
         <div class="profile-large-avatar">
-          <img src="assets/farmer_banner.jpg" alt="शेतकरी" class="profile-farmer-img">
+          👨🏻‍🌾
         </div>
 
         <div class="profile-popup-name">
 
           <h3 id="profileName">
-            संकट पाटील
+            शेतकरी मित्र
           </h3>
 
           <p>
@@ -104,8 +124,13 @@
 
         </div>
 
-        <button class="profile-close" id="profileClose" type="button" aria-label="बंद करा">
+        <button
+          class="profile-close"
+          id="profileClose"
+          type="button">
+
           ×
+
         </button>
 
       </div>
@@ -141,7 +166,10 @@
       </div>
 
 
-      <button class="view-profile-button" id="viewProfileBtn" type="button">
+      <button
+        class="view-profile-button"
+        id="viewProfileBtn"
+        type="button">
 
         <span>
           माझी माहिती पहा
@@ -160,9 +188,14 @@
          LEFT MENU OVERLAY
     ====================================== -->
 
-    <div class="menu-overlay" id="menuOverlay" hidden>
+    <div
+      class="menu-overlay"
+      id="menuOverlay"
+      hidden>
 
-      <aside class="side-drawer" id="sideDrawer">
+      <aside
+        class="side-drawer"
+        id="sideDrawer">
 
 
         <!-- DRAWER HEADER -->
@@ -172,13 +205,13 @@
           <div class="drawer-brand">
 
             <div class="drawer-logo">
-              <img src="assets/farmer_banner.jpg" alt="शेतकरी" class="farmer-brand-img">
+              🌱
             </div>
 
             <div>
 
               <h2>
-                किसानसेतू
+                किसानसेवा
               </h2>
 
               <p>
@@ -190,8 +223,13 @@
           </div>
 
 
-          <button class="drawer-close" id="drawerClose" type="button" aria-label="मेनू बंद करा">
+          <button
+            class="drawer-close"
+            id="drawerClose"
+            type="button">
+
             ×
+
           </button>
 
         </div>
@@ -202,20 +240,23 @@
         <div class="drawer-user">
 
           <div class="drawer-user-avatar">
-            <img src="assets/farmer_banner.jpg" alt="शेतकरी" class="drawer-farmer-img">
+            👨🏻‍🌾
           </div>
 
           <div class="drawer-user-details">
 
             <strong id="drawerName">
-              संकट पाटील
+              शेतकरी मित्र
             </strong>
 
             <span>
+
               ID:
+
               <span id="drawerUserId">
                 KS10245
               </span>
+
             </span>
 
           </div>
@@ -224,10 +265,12 @@
 
 
         <!-- =====================================
-             ALL 12 MENU TABS ARE CREATED BY JS
+             MENU ITEMS CREATED BY SCRIPT.JS
         ====================================== -->
 
-        <div class="drawer-menu" id="drawerMenu">
+        <div
+          class="drawer-menu"
+          id="drawerMenu">
 
         </div>
 
@@ -237,7 +280,7 @@
         <div class="drawer-footer">
 
           <p>
-            किसानसेतू
+            किसानसेवा
           </p>
 
           <span>
@@ -258,22 +301,28 @@
     <main class="main-content">
 
 
-      <!-- WELCOME -->
+      <!-- =====================================
+           WELCOME CARD
+      ====================================== -->
 
       <section class="welcome-card">
 
         <div class="welcome-content">
 
           <p class="welcome-small">
-            किसानसेतूमध्ये आपले स्वागत आहे
+            किसानसेवामध्ये आपले स्वागत आहे
           </p>
 
           <h2>
+
             नमस्कार,
+
             <span id="welcomeName">
-              संकट पाटील
+              शेतकरी मित्र
             </span>
+
             ! 👋
+
           </h2>
 
           <p class="welcome-description">
@@ -308,7 +357,7 @@
 
 
         <div class="welcome-farmer">
-          <img src="assets/farmer_banner.jpg" alt="शेतकरी" class="welcome-farmer-img">
+          👨🏻‍🌾
         </div>
 
       </section>
@@ -336,9 +385,14 @@
         <div class="service-list">
 
 
-          <!-- PIKANCHI MAHITI -->
+          <!-- =================================
+               PIKANCHI MAHITI
+          ================================== -->
 
-          <button class="service-card" data-tab="crops" type="button">
+          <button
+            class="service-card"
+            data-tab="crops"
+            type="button">
 
             <div class="service-icon green">
               🌱
@@ -363,9 +417,14 @@
           </button>
 
 
-          <!-- SLOT BOOKING -->
+          <!-- =================================
+               SLOT BOOKING
+          ================================== -->
 
-          <button class="service-card" data-tab="slotBooking" type="button">
+          <button
+            class="service-card"
+            data-tab="booking"
+            type="button">
 
             <div class="service-icon yellow">
               🧾
@@ -390,9 +449,14 @@
           </button>
 
 
-          <!-- MY BOOKING -->
+          <!-- =================================
+               MY BOOKING
+          ================================== -->
 
-          <button class="service-card" data-tab="myBooking" type="button">
+          <button
+            class="service-card"
+            data-tab="myBooking"
+            type="button">
 
             <div class="service-icon blue">
               🧺
@@ -417,9 +481,14 @@
           </button>
 
 
-          <!-- LIVE QUEUE -->
+          <!-- =================================
+               LIVE QUEUE
+          ================================== -->
 
-          <button class="service-card" data-tab="liveQueue" type="button">
+          <button
+            class="service-card"
+            data-tab="liveQueue"
+            type="button">
 
             <div class="service-icon purple">
               📄
@@ -444,6 +513,26 @@
           </button>
 
 
+          <!-- =================================
+               COMPLAINT / FEEDBACK
+          ================================== -->
+<a
+    href="./complaints/complaint.html"
+    class="service-card complaint-card">
+
+    <div class="service-icon purple">
+        💬
+    </div>
+
+    <div class="service-content">
+        <h3>तक्रार / अभिप्राय</h3>
+        <p>आपली तक्रार किंवा अभिप्राय नोंदवा</p>
+    </div>
+
+    <span class="service-arrow">→</span>
+
+</a>
+
         </div>
 
       </section>
@@ -456,9 +545,14 @@
       <section class="small-services">
 
 
-        <!-- PURCHASE STATUS -->
+        <!-- =================================
+             PURCHASE STATUS
+        ================================== -->
 
-        <button class="small-service-card" data-tab="purchase" type="button">
+        <button
+          class="small-service-card"
+          data-tab="purchase"
+          type="button">
 
           <div class="small-service-icon">
             ⏱️
@@ -483,9 +577,14 @@
         </button>
 
 
-        <!-- PAYMENT STATUS -->
+        <!-- =================================
+             PAYMENT STATUS
+        ================================== -->
 
-        <button class="small-service-card" data-tab="payment" type="button">
+        <button
+          class="small-service-card"
+          data-tab="payment"
+          type="button">
 
           <div class="small-service-icon notification">
             📍
@@ -520,19 +619,23 @@
       <section class="farmer-banner">
 
         <div class="banner-farmer">
-          <img src="assets/farmer_banner.jpg" alt="किसानसेतू शेतकरी" class="banner-farmer-img">
+          👨🏻‍🌾
         </div>
 
         <div class="banner-text">
 
           <h2>
+
             “समृद्ध शेतकरी<br>
             समृद्ध भारत”
+
           </h2>
 
           <p>
+
             आधुनिक तंत्रज्ञानासोबत<br>
             शेतीला नवी दिशा.
+
           </p>
 
         </div>
@@ -555,8 +658,10 @@
         </span>
 
         <p>
+
           मेनू बटणावर क्लिक करून<br>
           सर्व सेवा पहा.
+
         </p>
 
       </div>
@@ -567,9 +672,68 @@
   </div>
 
 
-  <!-- JAVASCRIPT -->
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
 
   <script src="script.js"></script>
+
+
+  <!-- =====================================
+       COMPLAINT PAGE NAVIGATION
+       Extra safety for JS-generated menu
+  ====================================== -->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      /*
+       * Complaint / Feedback card
+       */
+      const complaintCard =
+        document.querySelector(".complaint-card");
+
+      if (complaintCard) {
+
+        complaintCard.addEventListener("click", function () {
+
+          window.location.href =
+            "./complaints/complaint.html";
+
+        });
+
+      }
+
+
+      /*
+       * If complaint menu item is generated
+       * dynamically by script.js
+       */
+      document.addEventListener("click", function (event) {
+
+        const target =
+          event.target.closest(
+            '[data-tab="complaint"],' +
+            '[data-tab="complaints"],' +
+            '[data-tab="feedback"]'
+          );
+
+        if (target) {
+
+          event.preventDefault();
+
+          window.location.href =
+            "./complaints/complaint.html";
+
+        }
+
+      });
+
+    });
+
+  </script>
+
 
 </body>
 

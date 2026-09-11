@@ -801,12 +801,18 @@ body {
 ========================================================= */
 @media (max-width: 1024px) {
     .main-container {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
         gap: 28px;
         padding: 20px 16px 40px 16px;
     }
 
+    .form-section {
+        order: 1;
+    }
+
     .hero-section {
+        order: 2;
         position: static;
         gap: 16px;
     }

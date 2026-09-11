@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>किसानसेवा | स्लॉट बुकिंग (Slot Booking)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="slot-booking.css">
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
+        <div class="header-title">
+          <h1>स्लॉट बुकिंग (Slot Booking)</h1>
+          <p>केवळ ५ सोप्या टप्प्यांत शेतमाल विक्री स्लॉट बुक करा</p>
+        </div>
+      </div>
+      <div class="user-badge">
+        <span class="user-icon">👨🏻‍🌾</span>
+        <div class="user-text">
+          <strong id="headerUserName"></strong>
+          <small id="headerUserId"></small>
+        </div>
+      </div>
+    </header>
+
+    <!-- STEPPER PROGRESS BAR -->
+    <div class="stepper-bar">
+      <div class="step-pill active" data-step="1"><span>१</span> पीक</div>
+      <span class="step-arrow">→</span>
+      <div class="step-pill" data-step="2"><span>२</span> प्रमाण</div>
+      <span class="step-arrow">→</span>
+      <div class="step-pill" data-step="3"><span>३</span> खरेदी केंद्र</div>
+      <span class="step-arrow">→</span>
+      <div class="step-pill" data-step="4"><span>४</span> तारीख</div>
+      <span class="step-arrow">→</span>
+      <div class="step-pill" data-step="5"><span>५</span> वेळ स्लॉट</div>
+    </div>
+
+    <!-- MAIN FORM WRAPPER -->
+    <main class="page-content">
+      <form id="slotBookingForm" class="booking-form" novalidate>
+
+        <!-- 1. पीक निवडा — Crop name -->
+        <div class="form-card step-card" id="stepCrop">
+          <div class="card-header">
+            <span class="step-num">१</span>
+            <div class="step-title">
+              <h2>पीक निवडा (Crop Name)</h2>
+              <p>आपल्याला विक्रीसाठी आणायचा शेतमाल निवडा</p>
+            </div>
+          </div>
+          <div class="crop-quick-grid">
+            <label class="crop-tile active">
+              <input type="radio" name="cropOption" value="सोयाबीन (Soybean)" checked>
+              <span class="tile-icon">🫘</span>
+              <span class="tile-name">सोयाबीन</span>
+              <span class="tile-msp">हमीभाव: ₹४,८९२</span>
+            </label>
+            <label class="crop-tile">
+              <input type="radio" name="cropOption" value="कापूस (Cotton)">
+              <span class="tile-icon">☁️</span>
+              <span class="tile-name">कापूस</span>
+              <span class="tile-msp">हमीभाव: ₹७,५२१</span>
+            </label>
+            <label class="crop-tile">
+              <input type="radio" name="cropOption" value="तूर (Tur/Arhar)">
+              <span class="tile-icon">🌾</span>
+              <span class="tile-name">तूर</span>
+              <span class="tile-msp">हमीभाव: ₹७,५५०</span>
+            </label>
+            <label class="crop-tile">
+              <input type="radio" name="cropOption" value="हरभरा (Chana)">
+              <span class="tile-icon">🌱</span>
+              <span class="tile-name">हरभरा</span>
+              <span class="tile-msp">हमीभाव: ₹५,४४०</span>
+            </label>
+            <label class="crop-tile">
+              <input type="radio" name="cropOption" value="गहू (Wheat)">
+              <span class="tile-icon">🍞</span>
+              <span class="tile-name">गहू</span>
+              <span class="tile-msp">हमीभाव: ₹२,४२५</span>
+            </label>
+            <label class="crop-tile">
+              <input type="radio" name="cropOption" value="मका (Maize)">
+              <span class="tile-icon">🌽</span>
+              <span class="tile-name">मका</span>
+              <span class="tile-msp">हमीभाव: ₹२,२२५</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- 2. अंदाजित प्रमाण — Quantity in quintal -->
+        <div class="form-card step-card" id="stepQuantity">
+          <div class="card-header">
+            <span class="step-num">२</span>
+            <div class="step-title">
+              <h2>अंदाजित प्रमाण (Quantity in Quintal)</h2>
+              <p>विक्रीसाठी आणायचे अंदाजे वजन क्विंटलमध्ये नोंदवा</p>
+            </div>
+          </div>
+          <div class="qty-input-box">
+            <div class="qty-input-group">
+              <input type="number" id="quantityInput" min="1" max="500" step="1" value="45" required>
+              <span class="qty-unit">क्विंटल (Quintal)</span>
+            </div>
+            <div class="qty-quick-buttons">
+              <button type="button" class="quick-qty-btn" data-val="15">+ १५ क्विंटल</button>
+              <button type="button" class="quick-qty-btn" data-val="30">+ ३० क्विंटल</button>
+              <button type="button" class="quick-qty-btn" data-val="45">+ ४५ क्विंटल</button>
+              <button type="button" class="quick-qty-btn" data-val="60">+ ६० क्विंटल</button>
+              <button type="button" class="quick-qty-btn" data-val="100">+ १०० क्विंटल</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. खरेदी केंद्र निवडा — Procurement centre -->
+        <div class="form-card step-card" id="stepCenter">
+          <div class="card-header">
+            <span class="step-num">३</span>
+            <div class="step-title">
+              <h2>खरेदी केंद्र निवडा (Procurement Centre)</h2>
+              <p>आपल्या तालुक्यातील शासकीय खरेदी केंद्र / APMC यार्ड</p>
+            </div>
+          </div>
+          <div class="center-select-wrap">
+            <div class="center-option active">
+              <label>
+                <input type="radio" name="centerOption" value="कृषी उत्पन्न बाजार समिती, पंढरपूर (मुख्य यार्ड)" checked>
+                <div class="center-body">
+                  <strong>कृषी उत्पन्न बाजार समिती, पंढरपूर (मुख्य यार्ड)</strong>
+                  <p>मोहोळ रोड, पंढरपूर • काटा क्र. १ व २ उपलब्ध</p>
+                </div>
+              </label>
+            </div>
+            <div class="center-option">
+              <label>
+                <input type="radio" name="centerOption" value="उपबाजार केंद्र, करकंब - पंढरपूर">
+                <div class="center-body">
+                  <strong>उपबाजार केंद्र, करकंब - पंढरपूर</strong>
+                  <p>करकंब ग्रामीण यार्ड • कापूस व सोयाबीन खरेदी</p>
+                </div>
+              </label>
+            </div>
+            <div class="center-option">
+              <label>
+                <input type="radio" name="centerOption" value="शासकीय हमीभाव खरेदी केंद्र, मोहोळ">
+                <div class="center-body">
+                  <strong>शासकीय हमीभाव खरेदी केंद्र, मोहोळ</strong>
+                  <p>स्टेशन रोड, मोहोळ • सर्व धान्य खरेदी</p>
+                </div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 4. तारीख निवडा — Booking date -->
+        <div class="form-card step-card" id="stepDate">
+          <div class="card-header">
+            <span class="step-num">४</span>
+            <div class="step-title">
+              <h2>तारीख निवडा (Booking Date)</h2>
+              <p>आपल्या सोयीनुसार विक्रीची तारीख निवडा</p>
+            </div>
+          </div>
+          <div class="date-selector-row">
+            <div class="date-quick-tags" id="dateQuickTags">
+              <!-- Dynamically populated upcoming dates -->
+            </div>
+            <div class="manual-date-picker">
+              <label for="slotDate">किंवा कॅलेंडरमधून निवडा:</label>
+              <input type="date" id="slotDate" required>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. वेळ स्लॉट निवडा — Available time slot -->
+        <div class="form-card step-card" id="stepSlot">
+          <div class="card-header">
+            <span class="step-num">५</span>
+            <div class="step-title">
+              <h2>वेळ स्लॉट निवडा (Available Time Slot)</h2>
+              <p>केंद्रावर वाहन घेऊन पोहोचण्यासाठी उपलब्ध वेळ</p>
+            </div>
+          </div>
+          <div class="slot-grid" id="slotsGrid">
+            <!-- Dynamically populated time slots -->
+          </div>
+        </div>
+
+        <!-- CONFIRMATION SUMMARY BAR & SUBMIT -->
+        <div class="form-card summary-card">
+          <div class="booking-summary-preview">
+            <div class="sum-item"><span>पीक:</span> <strong id="sumCrop">सोयाबीन</strong></div>
+            <div class="sum-item"><span>प्रमाण:</span> <strong id="sumQty">४५ क्विंटल</strong></div>
+            <div class="sum-item"><span>केंद्र:</span> <strong id="sumCenter">पंढरपूर मुख्य यार्ड</strong></div>
+            <div class="sum-item"><span>तारीख:</span> <strong id="sumDate">उद्या</strong></div>
+            <div class="sum-item"><span>वेळ:</span> <strong id="sumTime">सकाळी ०८:०० - १०:००</strong></div>
+          </div>
+          <div class="form-actions">
+            <a href="../home_page/home.html" class="btn btn-secondary">रद्द करा</a>
+            <button type="submit" class="btn btn-primary" id="confirmBookingBtn">
+              <span>स्लॉट निश्चित करा (Confirm Booking)</span>
+              <span class="btn-arrow">✓</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </main>
+
+    <!-- SUCCESS MODAL: BOOKING ID + TOKEN NUMBER -->
+    <div class="modal-overlay" id="receiptModal" hidden>
+      <div class="modal-content receipt-modal">
+        <div class="receipt-header">
+          <div class="success-icon">🎉</div>
+          <h2>बुकिंग यशस्वी झाली!</h2>
+          <p>आपला स्लॉट अधिकृतपणे निश्चित झाला आहे.</p>
+        </div>
+
+        <!-- THE KEY GENERATED DETAILS: BOOKING ID + TOKEN NUMBER -->
+        <div class="token-display-box">
+          <div class="token-col">
+            <span class="td-label">बुकिंग ओळख क्रमांक (Booking ID)</span>
+            <div class="td-val booking-id" id="receiptBookingId">KS-BK-2026-8492</div>
+          </div>
+          <div class="token-divider"></div>
+          <div class="token-col highlight">
+            <span class="td-label">टोकन क्रमांक (Token Number)</span>
+            <div class="td-val token-num" id="receiptToken">#२४</div>
+          </div>
+        </div>
+
+        <!-- PRINTABLE SLIP -->
+        <div class="receipt-card" id="printableReceipt">
+          <div class="receipt-title-bar">
+            <span>🌱 किसानसेवा - ई-गेट पास (Gate Pass)</span>
+            <small id="rcptTimestamp">१० सप्टें २०२६</small>
+          </div>
+          <div class="receipt-meta-grid">
+            <div class="meta-cell">
+              <span class="meta-label">शेतकऱ्याचे नाव:</span>
+              <strong id="rcptName"></strong>
+            </div>
+            <div class="meta-cell">
+              <span class="meta-label">शेतकरी आयडी:</span>
+              <strong id="rcptUserId"></strong>
+            </div>
+            <div class="meta-cell">
+              <span class="meta-label">१. शेतमाल / पीक:</span>
+              <strong id="rcptCrop">सोयाबीन (Soybean)</strong>
+            </div>
+            <div class="meta-cell">
+              <span class="meta-label">२. प्रमाण:</span>
+              <strong id="rcptQty">४५ क्विंटल</strong>
+            </div>
+            <div class="meta-cell">
+              <span class="meta-label">३. खरेदी केंद्र:</span>
+              <strong id="rcptCenter">पंढरपूर मुख्य यार्ड</strong>
+            </div>
+            <div class="meta-cell">
+              <span class="meta-label">४. तारीख:</span>
+              <strong id="rcptDate">११ सप्टेंबर २०२६</strong>
+            </div>
+            <div class="meta-cell highlight-cell">
+              <span class="meta-label">५. वेळ स्लॉट:</span>
+              <strong id="rcptSlot">सकाळी ०८:०० - १०:००</strong>
+            </div>
+            <div class="meta-cell highlight-cell">
+              <span class="meta-label">रांगेतील अंदाजे वेळ:</span>
+              <strong>वेळेवर उपस्थित राहा</strong>
+            </div>
+          </div>
+          <div class="receipt-instructions">
+            📌 <strong>सूचना:</strong> खरेदी केंद्राच्या मुख्य प्रवेशद्वारावर हा बुकिंग आयडी व टोकन क्रमांक दाखवावा.
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-outline" id="printReceiptBtn">🖨️ पावती प्रिंट करा</button>
+          <a href="../my_booking/my-booking.html" class="btn btn-primary">माझी बुकिंग पहा →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="slot-booking.js"></script>
+</body>
+
+</html>

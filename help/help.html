@@ -1,0 +1,1960 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>KisanSeva - मदत</title>
+
+
+    <!-- ================= FONTS ================= -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+
+    <!-- ================= FONT AWESOME ================= -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+
+    <!-- ================= HELP CSS ================= -->
+
+    <link rel="stylesheet" href="help.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="header">
+
+        <div class="logo-section">
+
+            <div class="logo">
+
+                <i class="fa-solid fa-leaf"></i>
+
+            </div>
+
+
+            <div class="logo-text">
+
+                <h2>KisanSeva</h2>
+
+                <p>
+                    शेतकरी खरेदी-विक्री प्लॅटफॉर्म
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= DESKTOP NAVIGATION ================= -->
+
+        <nav class="navbar">
+
+            <a href="../home_page/home.html">
+                मुख्यपृष्ठ
+            </a>
+
+
+            <a href="../Login/login.html">
+                नोंदणी
+            </a>
+
+
+            <a href="../slot_booking/slot-booking.html">
+                स्लॉट बुक करा
+            </a>
+
+
+            <a href="../my_booking/my-booking.html">
+                माझे बुकिंग
+            </a>
+
+
+            <a href="../live_queue/live-queue.html">
+                थेट रांग
+            </a>
+
+
+            <a href="../notifications/notifications.html">
+                सूचना
+            </a>
+
+
+            <a href="../procurement_status/procurement-status.html">
+                खरेदी स्थिती
+            </a>
+
+
+            <a href="../payment_status/payment-status.html">
+                पेमेंट स्थिती
+            </a>
+
+
+            <a href="help.html" class="active">
+                मदत
+            </a>
+
+        </nav>
+
+
+        <!-- ================= MOBILE BUTTON ================= -->
+
+        <button
+            type="button"
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="मेनू उघडा">
+
+            <i class="fa-solid fa-bars"></i>
+
+        </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         MOBILE MENU
+    ====================================================== -->
+
+    <div class="mobile-menu" id="mobileMenu">
+
+        <a href="../home_page/home.html">
+            मुख्यपृष्ठ
+        </a>
+
+
+        <a href="../Login/login.html">
+            नोंदणी
+        </a>
+
+
+        <a href="../slot_booking/slot-booking.html">
+            स्लॉट बुक करा
+        </a>
+
+
+        <a href="../my_booking/my-booking.html">
+            माझे बुकिंग
+        </a>
+
+
+        <a href="../live_queue/live-queue.html">
+            थेट रांग
+        </a>
+
+
+        <a href="../notifications/notifications.html">
+            सूचना
+        </a>
+
+
+        <a href="../procurement_status/procurement-status.html">
+            खरेदी स्थिती
+        </a>
+
+
+        <a href="../payment_status/payment-status.html">
+            पेमेंट स्थिती
+        </a>
+
+
+        <a href="help.html" class="active">
+            मदत
+        </a>
+
+    </div>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="help-container">
+
+
+        <!-- ================= BACK BUTTON ================= -->
+
+        <div class="back-section">
+
+            <button
+                type="button"
+                class="back-btn"
+                onclick="goBack()">
+
+                <i class="fa-solid fa-arrow-left"></i>
+
+                मागे जा
+
+            </button>
+
+        </div>
+
+
+        <!-- ================= PAGE HEADING ================= -->
+
+        <section class="page-heading">
+
+            <div class="heading-icon">
+
+                <i class="fa-solid fa-circle-question"></i>
+
+            </div>
+
+
+            <div>
+
+                <h1>
+                    मदत
+                </h1>
+
+                <p>
+                    KisanSeva वापरताना आवश्यक माहिती येथे मिळवा
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             QUICK HELP
+        ====================================================== -->
+
+        <section class="quick-help">
+
+            <h2>
+                तुम्हाला कोणत्या विषयात मदत हवी आहे?
+            </h2>
+
+
+            <div class="category-grid">
+
+
+                <!-- ================= REGISTRATION ================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    onclick="scrollToSection('registration')">
+
+                    <div class="category-icon registration">
+
+                        <i class="fa-solid fa-user-plus"></i>
+
+                    </div>
+
+                    <span>
+                        शेतकरी नोंदणी
+                    </span>
+
+                </button>
+
+
+                <!-- ================= BOOKING ================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    onclick="scrollToSection('booking')">
+
+                    <div class="category-icon booking">
+
+                        <i class="fa-solid fa-calendar-check"></i>
+
+                    </div>
+
+                    <span>
+                        स्लॉट बुकिंग
+                    </span>
+
+                </button>
+
+
+                <!-- ================= QUEUE ================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    onclick="scrollToSection('queue')">
+
+                    <div class="category-icon queue">
+
+                        <i class="fa-solid fa-users"></i>
+
+                    </div>
+
+                    <span>
+                        थेट रांग
+                    </span>
+
+                </button>
+
+
+                <!-- ================= PROCUREMENT ================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    onclick="scrollToSection('procurement')">
+
+                    <div class="category-icon procurement">
+
+                        <i class="fa-solid fa-wheat-awn"></i>
+
+                    </div>
+
+                    <span>
+                        खरेदी प्रक्रिया
+                    </span>
+
+                </button>
+
+
+                <!-- ================= PAYMENT ================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    onclick="scrollToSection('payment')">
+
+                    <div class="category-icon payment">
+
+                        <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                    </div>
+
+                    <span>
+                        पेमेंट
+                    </span>
+
+                </button>
+
+
+                <!-- ================= NOTIFICATIONS ================= -->
+
+                <button
+                    type="button"
+                    class="category-card"
+                    onclick="scrollToSection('notifications')">
+
+                    <div class="category-icon notification">
+
+                        <i class="fa-solid fa-bell"></i>
+
+                    </div>
+
+                    <span>
+                        सूचना
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             FAQ SECTION
+        ====================================================== -->
+
+        <section class="faq-section">
+
+            <div class="section-title">
+
+                <h2>
+                    वारंवार विचारले जाणारे प्रश्न
+                </h2>
+
+                <p>
+                    शेतकऱ्यांना भेडसावणाऱ्या सामान्य प्रश्नांची उत्तरे
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 FARMER REGISTRATION
+            ================================================== -->
+
+            <div
+                class="faq-category"
+                id="registration">
+
+
+                <!-- FAQ 1 -->
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-user-plus"></i>
+
+                            मी शेतकरी म्हणून नोंदणी कशी करू शकतो?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                शेतकरी नोंदणी प्रक्रिया
+                            </h4>
+
+                            <p>
+                                KisanSeva प्लॅटफॉर्मवर शेतकरी म्हणून नोंदणी
+                                करण्यासाठी खालील प्रक्रिया पूर्ण करा.
+                            </p>
+
+
+                            <ol>
+
+                                <li>
+                                    <strong>नोंदणी</strong> पर्यायावर क्लिक करा.
+                                </li>
+
+                                <li>
+                                    तुमचे नाव आणि आवश्यक माहिती भरा.
+                                </li>
+
+                                <li>
+                                    वैध मोबाईल क्रमांक प्रविष्ट करा.
+                                </li>
+
+                                <li>
+                                    तुमच्या शेतीशी संबंधित आवश्यक माहिती भरा.
+                                </li>
+
+                                <li>
+                                    माहिती तपासून नोंदणी पूर्ण करा.
+                                </li>
+
+                            </ol>
+
+
+                            <div class="important-box">
+
+                                <i class="fa-solid fa-circle-info"></i>
+
+                                <span>
+                                    नोंदणी करताना मोबाईल क्रमांक अचूक द्या,
+                                    कारण महत्त्वाच्या सूचना त्यावर पाठवल्या
+                                    जाऊ शकतात.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FAQ 2 -->
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-user-pen"></i>
+
+                            माझी शेतकरी माहिती बदलू शकतो का?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                प्रोफाइल माहिती अपडेट करणे
+                            </h4>
+
+                            <p>
+                                तुमच्या प्रोफाइलमधील उपलब्ध माहिती आवश्यकतेनुसार
+                                अपडेट करता येते.
+                            </p>
+
+
+                            <ol>
+
+                                <li>
+                                    तुमच्या खात्यात लॉगिन करा.
+                                </li>
+
+                                <li>
+                                    प्रोफाइल किंवा माझी माहिती विभाग उघडा.
+                                </li>
+
+                                <li>
+                                    आवश्यक माहितीमध्ये बदल करा.
+                                </li>
+
+                                <li>
+                                    अपडेट/जतन करा या पर्यायावर क्लिक करा.
+                                </li>
+
+                            </ol>
+
+
+                            <p class="note">
+                                चुकीची माहिती आढळल्यास संबंधित खरेदी केंद्राशी
+                                संपर्क साधणे योग्य आहे.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FAQ 3 -->
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+
+                            मोबाईल क्रमांक बदलल्यास काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                मोबाईल क्रमांकाबाबत
+                            </h4>
+
+                            <p>
+                                मोबाईल क्रमांक हा स्लॉट, रांग, खरेदी आणि पेमेंट
+                                संबंधित सूचना मिळवण्यासाठी महत्त्वाचा आहे.
+                            </p>
+
+                            <p>
+                                मोबाईल क्रमांक बदलल्यास तुमच्या प्रोफाइलमध्ये
+                                उपलब्ध असल्यास नवीन क्रमांक अपडेट करा.
+                                बदल करता येत नसल्यास संबंधित खरेदी केंद्राच्या
+                                सहाय्यक टीमशी संपर्क साधा.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SLOT BOOKING
+            ================================================== -->
+
+            <div
+                class="faq-category"
+                id="booking">
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-calendar-check"></i>
+
+                            मी खरेदी केंद्रासाठी स्लॉट कसा बुक करू?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                स्लॉट बुक करण्याची प्रक्रिया
+                            </h4>
+
+                            <p>
+                                खरेदी केंद्रावर अनावश्यक गर्दी आणि प्रतीक्षा
+                                वेळ कमी करण्यासाठी स्लॉट बुकिंग सुविधा वापरा.
+                            </p>
+
+
+                            <ol>
+
+                                <li>
+                                    <strong>स्लॉट बुक करा</strong> या पर्यायावर
+                                    क्लिक करा.
+                                </li>
+
+                                <li>
+                                    तुमच्या सोयीचे खरेदी केंद्र निवडा.
+                                </li>
+
+                                <li>
+                                    उपलब्ध तारीख निवडा.
+                                </li>
+
+                                <li>
+                                    उपलब्ध वेळेतील स्लॉट निवडा.
+                                </li>
+
+                                <li>
+                                    पिकाची आवश्यक माहिती भरा.
+                                </li>
+
+                                <li>
+                                    सर्व माहिती तपासा.
+                                </li>
+
+                                <li>
+                                    <strong>स्लॉट निश्चित करा</strong> वर क्लिक करा.
+                                </li>
+
+                            </ol>
+
+
+                            <div class="important-box">
+
+                                <i class="fa-solid fa-clock"></i>
+
+                                <span>
+                                    निश्चित केलेल्या वेळेच्या आधी खरेदी
+                                    केंद्रावर पोहोचण्याचा प्रयत्न करा.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-calendar-xmark"></i>
+
+                            माझा स्लॉट चुकल्यास काय होईल?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                स्लॉट चुकल्यास
+                            </h4>
+
+                            <p>
+                                तुमचा बुक केलेला स्लॉट चुकल्यास प्रथम
+                                <strong>माझे बुकिंग</strong> विभाग तपासा.
+                            </p>
+
+                            <p>
+                                नवीन स्लॉट उपलब्ध असल्यास नवीन स्लॉट
+                                बुक करण्याचा प्रयत्न करा. स्लॉट उपलब्ध
+                                नसल्यास संबंधित खरेदी केंद्राशी संपर्क साधा.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-clock"></i>
+
+                            मी माझे बुकिंग पुन्हा शेड्यूल करू शकतो का?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                बुकिंगमध्ये बदल
+                            </h4>
+
+                            <p>
+                                उपलब्ध सुविधा आणि स्लॉटच्या उपलब्धतेनुसार
+                                बुकिंगमध्ये बदल किंवा नवीन स्लॉट निवडता येऊ शकतो.
+                            </p>
+
+
+                            <ol>
+
+                                <li>
+                                    <strong>माझे बुकिंग</strong> उघडा.
+                                </li>
+
+                                <li>
+                                    तुमचे बुकिंग निवडा.
+                                </li>
+
+                                <li>
+                                    उपलब्ध असल्यास बदल/पुन्हा बुकिंग पर्याय निवडा.
+                                </li>
+
+                                <li>
+                                    नवीन तारीख आणि वेळ निवडा.
+                                </li>
+
+                                <li>
+                                    बुकिंग पुन्हा निश्चित करा.
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-ban"></i>
+
+                            स्लॉट उपलब्ध नसल्यास काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                स्लॉट उपलब्ध नसल्यास
+                            </h4>
+
+                            <p>
+                                सर्व स्लॉट भरले असल्यास दुसरी उपलब्ध तारीख
+                                किंवा वेळ तपासा.
+                            </p>
+
+                            <p>
+                                शक्य असल्यास जवळचे दुसरे उपलब्ध खरेदी केंद्र
+                                तपासा. यामुळे गर्दी कमी करण्यास आणि तुमचा
+                                प्रतीक्षा वेळ कमी करण्यास मदत होईल.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 LIVE QUEUE
+            ================================================== -->
+
+            <div
+                class="faq-category"
+                id="queue">
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-users"></i>
+
+                            मी माझी रांगेतील स्थिती कशी पाहू शकतो?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                थेट रांगेची माहिती
+                            </h4>
+
+                            <p>
+                                <strong>थेट रांग</strong> विभागामध्ये
+                                तुमच्या बुकिंगची सद्यस्थिती पाहता येते.
+                            </p>
+
+
+                            <ul>
+
+                                <li>
+                                    तुमचा रांगेतील क्रमांक
+                                </li>
+
+                                <li>
+                                    तुमच्या पुढे असलेल्या शेतकऱ्यांची संख्या
+                                </li>
+
+                                <li>
+                                    अंदाजे प्रतीक्षा वेळ
+                                </li>
+
+                                <li>
+                                    खरेदी केंद्राची सद्यस्थिती
+                                </li>
+
+                            </ul>
+
+
+                            <div class="important-box">
+
+                                <i class="fa-solid fa-arrows-rotate"></i>
+
+                                <span>
+                                    रांगेतील स्थिती बदलत राहू शकते,
+                                    त्यामुळे केंद्रावर जाण्यापूर्वी
+                                    सद्यस्थिती तपासा.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-hourglass-half"></i>
+
+                            प्रतीक्षा वेळ कशी ठरवली जाते?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                अंदाजे प्रतीक्षा वेळ
+                            </h4>
+
+                            <p>
+                                प्रतीक्षा वेळ तुमचा रांगेतील क्रमांक,
+                                तुमच्या पुढील शेतकऱ्यांची संख्या आणि
+                                खरेदी केंद्रातील प्रक्रियेच्या गतीवर
+                                अवलंबून असते.
+                            </p>
+
+                            <p>
+                                प्रत्यक्ष प्रतीक्षा वेळ परिस्थितीनुसार
+                                कमी किंवा जास्त होऊ शकतो.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-people-arrows"></i>
+
+                            रांगेतील क्रमांक बदलतो का?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                रांगेतील क्रमांक
+                            </h4>
+
+                            <p>
+                                होय. तुमच्या आधी असलेल्या शेतकऱ्यांची
+                                प्रक्रिया पूर्ण झाल्यावर तुमचा क्रमांक
+                                पुढे येऊ शकतो.
+                            </p>
+
+                            <p>
+                                त्यामुळे रांगेची सद्यस्थिती नियमितपणे
+                                तपासणे उपयुक्त ठरते.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PROCUREMENT
+            ================================================== -->
+
+            <div
+                class="faq-category"
+                id="procurement">
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-wheat-awn"></i>
+
+                            माझ्या खरेदीची स्थिती कशी तपासू शकतो?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                खरेदी स्थिती तपासणे
+                            </h4>
+
+                            <p>
+                                <strong>खरेदी स्थिती</strong> विभागामध्ये
+                                तुमच्या उत्पादनाच्या खरेदी प्रक्रियेची
+                                सद्यस्थिती पाहता येते.
+                            </p>
+
+                            <p>
+                                प्रक्रियेमध्ये खालील टप्पे असू शकतात:
+                            </p>
+
+
+                            <ul>
+
+                                <li>
+                                    उत्पादन प्राप्त
+                                </li>
+
+                                <li>
+                                    वजन प्रक्रिया
+                                </li>
+
+                                <li>
+                                    गुणवत्ता तपासणी
+                                </li>
+
+                                <li>
+                                    खरेदी नोंद
+                                </li>
+
+                                <li>
+                                    खरेदी पूर्ण
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-file-circle-check"></i>
+
+                            कोणती कागदपत्रे आवश्यक असू शकतात?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                आवश्यक कागदपत्रे
+                            </h4>
+
+                            <p>
+                                आवश्यक कागदपत्रे पिकाचा प्रकार,
+                                खरेदी केंद्र आणि लागू असलेल्या
+                                नियमांनुसार वेगवेगळी असू शकतात.
+                            </p>
+
+                            <p>
+                                त्यामुळे खरेदी केंद्राने दिलेल्या
+                                अधिकृत सूचनांनुसार आवश्यक कागदपत्रे
+                                सोबत ठेवावीत.
+                            </p>
+
+
+                            <div class="important-box">
+
+                                <i class="fa-solid fa-folder-open"></i>
+
+                                <span>
+                                    आवश्यक कागदपत्रांची माहिती आधी तपासल्यास
+                                    खरेदी केंद्रावर होणारा अतिरिक्त वेळ कमी होतो.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-scale-balanced"></i>
+
+                            माझ्या उत्पादनाचे वजन कसे केले जाते?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                वजन प्रक्रिया
+                            </h4>
+
+                            <p>
+                                खरेदी केंद्रावर उत्पादनाची अधिकृत प्रक्रियेनुसार
+                                तपासणी व वजन केले जाते.
+                            </p>
+
+                            <p>
+                                वजनाशी संबंधित माहिती नोंदवल्यानंतर ती
+                                खरेदी प्रक्रियेत वापरली जाते.
+                            </p>
+
+                            <p>
+                                वजनाबाबत काही अडचण असल्यास त्याच वेळी
+                                संबंधित केंद्राच्या अधिकाऱ्याला कळवा.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+
+                            माझ्या खरेदीमध्ये समस्या असल्यास काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                खरेदीशी संबंधित समस्या
+                            </h4>
+
+                            <p>
+                                तुमच्या खरेदीची स्थिती अपेक्षेप्रमाणे
+                                अपडेट झाली नसेल तर:
+                            </p>
+
+
+                            <ol>
+
+                                <li>
+                                    खरेदी स्थिती तपासा.
+                                </li>
+
+                                <li>
+                                    तुमचे बुकिंग आणि रांगेची माहिती तपासा.
+                                </li>
+
+                                <li>
+                                    आवश्यक असल्यास खरेदी केंद्राशी संपर्क करा.
+                                </li>
+
+                                <li>
+                                    समस्येची माहिती सहाय्यक टीमला द्या.
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 PAYMENT
+            ================================================== -->
+
+            <div
+                class="faq-category"
+                id="payment">
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                            मी माझी पेमेंट स्थिती कशी तपासू शकतो?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                पेमेंट स्थिती तपासणे
+                            </h4>
+
+                            <p>
+                                <strong>पेमेंट स्थिती</strong> विभागामध्ये
+                                तुमच्या खरेदीशी संबंधित पेमेंटची सद्यस्थिती
+                                पाहता येते.
+                            </p>
+
+                            <p>
+                                येथे उपलब्ध असल्यास खालील माहिती पाहता येईल:
+                            </p>
+
+
+                            <ul>
+
+                                <li>
+                                    एकूण रक्कम
+                                </li>
+
+                                <li>
+                                    मंजूर रक्कम
+                                </li>
+
+                                <li>
+                                    प्राप्त रक्कम
+                                </li>
+
+                                <li>
+                                    प्रलंबित रक्कम
+                                </li>
+
+                                <li>
+                                    पेमेंटची स्थिती
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-money-bill-transfer"></i>
+
+                            माझे पेमेंट उशिरा झाल्यास काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                पेमेंट प्रलंबित असल्यास
+                            </h4>
+
+
+                            <ol>
+
+                                <li>
+                                    सर्वप्रथम पेमेंट स्थिती तपासा.
+                                </li>
+
+                                <li>
+                                    तुमची खरेदी प्रक्रिया पूर्ण झाली आहे
+                                    का ते तपासा.
+                                </li>
+
+                                <li>
+                                    बँक खात्याशी संबंधित माहिती योग्य आहे
+                                    का ते तपासा.
+                                </li>
+
+                                <li>
+                                    पेमेंट प्रलंबित असल्यास संबंधित
+                                    खरेदी केंद्र किंवा सहाय्यक टीमशी
+                                    संपर्क करा.
+                                </li>
+
+                            </ol>
+
+
+                            <div class="important-box">
+
+                                <i class="fa-solid fa-shield-halved"></i>
+
+                                <span>
+                                    कोणालाही OTP, पासवर्ड किंवा बँक खात्याचा
+                                    गोपनीय PIN सांगू नका.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+
+                            पेमेंट अपडेट होण्यासाठी वेळ का लागू शकतो?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                पेमेंट प्रक्रियेचा वेळ
+                            </h4>
+
+                            <p>
+                                खरेदीची पडताळणी, नोंदणी, मंजुरी आणि
+                                पेमेंट प्रक्रियेमुळे स्थिती अपडेट होण्यास
+                                काही वेळ लागू शकतो.
+                            </p>
+
+                            <p>
+                                पेमेंटची सद्यस्थिती पाहण्यासाठी
+                                <strong>पेमेंट स्थिती</strong> विभाग तपासा.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 NOTIFICATIONS
+            ================================================== -->
+
+            <div
+                class="faq-category"
+                id="notifications">
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-bell"></i>
+
+                            मला कोणत्या सूचना मिळतील?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                महत्त्वाच्या सूचना
+                            </h4>
+
+                            <p>
+                                KisanSeva प्लॅटफॉर्मवर उपलब्ध सुविधेनुसार
+                                तुम्हाला विविध महत्त्वाच्या सूचना मिळू शकतात.
+                            </p>
+
+
+                            <ul>
+
+                                <li>
+                                    नोंदणी संबंधित सूचना
+                                </li>
+
+                                <li>
+                                    स्लॉट बुकिंगची पुष्टी
+                                </li>
+
+                                <li>
+                                    स्लॉट बदल किंवा अपडेट
+                                </li>
+
+                                <li>
+                                    रांगेतील स्थिती
+                                </li>
+
+                                <li>
+                                    खरेदी प्रक्रियेतील बदल
+                                </li>
+
+                                <li>
+                                    पेमेंट स्थिती
+                                </li>
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-comment-sms"></i>
+
+                            मला SMS द्वारे सूचना मिळतील का?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                SMS सूचना
+                            </h4>
+
+                            <p>
+                                तुमचा मोबाईल क्रमांक नोंदणीकृत असल्यास
+                                आणि संबंधित SMS सुविधा सक्रिय असल्यास
+                                स्लॉट, खरेदी किंवा पेमेंटशी संबंधित
+                                महत्त्वाच्या सूचना SMS द्वारे मिळू शकतात.
+                            </p>
+
+
+                            <div class="important-box">
+
+                                <i class="fa-solid fa-mobile-screen"></i>
+
+                                <span>
+                                    त्यामुळे नोंदणी करताना योग्य मोबाईल
+                                    क्रमांक देणे महत्त्वाचे आहे.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-bell-slash"></i>
+
+                            मला सूचना मिळत नसतील तर काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                सूचना मिळत नसल्यास
+                            </h4>
+
+
+                            <ol>
+
+                                <li>
+                                    तुमचा मोबाईल क्रमांक योग्य आहे का तपासा.
+                                </li>
+
+                                <li>
+                                    KisanSeva मधील सूचना विभाग तपासा.
+                                </li>
+
+                                <li>
+                                    तुमच्या मोबाईलमध्ये SMS सेवा उपलब्ध
+                                    आहे का तपासा.
+                                </li>
+
+                                <li>
+                                    आवश्यक असल्यास संबंधित खरेदी केंद्राशी
+                                    संपर्क करा.
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 GENERAL HELP
+            ================================================== -->
+
+            <div
+                class="faq-category"
+                id="general">
+
+
+                <!-- GENERAL FAQ 1 -->
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-circle-exclamation"></i>
+
+                            वेबसाइटवर माझे बुकिंग दिसत नसल्यास काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                बुकिंग दिसत नसल्यास
+                            </h4>
+
+
+                            <ol>
+
+                                <li>
+                                    योग्य खात्यात लॉगिन केले आहे का तपासा.
+                                </li>
+
+                                <li>
+                                    <strong>माझे बुकिंग</strong> विभाग उघडा.
+                                </li>
+
+                                <li>
+                                    पेज पुन्हा लोड करा.
+                                </li>
+
+                                <li>
+                                    तुमच्या नोंदणीकृत मोबाईल क्रमांकाची
+                                    माहिती तपासा.
+                                </li>
+
+                                <li>
+                                    तरीही बुकिंग दिसत नसल्यास संबंधित
+                                    सहाय्यक टीमशी संपर्क साधा.
+                                </li>
+
+                            </ol>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GENERAL FAQ 2 -->
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-wifi"></i>
+
+                            वेबसाइट किंवा पेज उघडत नसल्यास काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                तांत्रिक समस्या
+                            </h4>
+
+
+                            <ul>
+
+                                <li>
+                                    इंटरनेट कनेक्शन तपासा.
+                                </li>
+
+                                <li>
+                                    पेज पुन्हा लोड करा.
+                                </li>
+
+                                <li>
+                                    ब्राउझर पुन्हा उघडा.
+                                </li>
+
+                                <li>
+                                    काही वेळाने पुन्हा प्रयत्न करा.
+                                </li>
+
+                            </ul>
+
+
+                            <p>
+                                समस्या कायम राहिल्यास संबंधित
+                                तांत्रिक सहाय्य टीमशी संपर्क करा.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- GENERAL FAQ 3 -->
+
+                <div class="faq-item">
+
+                    <button
+                        type="button"
+                        class="faq-question">
+
+                        <span>
+
+                            <i class="fa-solid fa-headset"></i>
+
+                            मला अजूनही मदत हवी असल्यास काय करावे?
+
+                        </span>
+
+                        <i class="fa-solid fa-chevron-down arrow"></i>
+
+                    </button>
+
+
+                    <div class="faq-answer">
+
+                        <div class="answer-content">
+
+                            <h4>
+                                शेतकरी सहाय्य
+                            </h4>
+
+
+                            <p>
+                                वरील माहितीमध्ये तुमच्या प्रश्नाचे उत्तर
+                                मिळाले नसेल तर संबंधित खरेदी केंद्र,
+                                अधिकृत सहाय्यक टीम किंवा उपलब्ध
+                                शेतकरी हेल्पलाइनशी संपर्क साधा.
+                            </p>
+
+
+                            <p>
+                                संपर्क करताना तुमचा बुकिंग क्रमांक,
+                                खरेदीची माहिती आणि समस्येचे थोडक्यात
+                                वर्णन तयार ठेवल्यास समस्या सोडवण्यास
+                                मदत होऊ शकते.
+                            </p>
+
+
+                            <div class="important-box">
+
+                                <i class="fa-solid fa-lock"></i>
+
+                                <span>
+                                    OTP, पासवर्ड, UPI PIN किंवा बँक खात्याची
+                                    गोपनीय माहिती कोणालाही देऊ नका.
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             SUPPORT
+        ====================================================== -->
+
+        <section class="support-card">
+
+
+            <div class="support-icon">
+
+                <i class="fa-solid fa-headset"></i>
+
+            </div>
+
+
+            <div class="support-content">
+
+                <h2>
+                    अजूनही मदत हवी आहे?
+                </h2>
+
+                <p>
+                    तुमच्या समस्येचे निराकरण करण्यासाठी संबंधित
+                    खरेदी केंद्र किंवा अधिकृत सहाय्य टीमशी संपर्क करा.
+                </p>
+
+            </div>
+
+
+            <!--
+                IMPORTANT:
+                This button now correctly targets
+                the GENERAL section.
+            -->
+
+            <button
+                type="button"
+                class="support-btn"
+                onclick="scrollToSection('general')">
+
+                <i class="fa-solid fa-circle-question"></i>
+
+                मदत माहिती
+
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="footer">
+
+
+        <div class="footer-logo">
+
+            <i class="fa-solid fa-leaf"></i>
+
+            <span>
+                KisanSeva
+            </span>
+
+        </div>
+
+
+        <p>
+            शेतकऱ्यांसाठी सोपे, जलद आणि पारदर्शक खरेदी व्यवस्थापन
+        </p>
+
+
+        <div class="footer-links">
+
+            <a href="../home_page/home.html">
+                मुख्यपृष्ठ
+            </a>
+
+            <span>|</span>
+
+            <a href="help.html">
+                मदत
+            </a>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="help.js"></script>
+
+</body>
+
+</html>

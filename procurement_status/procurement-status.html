@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>किसानसेवा | खरेदीची स्थिती (Procurement Status)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="procurement-status.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
+        <div class="header-title">
+          <h1>खरेदीची स्थिती</h1>
+          <p>शेतमाल तोलाई, प्रतवारी व खरेदी पावती ट्रॅकिंग</p>
+        </div>
+      </div>
+      <div class="user-chip">
+        <span>👨🏻‍🌾 KS10245</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+      <!-- ACTIVE LOT BANNER -->
+      <section class="active-lot-card">
+        <div class="lot-header">
+          <div>
+            <span class="lot-lbl">सध्याची खरेदी लॉट क्रमांक</span>
+            <div class="lot-id">LOT-MH13-2026-0811</div>
+          </div>
+          <span class="status-pill verified">तपासणी पूर्ण (Verified)</span>
+        </div>
+
+        <div class="lot-quick-meta">
+          <div><strong>खरेदी केंद्र:</strong> पंढरपूर मुख्य यार्ड</div>
+          <div><strong>पीक:</strong> सोयाबीन (पिवळा)</div>
+          <div><strong>तोल तारीख:</strong> ०४ सप्टेंबर २०२६</div>
+        </div>
+
+        <!-- 5-STEP PROCUREMENT TIMELINE -->
+        <div class="procurement-stepper">
+          <div class="step-point done">
+            <div class="step-circle">✓</div>
+            <span class="step-title">गेट प्रवेश</span>
+            <small>०९:१५ AM</small>
+          </div>
+          <div class="step-line done"></div>
+          <div class="step-point done">
+            <div class="step-circle">✓</div>
+            <span class="step-title">वजन काटा (तोलाई)</span>
+            <small>४५ क्विंटल</small>
+          </div>
+          <div class="step-line done"></div>
+          <div class="step-point done">
+            <div class="step-circle">✓</div>
+            <span class="step-title">प्रतवारी (Quality)</span>
+            <small>ग्रेड 'अ'</small>
+          </div>
+          <div class="step-line done"></div>
+          <div class="step-point done">
+            <div class="step-circle">✓</div>
+            <span class="step-title">गोदामात जमा</span>
+            <small>पावती जारी</small>
+          </div>
+          <div class="step-line active"></div>
+          <div class="step-point current">
+            <div class="step-circle">⏱️</div>
+            <span class="step-title">देयक मंजुरी</span>
+            <small>प्रक्रियेत</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUALITY & WEIGHING PARAMETERS -->
+      <section class="metrics-grid">
+        <!-- Weighing Card -->
+        <div class="metric-card">
+          <div class="m-card-top">
+            <span class="m-icon">⚖️</span>
+            <h3>तोल व वजन तपशील (Weighing Slip)</h3>
+          </div>
+          <div class="m-details">
+            <div class="m-row">
+              <span>एकूण भरलेले वजन (Gross):</span>
+              <strong>५,८०० कि.ग्रॅ.</strong>
+            </div>
+            <div class="m-row">
+              <span>वाहनाचे रिकामे वजन (Tare):</span>
+              <strong>१,३०० कि.ग्रॅ.</strong>
+            </div>
+            <div class="m-row highlight">
+              <span>निव्वळ शेतमाल वजन (Net):</span>
+              <strong class="text-green">४,५०० कि.ग्रॅ. (४५ क्विंटल)</strong>
+            </div>
+            <div class="m-row">
+              <span>बारदाना / पोती संख्या:</span>
+              <strong>९० कट्टे (५० किलो प्रति कट्टा)</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quality & Moisture Card -->
+        <div class="metric-card">
+          <div class="m-card-top">
+            <span class="m-icon">🧪</span>
+            <h3>प्रतवारी व आर्द्रता अहवाल (Grading)</h3>
+          </div>
+          <div class="m-details">
+            <div class="m-row">
+              <span>आर्द्रता प्रमाण (Moisture):</span>
+              <strong class="badge-good">११.२% (मानक: < १२%)</strong>
+            </div>
+            <div class="m-row">
+              <span>कचरा व काडीकचरा (Foreign Matter):</span>
+              <strong class="badge-good">०.८% (मानक: < २%)</strong>
+            </div>
+            <div class="m-row">
+              <span>किडके / डागाळलेले दाणे:</span>
+              <strong class="badge-good">१.२% (मानक: < ४%)</strong>
+            </div>
+            <div class="m-row highlight">
+              <span>अंतिम वर्गवारी / ग्रेड:</span>
+              <strong class="text-green">दर्जा 'अ' (FAQ Standard 1)</strong>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROCUREMENT VALUATION & RECEIPT -->
+      <section class="valuation-card">
+        <div class="val-header">
+          <h3>शासकीय हमीभाव खरेदी मूल्य तपशील</h3>
+          <span class="val-rate">हमीभाव दर: ₹४,८९२ / क्विंटल</span>
+        </div>
+        <div class="val-row">
+          <span>४५ क्विंटल × ₹४,८९२</span>
+          <strong class="total-price">₹ २,२०,१४०.००</strong>
+        </div>
+        <p class="dbt-note">
+          ✅ सदर रक्कम शेतकरी सन्मान निधीशी संलग्न असलेल्या बँक खात्यात थेट DBT द्वारे जमा केली जाईल.
+        </p>
+        <div class="val-actions">
+          <button class="btn btn-outline" id="printProcurementBtn">🖨️ खरेदी पावती (J-Form) प्रिंट करा</button>
+          <a href="../payment_status/payment-status.html" class="btn btn-primary">देयक स्थिती पहा (Payment Status) →</a>
+        </div>
+      </section>
+
+      <!-- PAST PROCUREMENT HISTORY -->
+      <section class="history-card">
+        <h3>मागील खरेदी नोंदी (Past Procurements)</h3>
+        <div class="history-list">
+          <div class="history-item">
+            <div class="hist-left">
+              <span class="hist-crop">हरभरा (Chana) - ५० क्विंटल</span>
+              <small>LOT-MH13-2026-0422 • १८ ऑगस्ट २०२६</small>
+            </div>
+            <div class="hist-right">
+              <strong class="hist-amt">₹ २,७२,०००</strong>
+              <span class="hist-status paid">जमा झाले (Paid)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="procurement-status.js"></script>
+</body>
+</html>

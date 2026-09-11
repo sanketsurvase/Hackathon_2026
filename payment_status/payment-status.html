@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>किसानसेवा | देयक स्थिती (Payment Status)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="payment-status.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
+        <div class="header-title">
+          <h1>देयक स्थिती (Payment Status)</h1>
+          <p>थेट बँक खात्यात जमा झालेल्या रकमांचा तपशील (DBT)</p>
+        </div>
+      </div>
+      <div class="dbt-badge">
+        <span>🔒 आधार संलग्न DBT</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+      <!-- FINANCIAL SUMMARY CARDS -->
+      <section class="fin-summary-row">
+        <div class="fin-card total-paid">
+          <div class="fin-icon">💰</div>
+          <div class="fin-meta">
+            <span class="fin-lbl">एकूण जमा झालेली रक्कम</span>
+            <strong class="fin-amount">₹ ३,५६,८७५.००</strong>
+            <small class="fin-sub">२ यशस्वी व्यवहार</small>
+          </div>
+        </div>
+
+        <div class="fin-card pending-pay">
+          <div class="fin-icon">⏳</div>
+          <div class="fin-meta">
+            <span class="fin-lbl">प्रक्रियेत / देय रक्कम</span>
+            <strong class="fin-amount text-amber">₹ २,२०,१४०.००</strong>
+            <small class="fin-sub">अंदाजे २ दिवसांत जमा होईल</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- LINKED BANK ACCOUNT CARD -->
+      <section class="bank-card">
+        <div class="bank-card-header">
+          <div class="bank-name">
+            <span class="bank-logo">🏛️</span>
+            <div>
+              <h3>स्टेट बँक ऑफ इंडिया (State Bank of India)</h3>
+              <p>आधार संलग्न प्राथमिक शेतकरी खाते (Aadhaar Seeded)</p>
+            </div>
+          </div>
+          <span class="verified-tag">✓ सक्रिय खाते (Active)</span>
+        </div>
+        <div class="bank-details-grid">
+          <div>
+            <span>खाते क्रमांक (A/C No):</span>
+            <strong>XXXX XXXX ४८२१</strong>
+          </div>
+          <div>
+            <span>आयएफएससी कोड (IFSC):</span>
+            <strong>SBIN0001245</strong>
+          </div>
+          <div>
+            <span>शाखा (Branch):</span>
+            <strong>पंढरपूर मुख्य शाखा</strong>
+          </div>
+          <div>
+            <span>खातेदार:</span>
+            <strong>संकट मारुती पाटील</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRANSACTION FILTER TABS -->
+      <div class="filter-bar">
+        <button class="filter-pill active" data-filter="all">सर्व व्यवहार (All)</button>
+        <button class="filter-pill" data-filter="credited">जमा झालेले (Credited)</button>
+        <button class="filter-pill" data-filter="processing">प्रक्रियेत (Processing)</button>
+      </div>
+
+      <!-- TRANSACTION LIST -->
+      <section class="transactions-container" id="transactionsList">
+        <!-- Card 1: Processing -->
+        <div class="txn-card processing" data-type="processing">
+          <div class="txn-top">
+            <div class="txn-left">
+              <span class="txn-id">व्यवहार क्र: TXN-MH13-2026-8841</span>
+              <h4>सोयाबीन हमीभाव खरेदी (४५ क्विंटल)</h4>
+              <p>लॉट क्र: LOT-MH13-2026-0811 • केंद्र: पंढरपूर यार्ड</p>
+            </div>
+            <div class="txn-right">
+              <span class="txn-amt text-amber">₹ २,२०,१४०.००</span>
+              <span class="badge badge-processing">⏱️ ट्रेझरी मंजुरीत</span>
+            </div>
+          </div>
+          <div class="txn-bottom">
+            <span>अपेक्षित जमा तारीख: <strong>१४ सप्टेंबर २०२६</strong></span>
+            <button class="btn-slip" onclick="alert('सदर देयक प्रक्रिया पूर्ण झाल्यावर पावती उपलब्ध होईल.')">
+              पावती पहा
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Credited -->
+        <div class="txn-card credited" data-type="credited">
+          <div class="txn-top">
+            <div class="txn-left">
+              <span class="txn-id">व्यवहार क्र: TXN-MH13-2026-4412</span>
+              <h4>हरभरा हमीभाव खरेदी (५० क्विंटल)</h4>
+              <p>लॉट क्र: LOT-MH13-2026-0422 • केंद्र: करकंब उपबाजार</p>
+            </div>
+            <div class="txn-right">
+              <span class="txn-amt text-green">₹ २,७२,०००.००</span>
+              <span class="badge badge-credited">✓ खात्यात जमा</span>
+            </div>
+          </div>
+          <div class="txn-bottom">
+            <span>जमा तारीख: <strong>२५ ऑगस्ट २०२६</strong> (UTR: SBIN2623789124)</span>
+            <button class="btn-slip" onclick="window.print()">🖨️ DBT पावती (Voucher)</button>
+          </div>
+        </div>
+
+        <!-- Card 3: Credited -->
+        <div class="txn-card credited" data-type="credited">
+          <div class="txn-top">
+            <div class="txn-left">
+              <span class="txn-id">व्यवहार क्र: TXN-MH13-2026-1109</span>
+              <h4>गहू खरेदी हंगाम २०२६ (३५ क्विंटल)</h4>
+              <p>लॉट क्र: LOT-MH13-2026-0199 • केंद्र: पंढरपूर मुख्य यार्ड</p>
+            </div>
+            <div class="txn-right">
+              <span class="txn-amt text-green">₹ ८४,८७५.००</span>
+              <span class="badge badge-credited">✓ खात्यात जमा</span>
+            </div>
+          </div>
+          <div class="txn-bottom">
+            <span>जमा तारीख: <strong>१५ एप्रिल २०२६</strong> (UTR: SBIN2610544190)</span>
+            <button class="btn-slip" onclick="window.print()">🖨️ DBT पावती (Voucher)</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="payment-status.js"></script>
+</body>
+</html>

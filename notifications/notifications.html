@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>किसानसेवा | महत्त्वाच्या सूचना (Notifications)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="notifications.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
+        <div class="header-title">
+          <h1>सूचना केंद्र (Notifications)</h1>
+          <p>बाजार समिती, खरेदी, देयक व हवामान अलर्ट</p>
+        </div>
+      </div>
+      <button class="btn-mark-all" id="markAllReadBtn">सर्व वाचले ✓</button>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+      <!-- CATEGORY PILLS -->
+      <div class="category-tabs">
+        <button class="cat-pill active" data-category="all">सर्व (All)</button>
+        <button class="cat-pill" data-category="booking">स्लॉट व खरेदी</button>
+        <button class="cat-pill" data-category="payment">देयक / DBT</button>
+        <button class="cat-pill" data-category="msp">हमीभाव</button>
+        <button class="cat-pill" data-category="weather">हवामान इशारा</button>
+      </div>
+
+      <!-- NOTIFICATION LIST -->
+      <section class="notification-list" id="notificationList">
+        <!-- Rendered via notifications.js -->
+      </section>
+    </main>
+  </div>
+
+  <script src="notifications.js"></script>
+</body>
+</html>

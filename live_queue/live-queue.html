@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>किसानसेवा | लाईव्ह रांग (Live Queue Status)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="live-queue.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
+        <div class="header-title">
+          <h1>थेट रांग स्थिती (Live Queue)</h1>
+          <p>खरेदी केंद्र व वजन काटा थेट स्थिती</p>
+        </div>
+      </div>
+      <div class="live-indicator">
+        <span class="pulse-dot"></span>
+        <span>थेट अपडेट (LIVE)</span>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+      <!-- CENTER & SCALE SELECTOR -->
+      <section class="filter-box">
+        <div class="form-group">
+          <label for="centerFilter">खरेदी केंद्र निवडा:</label>
+          <select id="centerFilter">
+            <option value="pandharpur_main">कृषी उत्पन्न बाजार समिती, पंढरपूर (मुख्य यार्ड)</option>
+            <option value="karkamb">उपबाजार केंद्र, करकंब - पंढरपूर</option>
+            <option value="mohol">शासकीय हमीभाव केंद्र, मोहोळ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="scaleFilter">वजन काटा (Weighbridge):</label>
+          <select id="scaleFilter">
+            <option value="scale1">काटा क्र. १ (सोयाबीन व धान्य)</option>
+            <option value="scale2">काटा क्र. २ (कापूस व भुसार माल)</option>
+          </select>
+        </div>
+      </section>
+
+      <!-- NOW SERVING BOARD -->
+      <section class="serving-card">
+        <div class="serving-badge">सध्या वजन काटा चालू टोकन</div>
+        <div class="serving-token-display" id="nowServingToken">KS-SLT-2026-9210</div>
+        <div class="serving-details">
+          <span id="nowServingFarmer">शेतकरी: रमेश बाबुराव देशमुख</span> •
+          <span id="nowServingVehicle">🚜 ट्रॅक्टर (MH 13 G 5521)</span> •
+          <span id="nowServingCrop">सोयाबीन (४० क्विंटल)</span>
+        </div>
+        <div class="serving-timer">
+          <span>काटा वेळ सुरू: <strong id="servingTimeElapsed">०८:४२ मिनिटे</strong></span>
+        </div>
+      </section>
+
+      <!-- USER'S QUEUE TRACKER -->
+      <section class="user-queue-card" id="userQueueCard">
+        <div class="u-card-header">
+          <h3>🎯 आपल्या टोकनची स्थिती (Your Token Status)</h3>
+          <span class="u-token-badge" id="uTokenVal">KS-SLT-2026-9214</span>
+        </div>
+        <div class="u-metrics-grid">
+          <div class="u-metric">
+            <span>रांगेतील क्रमांक</span>
+            <strong class="pos-highlight" id="uQueuePos"># ४</strong>
+          </div>
+          <div class="u-metric">
+            <span>अंदाजे वेळ शिल्लक</span>
+            <strong id="uWaitTime">~ ३२ मिनिटे</strong>
+          </div>
+          <div class="u-metric">
+            <span>वजन काटा</span>
+            <strong id="uScaleNo">काटा क्र. १</strong>
+          </div>
+        </div>
+        <div class="u-status-msg" id="uStatusMsg">
+          📢 आपला क्रमांक लवकरच येणार आहे. कृपया वाहनासह प्रवेशद्वाराजवळ सज्ज राहा.
+        </div>
+      </section>
+
+      <!-- LIVE QUEUE LIST TABLE -->
+      <section class="queue-table-card">
+        <div class="table-header">
+          <h3>रांगेतील शेतकरी यादी (Upcoming Queue)</h3>
+          <span class="total-waiting" id="totalWaiting">एकूण प्रतिक्षा: ७ वाहने</span>
+        </div>
+        <div class="queue-list" id="queueListContainer">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- HELP TIP -->
+      <div class="info-tip">
+        💡 <strong>टीप:</strong> आपला क्रमांक पुकारल्यानंतर १५ मिनिटांच्या आत वजन काट्यावर वाहन न पोहोचल्यास पुढील टोकनला प्राधान्य दिले जाईल.
+      </div>
+    </main>
+  </div>
+
+  <script src="../config.js"></script>
+  <script src="live-queue.js"></script>
+</body>
+</html>

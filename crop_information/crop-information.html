@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="mr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>किसानसेवा | पिकांची माहिती (Crop Information)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;600;700;800&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="crop-information.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- HEADER -->
+    <header class="app-header">
+      <div class="header-left">
+        <a href="../home_page/home.html" class="back-btn" title="मागे जा">←</a>
+        <div class="header-title">
+          <h1>पिकांची माहिती (Crop Details)</h1>
+          <p>आपली शेती, पीक नोंदणी व चालू हमीभाव</p>
+        </div>
+      </div>
+      <button class="btn-add-crop" id="openCropModalBtn">+ नवीन पीक नोंदवा</button>
+    </header>
+
+    <!-- CONTENT -->
+    <main class="page-content">
+      <!-- REGISTERED CROPS GRID -->
+      <section class="section-block">
+        <div class="section-title-row">
+          <h2>माझी नोंदणीकृत पिके (Registered Crops)</h2>
+          <span class="crop-count-tag" id="cropCountBadge">३ पिके नोंदणीकृत</span>
+        </div>
+        <div class="crop-cards-grid" id="cropCardsContainer">
+          <!-- Dynamically populated from JS -->
+        </div>
+      </section>
+
+      <!-- GOVT MSP RATES 2026 SECTION -->
+      <section class="section-block msp-section">
+        <div class="section-title-row">
+          <h2>शासकीय हमीभाव दर सूची २०२६ (Govt MSP Rates)</h2>
+          <span class="msp-badge">अधिकृत हमीभाव</span>
+        </div>
+        <div class="msp-table-wrap">
+          <table class="msp-table">
+            <thead>
+              <tr>
+                <th>शेतमाल / पीक</th>
+                <th>हंगाम</th>
+                <th>हमीभाव (प्रति क्विंटल)</th>
+                <th>मागील वर्षापेक्षा वाढ</th>
+                <th>कृती</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>🫘 सोयाबीन (Soybean)</strong></td>
+                <td>खरीप २०२६</td>
+                <td class="price-highlight">₹ ४,८९२</td>
+                <td class="text-green">+ ₹२९२</td>
+                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
+              </tr>
+              <tr>
+                <td><strong>☁️ कापूस (Cotton - Long Staple)</strong></td>
+                <td>खरीप २०२६</td>
+                <td class="price-highlight">₹ ७,५२१</td>
+                <td class="text-green">+ ₹५०१</td>
+                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
+              </tr>
+              <tr>
+                <td><strong>🌾 तूर (Tur / Arhar)</strong></td>
+                <td>खरीप २०२६</td>
+                <td class="price-highlight">₹ ७,५५०</td>
+                <td class="text-green">+ ₹५५०</td>
+                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
+              </tr>
+              <tr>
+                <td><strong>🌱 हरभरा (Gram / Chana)</strong></td>
+                <td>रब्बी २०२६</td>
+                <td class="price-highlight">₹ ५,४४०</td>
+                <td class="text-green">+ ₹२१०</td>
+                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
+              </tr>
+              <tr>
+                <td><strong>🍞 गहू (Wheat)</strong></td>
+                <td>रब्बी २०२६</td>
+                <td class="price-highlight">₹ २,४२५</td>
+                <td class="text-green">+ ₹१५०</td>
+                <td><a href="../slot_booking/slot-booking.html" class="table-book-link">स्लॉट बुक करा →</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- EXPERT CROP ADVISORY -->
+      <section class="section-block advisory-block">
+        <div class="adv-card">
+          <div class="adv-header">
+            <span class="adv-icon">💡</span>
+            <div>
+              <h3>कृषी विद्यापीठ सल्लागार (Crop Advisory)</h3>
+              <p>सोलापूर व मराठवाडा विभाग - चालू आठवडा</p>
+            </div>
+          </div>
+          <div class="adv-content">
+            <p>
+              • <strong>सोयाबीन:</strong> काढणी करताना दाण्यातील ओलावा १२% पेक्षा कमी असावा, जेणेकरून खरेदी केंद्रावर पूर्ण भाव मिळेल.
+            </p>
+            <p>
+              • <strong>कापूस:</strong> पहिल्या वेचणीचा कापूस कोरड्या जागेत साठवून ठेवावा, धूळ व पानांचा कचरा बाजूला करावा.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- NEW CROP REGISTRATION MODAL -->
+    <div class="modal-overlay" id="newCropModal" hidden>
+      <div class="modal-content">
+        <div class="modal-top">
+          <h3>नवीन पीक नोंदणी (Register Crop)</h3>
+          <button class="modal-close-btn" id="closeCropModal">×</button>
+        </div>
+        <form id="newCropForm">
+          <div class="form-group">
+            <label for="modalCropName">पिकाचे नाव <span class="req">*</span></label>
+            <select id="modalCropName" required>
+              <option value="सोयाबीन (Soybean)">सोयाबीन (Soybean)</option>
+              <option value="कापूस (Cotton)">कापूस (Cotton)</option>
+              <option value="तूर (Tur)">तूर (Tur)</option>
+              <option value="हरभरा (Chana)">हरभरा (Chana)</option>
+              <option value="गहू (Wheat)">गहू (Wheat)</option>
+              <option value="कांदा (Onion)">कांदा (Onion)</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="modalCropVariety">जात / व्हरायटी</label>
+            <input type="text" id="modalCropVariety" placeholder="उदा. JS 335 / फुले कल्याणी">
+          </div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="modalArea">क्षेत्र (एकर) <span class="req">*</span></label>
+              <input type="number" step="0.1" id="modalArea" placeholder="उदा. २.५" required>
+            </div>
+            <div class="form-group">
+              <label for="modalQty">अंदाजे उत्पादन (क्विंटल) <span class="req">*</span></label>
+              <input type="number" id="modalQty" placeholder="उदा. ४०" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="modalGatNo">७/१२ गट नंबर <span class="req">*</span></label>
+            <input type="text" id="modalGatNo" placeholder="उदा. १४२/२" required>
+          </div>
+          <div class="form-group">
+            <label for="modalSowingDate">पेरणी तारीख</label>
+            <input type="date" id="modalSowingDate">
+          </div>
+          <div class="modal-actions">
+            <button type="button" class="btn btn-secondary" id="cancelCropModal">रद्द करा</button>
+            <button type="submit" class="btn btn-primary">नोंदणी जतन करा (Save)</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="crop-information.js"></script>
+</body>
+</html>
