@@ -629,35 +629,17 @@ if (registerForm) {
                         .trim(),
 
 
-                farm_area:
+                land_area_acres:
                     Number(
                         document
                             .getElementById("farmArea")
                             .value || 0
                     ),
 
-                area_unit:
-                    document
-                        .getElementById("areaUnit")
-                        .value || "एकर",
-
-                crop_name:
+                primary_crop:
                     document
                         .getElementById("crop")
                         .value,
-
-                expected_quantity:
-                    Number(
-                        document
-                            .getElementById("quantity")
-                            .value || 0
-                    ),
-
-                preferred_centre:
-                    document
-                        .getElementById("centre")
-                        .value || null,
-
 
                 password:
                     password
