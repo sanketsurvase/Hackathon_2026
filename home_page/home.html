@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <meta name="theme-color" content="#087a43">
 
   <title>किसानसेवा</title>
@@ -29,7 +30,9 @@
 
         <div class="brand-details">
 
-          <h1>किसानसेवा</h1>
+          <h1>
+            किसानसेवा
+          </h1>
 
           <p>
             शेतकऱ्यांसाठी डिजिटल सेवा
@@ -47,15 +50,20 @@
           id="notificationBtn"
           aria-label="सूचना"
           type="button">
+
           🔔
+
         </button>
+
 
         <button
           class="profile-button"
           id="profileBtn"
           aria-label="प्रोफाइल"
           type="button">
+
           👨🏻‍🌾
+
         </button>
 
       </div>
@@ -74,10 +82,14 @@
         id="menuBtn"
         aria-label="मेनू उघडा"
         type="button">
+
         ☰
+
       </button>
 
-      <span>मेनू</span>
+      <span>
+        मेनू
+      </span>
 
     </div>
 
@@ -116,7 +128,9 @@
           class="profile-close"
           id="profileClose"
           type="button">
+
           ×
+
         </button>
 
       </div>
@@ -213,7 +227,9 @@
             class="drawer-close"
             id="drawerClose"
             type="button">
+
             ×
+
           </button>
 
         </div>
@@ -234,10 +250,13 @@
             </strong>
 
             <span>
+
               ID:
+
               <span id="drawerUserId">
                 KS10245
               </span>
+
             </span>
 
           </div>
@@ -246,7 +265,7 @@
 
 
         <!-- =====================================
-             ALL 12 MENU TABS ARE CREATED BY JS
+             MENU ITEMS CREATED BY SCRIPT.JS
         ====================================== -->
 
         <div
@@ -282,7 +301,9 @@
     <main class="main-content">
 
 
-      <!-- WELCOME -->
+      <!-- =====================================
+           WELCOME CARD
+      ====================================== -->
 
       <section class="welcome-card">
 
@@ -293,11 +314,15 @@
           </p>
 
           <h2>
+
             नमस्कार,
+
             <span id="welcomeName">
               संकट पाटील
             </span>
+
             ! 👋
+
           </h2>
 
           <p class="welcome-description">
@@ -360,12 +385,15 @@
         <div class="service-list">
 
 
-          <!-- PIKANCHI MAHITI -->
+          <!-- =================================
+               PIKANCHI MAHITI
+          ================================== -->
 
-           <button
-    class="service-card"
-    data-tab="crops"
-    type="button"> 
+          <button
+            class="service-card"
+            data-tab="crops"
+            type="button">
+
             <div class="service-icon green">
               🌱
             </div>
@@ -389,12 +417,15 @@
           </button>
 
 
-          <!-- SLOT BOOKING -->
+          <!-- =================================
+               SLOT BOOKING
+          ================================== -->
 
           <button
             class="service-card"
-            data-tab="slotBooking"
-            type="button">
+            id="slotBooking"
+            type="button"
+            onclick="window.location.href='./slot-booking.html'">
 
             <div class="service-icon yellow">
               🧾
@@ -419,7 +450,9 @@
           </button>
 
 
-          <!-- MY BOOKING -->
+          <!-- =================================
+               MY BOOKING
+          ================================== -->
 
           <button
             class="service-card"
@@ -449,7 +482,9 @@
           </button>
 
 
-          <!-- LIVE QUEUE -->
+          <!-- =================================
+               LIVE QUEUE
+          ================================== -->
 
           <button
             class="service-card"
@@ -479,6 +514,26 @@
           </button>
 
 
+          <!-- =================================
+               COMPLAINT / FEEDBACK
+          ================================== -->
+<a
+    href="./complaints/complaint.html"
+    class="service-card complaint-card">
+
+    <div class="service-icon purple">
+        💬
+    </div>
+
+    <div class="service-content">
+        <h3>तक्रार / अभिप्राय</h3>
+        <p>आपली तक्रार किंवा अभिप्राय नोंदवा</p>
+    </div>
+
+    <span class="service-arrow">→</span>
+
+</a>
+
         </div>
 
       </section>
@@ -491,7 +546,9 @@
       <section class="small-services">
 
 
-        <!-- PURCHASE STATUS -->
+        <!-- =================================
+             PURCHASE STATUS
+        ================================== -->
 
         <button
           class="small-service-card"
@@ -521,7 +578,9 @@
         </button>
 
 
-        <!-- PAYMENT STATUS -->
+        <!-- =================================
+             PAYMENT STATUS
+        ================================== -->
 
         <button
           class="small-service-card"
@@ -567,13 +626,17 @@
         <div class="banner-text">
 
           <h2>
+
             “समृद्ध शेतकरी<br>
             समृद्ध भारत”
+
           </h2>
 
           <p>
+
             आधुनिक तंत्रज्ञानासोबत<br>
             शेतीला नवी दिशा.
+
           </p>
 
         </div>
@@ -596,8 +659,10 @@
         </span>
 
         <p>
+
           मेनू बटणावर क्लिक करून<br>
           सर्व सेवा पहा.
+
         </p>
 
       </div>
@@ -608,9 +673,68 @@
   </div>
 
 
-  <!-- JAVASCRIPT -->
+  <!-- =====================================
+       JAVASCRIPT
+  ====================================== -->
 
   <script src="script.js"></script>
+
+
+  <!-- =====================================
+       COMPLAINT PAGE NAVIGATION
+       Extra safety for JS-generated menu
+  ====================================== -->
+
+  <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+      /*
+       * Complaint / Feedback card
+       */
+      const complaintCard =
+        document.querySelector(".complaint-card");
+
+      if (complaintCard) {
+
+        complaintCard.addEventListener("click", function () {
+
+          window.location.href =
+            "./complaints/complaint.html";
+
+        });
+
+      }
+
+
+      /*
+       * If complaint menu item is generated
+       * dynamically by script.js
+       */
+      document.addEventListener("click", function (event) {
+
+        const target =
+          event.target.closest(
+            '[data-tab="complaint"],' +
+            '[data-tab="complaints"],' +
+            '[data-tab="feedback"]'
+          );
+
+        if (target) {
+
+          event.preventDefault();
+
+          window.location.href =
+            "./complaints/complaint.html";
+
+        }
+
+      });
+
+    });
+
+  </script>
+
 
 </body>
 

@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#087a43">
+
+    <title>तक्रार / अभिप्राय - किसानसेवा</title>
+
+    <link rel="stylesheet" href="complaint-feedback.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="top-header">
+
+        <div class="brand">
+
+            <div class="brand-logo">
+                🌱
+            </div>
+
+            <div>
+                <h1>किसानसेवा</h1>
+
+                <p>
+                    शेतकऱ्यांसाठी डिजिटल सेवा
+                </p>
+            </div>
+
+        </div>
+
+        <button
+            class="home-button"
+            onclick="goHome()"
+            type="button">
+
+            🏠 होम
+
+        </button>
+
+    </header>
+
+
+    <!-- ================= PAGE ================= -->
+
+    <main class="main-container">
+
+        <!-- PAGE TITLE -->
+
+        <section class="page-heading">
+
+            <div class="heading-icon">
+                💬
+            </div>
+
+            <div>
+
+                <h2>
+                    तक्रार / अभिप्राय
+                </h2>
+
+                <p>
+                    आपल्या समस्या आणि सूचना आम्हाला कळवा
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TYPE SELECTION ================= -->
+
+        <section class="type-section">
+
+            <h3>
+                आपण काय नोंदवू इच्छिता?
+            </h3>
+
+            <div class="type-buttons">
+
+                <button
+                    class="type-card active"
+                    id="complaintBtn"
+                    type="button"
+                    onclick="selectType('complaint')">
+
+                    <span class="type-icon">
+                        ⚠️
+                    </span>
+
+                    <span>
+                        <strong>तक्रार</strong>
+                        <small>समस्या नोंदवा</small>
+                    </span>
+
+                </button>
+
+
+                <button
+                    class="type-card"
+                    id="feedbackBtn"
+                    type="button"
+                    onclick="selectType('feedback')">
+
+                    <span class="type-icon">
+                        ⭐
+                    </span>
+
+                    <span>
+                        <strong>अभिप्राय</strong>
+                        <small>आपले मत द्या</small>
+                    </span>
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= FORM ================= -->
+
+        <section class="form-card">
+
+            <form id="complaintForm">
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label for="category">
+                        श्रेणी निवडा
+                        <span>*</span>
+                    </label>
+
+                    <select id="category" required>
+
+                        <option value="">
+                            -- श्रेणी निवडा --
+                        </option>
+
+                        <option value="slot">
+                            🧾 स्लॉट बुकिंग
+                        </option>
+
+                        <option value="purchase">
+                            🌾 खरेदी संबंधित
+                        </option>
+
+                        <option value="payment">
+                            💰 देयक संबंधित
+                        </option>
+
+                        <option value="queue">
+                            👥 लाईव्ह रांग
+                        </option>
+
+                        <option value="crop">
+                            🌱 पिकांची माहिती
+                        </option>
+
+                        <option value="website">
+                            💻 वेबसाइट संबंधित
+                        </option>
+
+                        <option value="other">
+                            📌 इतर
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- NAME -->
+
+                <div class="form-row">
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            शेतकऱ्याचे नाव
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="आपले नाव लिहा"
+                            required>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="mobile">
+                            मोबाईल नंबर
+                            <span>*</span>
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="mobile"
+                            maxlength="10"
+                            placeholder="10 अंकी मोबाईल नंबर"
+                            required>
+
+                    </div>
+
+                </div>
+
+
+                <!-- RATING -->
+
+                <div
+                    class="rating-section"
+                    id="ratingSection">
+
+                    <label>
+                        आपला अनुभव कसा होता?
+                    </label>
+
+                    <div class="stars">
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-rating="1">
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-rating="2">
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-rating="3">
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-rating="4">
+                            ★
+                        </button>
+
+                        <button
+                            type="button"
+                            class="star"
+                            data-rating="5">
+                            ★
+                        </button>
+
+                    </div>
+
+                    <p id="ratingText">
+                        रेटिंग निवडा
+                    </p>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="message">
+
+                        <span id="messageLabel">
+                            तक्रारीचे वर्णन
+                        </span>
+
+                        <span>*</span>
+
+                    </label>
+
+                    <textarea
+                        id="message"
+                        maxlength="500"
+                        placeholder="आपली समस्या सविस्तर लिहा..."
+                        required></textarea>
+
+                    <div class="character-count">
+
+                        <span id="charCount">
+                            0
+                        </span>
+
+                        / 500
+
+                    </div>
+
+                </div>
+
+
+                <!-- ATTACHMENT -->
+
+                <div class="form-group">
+
+                    <label>
+                        फोटो जोडावा
+                        <small>(ऐच्छिक)</small>
+                    </label>
+
+                    <label
+                        class="upload-box"
+                        for="imageUpload">
+
+                        <div class="upload-icon">
+                            📷
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                फोटो निवडा
+                            </strong>
+
+                            <p>
+                                समस्या दर्शविणारा फोटो जोडू शकता
+                            </p>
+
+                        </div>
+
+                    </label>
+
+                    <input
+                        type="file"
+                        id="imageUpload"
+                        accept="image/*"
+                        hidden>
+
+
+                    <div
+                        class="file-name"
+                        id="fileName">
+                    </div>
+
+                </div>
+
+
+                <!-- TERMS -->
+
+                <div class="terms">
+
+                    <input
+                        type="checkbox"
+                        id="terms"
+                        required>
+
+                    <label for="terms">
+
+                        मी दिलेली माहिती योग्य आहे.
+
+                    </label>
+
+                </div>
+
+
+                <!-- SUBMIT -->
+
+                <button
+                    class="submit-button"
+                    type="submit">
+
+                    <span>
+                        📤
+                    </span>
+
+                    <span id="submitText">
+                        तक्रार नोंदवा
+                    </span>
+
+                </button>
+
+
+                <!-- RESET -->
+
+                <button
+                    class="reset-button"
+                    type="button"
+                    onclick="resetForm()">
+
+                    पुन्हा भरा
+
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- ================= SUCCESS BOX ================= -->
+
+        <section
+            class="success-card"
+            id="successCard"
+            hidden>
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2 id="successTitle">
+                तक्रार यशस्वीरीत्या नोंदवली!
+            </h2>
+
+            <p>
+                आपली नोंदणी यशस्वी झाली आहे.
+            </p>
+
+            <div class="tracking-box">
+
+                <span>
+                    आपला संदर्भ क्रमांक
+                </span>
+
+                <strong id="referenceId">
+                    KS000000
+                </strong>
+
+            </div>
+
+            <p class="success-note">
+
+                कृपया हा क्रमांक भविष्यातील संदर्भासाठी जतन करा.
+
+            </p>
+
+            <div class="success-buttons">
+
+                <button
+                    type="button"
+                    onclick="resetForm()">
+
+                    ➕ नवीन नोंद
+
+                </button>
+
+                <button
+                    type="button"
+                    onclick="goHome()">
+
+                    🏠 होम पेज
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= INFO CARDS ================= -->
+
+        <section class="help-section">
+
+            <h3>
+                आम्ही आपली मदत करण्यासाठी येथे आहोत
+            </h3>
+
+            <div class="help-grid">
+
+                <div class="help-card">
+
+                    <div>
+                        📞
+                    </div>
+
+                    <strong>
+                        हेल्पलाइन
+                    </strong>
+
+                    <span>
+                        1800-123-4567
+                    </span>
+
+                </div>
+
+
+                <div class="help-card">
+
+                    <div>
+                        ⏱️
+                    </div>
+
+                    <strong>
+                        प्रतिसाद वेळ
+                    </strong>
+
+                    <span>
+                        24 ते 48 तास
+                    </span>
+
+                </div>
+
+
+                <div class="help-card">
+
+                    <div>
+                        🔒
+                    </div>
+
+                    <strong>
+                        सुरक्षित माहिती
+                    </strong>
+
+                    <span>
+                        आपली माहिती सुरक्षित
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <strong>
+            किसानसेवा
+        </strong>
+
+        <span>
+            शेतकऱ्यांसाठी • शेतकऱ्यांकडून
+        </span>
+
+    </footer>
+
+</div>
+
+
+<script src="complaint-feedback.js"></script>
+
+</body>
+
+</html>

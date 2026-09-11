@@ -561,6 +561,19 @@ function handleMenuClick(id) {
 
 
     // ========================================
+    // COMPLAINT / FEEDBACK
+    // ========================================
+
+    if (id === "complaint") {
+
+        window.location.href = "complaints/complaint.html";
+
+        return;
+
+    }
+
+
+    // ========================================
     // OTHER TABS (complaint, help, etc.)
     // ========================================
 
