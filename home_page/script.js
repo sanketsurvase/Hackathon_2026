@@ -1,8 +1,3 @@
-/* =========================================================
-   KISANSETU (किसानसेतू) - HOME PAGE JAVASCRIPT
-   Unified with Farmer Login & Sign-Up Portals
-   ========================================================= */
-
 const menuItems = [
     { id: "home", icon: "🏠", label: "मुख्यपृष्ठ" },
     { id: "profile", icon: "👤", label: "माझी माहिती" },
@@ -12,12 +7,13 @@ const menuItems = [
     { id: "liveQueue", icon: "📄", label: "लाईव्ह रांग" },
     { id: "purchase", icon: "⏱️", label: "खरेदीची स्थिती" },
     { id: "payment", icon: "📍", label: "देयक स्थिती" },
-    { id: "notification", icon: "🔔", label: "सरकारी सूचना" },
+    { id: "notification", icon: "🔔", label: "सूचना" },
     { id: "complaint", icon: "📝", label: "तक्रार / अभिप्राय" },
     { id: "help", icon: "❓", label: "मदत व संपर्क" }
 ];
 
 let activeTab = "home";
+
 
 const defaultUser = {
     userId: "KS10245",
@@ -25,383 +21,875 @@ const defaultUser = {
     mobile: "9876543210"
 };
 
+
 // ========================================
-// 1. GET USER INFORMATION FROM SESSION
+// GET USER
 // ========================================
+
 function getUser() {
+
     try {
-        // First check standard loggedInUser
-        const savedUser = localStorage.getItem("loggedInUser");
+
+        const savedUser =
+            localStorage.getItem("loggedInUser");
+
         if (savedUser) {
-            const parsed = JSON.parse(savedUser);
-            if (parsed && (parsed.name || parsed.userId)) {
-                return { ...defaultUser, ...parsed };
-            }
-        }
 
-        // Second check KisanSetu session saved by login.js
-        const kisanSetuUser = localStorage.getItem("kisanSetuUser");
-        if (kisanSetuUser) {
-            const parsedKs = JSON.parse(kisanSetuUser);
-            if (parsedKs) {
-                return {
-                    userId: "KS" + (parsedKs.farmer_id || "10245"),
-                    name: parsedKs.full_name || defaultUser.name,
-                    mobile: parsedKs.mobile_number || defaultUser.mobile
-                };
-            }
+            return {
+                ...defaultUser,
+                ...JSON.parse(savedUser)
+            };
+
         }
 
         return defaultUser;
+
     } catch (error) {
-        console.warn("Could not retrieve user session:", error);
+
         return defaultUser;
+
     }
+
 }
+
 
 const user = getUser();
 
-// ========================================
-// 2. UPDATE USER INTERFACE
-// ========================================
-function updateUserUI() {
-    const profileName = document.getElementById("profileName");
-    const profileUserId = document.getElementById("profileUserId");
-    const profileInfoUserId = document.getElementById("profileInfoUserId");
-    const profileMobile = document.getElementById("profileMobile");
-    const drawerName = document.getElementById("drawerName");
-    const drawerUserId = document.getElementById("drawerUserId");
-    const welcomeName = document.getElementById("welcomeName");
-    const welcomeUserId = document.getElementById("welcomeUserId");
-    const navProfileName = document.getElementById("navProfileName");
 
-    if (profileName) profileName.textContent = user.name;
-    if (profileUserId) profileUserId.textContent = user.userId;
-    if (profileInfoUserId) profileInfoUserId.textContent = user.userId;
-    if (profileMobile) profileMobile.textContent = user.mobile;
-    if (drawerName) drawerName.textContent = user.name;
-    if (drawerUserId) drawerUserId.textContent = user.userId;
-    if (welcomeName) welcomeName.textContent = user.name;
-    if (welcomeUserId) welcomeUserId.textContent = user.userId;
-    if (navProfileName) {
-        // Show first name or up to 12 characters
-        const firstName = user.name.split(" ")[0] || user.name;
-        navProfileName.textContent = firstName;
+// ========================================
+// UPDATE USER INFORMATION
+// ========================================
+
+function updateUserUI() {
+
+    const profileName =
+        document.getElementById("profileName");
+
+    const profileUserId =
+        document.getElementById("profileUserId");
+
+    const profileInfoUserId =
+        document.getElementById("profileInfoUserId");
+
+    const profileMobile =
+        document.getElementById("profileMobile");
+
+    const drawerName =
+        document.getElementById("drawerName");
+
+    const drawerUserId =
+        document.getElementById("drawerUserId");
+
+    const welcomeName =
+        document.getElementById("welcomeName");
+
+    const welcomeUserId =
+        document.getElementById("welcomeUserId");
+
+
+    if (profileName) {
+
+        profileName.textContent =
+            user.name;
+
     }
+
+
+    if (profileUserId) {
+
+        profileUserId.textContent =
+            user.userId;
+
+    }
+
+
+    if (profileInfoUserId) {
+
+        profileInfoUserId.textContent =
+            user.userId;
+
+    }
+
+
+    if (profileMobile) {
+
+        profileMobile.textContent =
+            user.mobile;
+
+    }
+
+
+    if (drawerName) {
+
+        drawerName.textContent =
+            user.name;
+
+    }
+
+
+    if (drawerUserId) {
+
+        drawerUserId.textContent =
+            user.userId;
+
+    }
+
+
+    if (welcomeName) {
+
+        welcomeName.textContent =
+            user.name;
+
+    }
+
+
+    if (welcomeUserId) {
+
+        welcomeUserId.textContent =
+            user.userId;
+
+    }
+
 }
 
+
 // ========================================
-// 3. GENERATE SIDE DRAWER MENU ITEMS
+// CREATE MENU
 // ========================================
+
 function createDrawerMenu() {
-    const drawerMenu = document.getElementById("drawerMenu");
-    if (!drawerMenu) return;
+
+    const drawerMenu =
+        document.getElementById("drawerMenu");
+
+
+    if (!drawerMenu) {
+
+        return;
+
+    }
+
 
     drawerMenu.innerHTML = "";
 
+
     menuItems.forEach(function (item) {
-        const button = document.createElement("button");
+
+        const button =
+            document.createElement("button");
+
+
         button.type = "button";
-        button.className = "drawer-item";
+
+        button.className =
+            "drawer-item";
+
 
         if (activeTab === item.id) {
+
             button.classList.add("active");
+
         }
 
-        button.setAttribute("data-menu-id", item.id);
 
-        const icon = document.createElement("span");
-        icon.className = "drawer-item-icon";
-        icon.textContent = item.icon;
+        button.setAttribute(
+            "data-menu-id",
+            item.id
+        );
 
-        const label = document.createElement("span");
-        label.className = "drawer-item-label";
-        label.textContent = item.label;
 
-        const arrow = document.createElement("span");
-        arrow.className = "drawer-item-arrow";
+        const icon =
+            document.createElement("span");
+
+
+        icon.className =
+            "drawer-item-icon";
+
+
+        icon.textContent =
+            item.icon;
+
+
+        const label =
+            document.createElement("span");
+
+
+        label.className =
+            "drawer-item-label";
+
+
+        label.textContent =
+            item.label;
+
+
+        const arrow =
+            document.createElement("span");
+
+
+        arrow.className =
+            "drawer-item-arrow";
+
+
         arrow.textContent = "›";
 
+
         button.appendChild(icon);
+
         button.appendChild(label);
+
         button.appendChild(arrow);
 
-        button.addEventListener("click", function (event) {
-            event.preventDefault();
-            event.stopPropagation();
-            handleMenuClick(item.id);
-        });
+
+        button.addEventListener(
+            "click",
+            function (event) {
+
+                event.preventDefault();
+
+                event.stopPropagation();
+
+                handleMenuClick(item.id);
+
+            }
+        );
+
 
         drawerMenu.appendChild(button);
+
     });
 
-    // Logout Button in Drawer
-    const logoutButton = document.createElement("button");
+
+    // ========================================
+    // LOGOUT BUTTON
+    // ========================================
+
+    const logoutButton =
+        document.createElement("button");
+
+
     logoutButton.type = "button";
-    logoutButton.className = "drawer-item logout-item";
+
+
+    logoutButton.className =
+        "drawer-item logout-item";
+
+
     logoutButton.innerHTML = `
         <span class="drawer-item-icon">🚪</span>
-        <span class="drawer-item-label">लॉगआउट (Logout)</span>
+        <span class="drawer-item-label">लॉगआउट</span>
         <span class="drawer-item-arrow">›</span>
     `;
 
-    logoutButton.addEventListener("click", function (event) {
-        event.preventDefault();
-        event.stopPropagation();
-        handleLogout();
-    });
+
+    logoutButton.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+            handleLogout();
+
+        }
+    );
+
 
     drawerMenu.appendChild(logoutButton);
+
 }
 
+
 // ========================================
-// 4. DRAWER OPEN / CLOSE
+// OPEN THREE DOT / MENU DRAWER
 // ========================================
+
 function openMenu() {
-    const overlay = document.getElementById("menuOverlay");
-    const drawer = document.getElementById("sideDrawer");
-    if (!overlay || !drawer) return;
+
+    const overlay =
+        document.getElementById("menuOverlay");
+
+
+    const drawer =
+        document.getElementById("sideDrawer");
+
+
+    if (!overlay || !drawer) {
+
+        return;
+
+    }
+
 
     overlay.hidden = false;
-    overlay.style.display = "block";
-    drawer.style.display = "flex";
 
-    document.body.style.overflow = "hidden";
+    overlay.style.display = "block";
+
+    drawer.style.display = "block";
+
+
+    // Force drawer to LEFT side
+
+    drawer.style.left = "0";
+
+    drawer.style.right = "auto";
+
+    drawer.style.transform =
+        "translateX(0)";
+
+
+    document.body.style.overflow =
+        "hidden";
+
 
     requestAnimationFrame(function () {
-        overlay.classList.add("menu-visible");
-        drawer.classList.add("drawer-visible");
+
+        overlay.classList.add(
+            "menu-visible"
+        );
+
+        drawer.classList.add(
+            "drawer-visible"
+        );
+
     });
+
 }
+
+
+// ========================================
+// CLOSE MENU DRAWER
+// ========================================
 
 function closeMenu() {
-    const overlay = document.getElementById("menuOverlay");
-    const drawer = document.getElementById("sideDrawer");
-    if (!overlay || !drawer) return;
 
-    drawer.classList.remove("drawer-visible");
-    overlay.classList.remove("menu-visible");
+    const overlay =
+        document.getElementById("menuOverlay");
+
+
+    const drawer =
+        document.getElementById("sideDrawer");
+
+
+    if (!overlay || !drawer) {
+
+        return;
+
+    }
+
+
+    drawer.classList.remove(
+        "drawer-visible"
+    );
+
+
+    overlay.classList.remove(
+        "menu-visible"
+    );
+
 
     setTimeout(function () {
+
         overlay.style.display = "none";
+
         overlay.hidden = true;
+
         drawer.style.display = "";
+
+        drawer.style.transform = "";
+
         document.body.style.overflow = "";
-    }, 250);
+
+    }, 200);
+
 }
 
-// ========================================
-// 5. PROFILE POPUP MODAL
-// ========================================
-function toggleProfilePopup() {
-    const popup = document.getElementById("profilePopup");
-    if (!popup) return;
-
-    if (popup.hidden || popup.style.display === "none") {
-        popup.hidden = false;
-        popup.style.display = "block";
-    } else {
-        popup.hidden = true;
-        popup.style.display = "none";
-    }
-}
-
-function closeProfilePopup() {
-    const popup = document.getElementById("profilePopup");
-    if (popup) {
-        popup.hidden = true;
-        popup.style.display = "none";
-    }
-}
 
 // ========================================
-// 6. MENU & SERVICE TAB ACTIONS
+// MENU ITEM CLICK
 // ========================================
+
 function handleMenuClick(id) {
-    // Standardize slotBooking to booking
-    if (id === "slotBooking") {
-        id = "booking";
-    }
 
     activeTab = id;
+
+
+    // Update active menu
+
     createDrawerMenu();
+
+
+    // Close drawer
+
     closeMenu();
+
+
+    // ========================================
+    // HOME
+    // ========================================
 
     if (id === "home") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+
+        window.scrollTo({
+
+            top: 0,
+
+            behavior: "smooth"
+
+        });
+
         return;
+
     }
+
+
+    // ========================================
+    // PROFILE
+    // ========================================
 
     if (id === "profile") {
-        toggleProfilePopup();
-        return;
-    }
 
-    if (id === "help") {
-        const footer = document.getElementById("footerSection");
-        if (footer) {
-            footer.scrollIntoView({ behavior: "smooth" });
+        const popup =
+            document.getElementById(
+                "profilePopup"
+            );
+
+
+        if (popup) {
+
+            popup.hidden = false;
+
+            popup.style.display =
+                "block";
+
         }
+
         return;
+
     }
 
+
     // ========================================
-    // PAGE ROUTES
-    // ========================================
-    const pageRoutes = {
-        crops: "../crop_information/crop-information.html",
-        slotBooking: "../slot_booking/slot-booking.html",
-        booking: "../slot_booking/slot-booking.html",
-        myBooking: "../my_booking/my-booking.html",
-        liveQueue: "../live_queue/live-queue.html",
-        purchase: "../procurement_status/procurement-status.html",
-        payment: "../payment_status/payment-status.html",
-        notification: "../notifications/notifications.html"
-    };
+// CROP INFORMATION
+// ========================================
 
-    if (pageRoutes[id]) {
-        window.location.href = pageRoutes[id];
-        return;
-    }
+if (id === "crops") {
 
-    const selected = menuItems.find(item => item.id === id);
-    const serviceName = selected ? selected.label : id;
+    window.location.href = "crop_info/crop.html";
 
-    // Elegant informational alert matching theme
-    alert(`🌿 किसानसेतू: "${serviceName}" विभाग लवकरच कार्यान्वित होईल.`);
+    return;
+
 }
 
-// ========================================
-// 7. LOGOUT FUNCTIONALITY
-// ========================================
-function handleLogout() {
-    const confirmLogout = confirm("तुम्हाला किसानसेतू खात्यातून बाहेर पडायचे (लॉगआउट करायचे) आहे का?");
-    if (!confirmLogout) return;
 
-    localStorage.removeItem("loggedInUser");
-    localStorage.removeItem("kisanSetuUser");
-    localStorage.removeItem("kisanSetuLoggedIn");
+// ========================================
+// OTHER TABS
+// ========================================
+
+const selected =
+    menuItems.find(
+        function (item) {
+
+            return item.id === id;
+
+        }
+    );
+
+
+if (selected) {
+
+    alert(
+        selected.label +
+        " विभाग लवकरच उपलब्ध होईल."
+    );
+
+}
+
+}
+
+
+// ========================================
+// LOGOUT
+// ========================================
+
+function handleLogout() {
+
+    const confirmLogout =
+        confirm(
+            "तुम्हाला खात्री आहे का की तुम्हाला लॉगआउट करायचे आहे?"
+        );
+
+
+    if (!confirmLogout) {
+
+        return;
+
+    }
+
+
+    localStorage.removeItem(
+        "loggedInUser"
+    );
+
 
     closeMenu();
-    closeProfilePopup();
 
-    alert("आपण यशस्वीरित्या लॉगआउट झाला आहात.");
 
-    // Redirect to login page
-    window.location.href = "../login/login.html";
+    const popup =
+        document.getElementById(
+            "profilePopup"
+        );
+
+
+    if (popup) {
+
+        popup.hidden = true;
+
+        popup.style.display =
+            "none";
+
+    }
+
+
+    alert(
+        "आपण यशस्वीरित्या लॉगआउट झाला आहात."
+    );
+
+
+    window.location.reload();
+
 }
 
-// ========================================
-// 8. EVENT BINDINGS
-// ========================================
-document.addEventListener("DOMContentLoaded", function () {
-    // 1. Initial UI population
-    updateUserUI();
-    createDrawerMenu();
 
-    // 2. Menu Trigger (Mobile hamburger)
-    const menuBtn = document.getElementById("menuBtn");
-    if (menuBtn) {
-        menuBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+// ========================================
+// OPEN MENU BUTTON
+// ========================================
+
+const menuButton =
+    document.getElementById("menuBtn");
+
+
+if (menuButton) {
+
+    menuButton.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
             openMenu();
-        });
-    }
 
-    // 3. Drawer Close Button
-    const drawerClose = document.getElementById("drawerClose");
-    if (drawerClose) {
-        drawerClose.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        }
+    );
+
+}
+
+
+// ========================================
+// CLOSE DRAWER BUTTON
+// ========================================
+
+const drawerClose =
+    document.getElementById("drawerClose");
+
+
+if (drawerClose) {
+
+    drawerClose.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
             closeMenu();
-        });
-    }
 
-    // 4. Click outside drawer overlay
-    const menuOverlay = document.getElementById("menuOverlay");
-    if (menuOverlay) {
-        menuOverlay.addEventListener("click", function (e) {
-            if (e.target === menuOverlay) {
+        }
+    );
+
+}
+
+
+// ========================================
+// CLICK OUTSIDE DRAWER
+// ========================================
+
+const menuOverlay =
+    document.getElementById("menuOverlay");
+
+
+if (menuOverlay) {
+
+    menuOverlay.addEventListener(
+        "click",
+        function (event) {
+
+            if (
+                event.target ===
+                menuOverlay
+            ) {
+
                 closeMenu();
+
             }
-        });
-    }
 
-    // 5. Profile Button
-    const profileBtn = document.getElementById("profileBtn");
-    if (profileBtn) {
-        profileBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            toggleProfilePopup();
-        });
-    }
+        }
+    );
 
-    // 6. Profile Close Button
-    const profileClose = document.getElementById("profileClose");
-    if (profileClose) {
-        profileClose.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeProfilePopup();
-        });
-    }
+}
 
-    // 7. View Profile Button
-    const viewProfileBtn = document.getElementById("viewProfileBtn");
-    if (viewProfileBtn) {
-        viewProfileBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            closeProfilePopup();
-            handleMenuClick("profile");
-        });
-    }
 
-    // 8. Notification Button
-    const notificationBtn = document.getElementById("notificationBtn");
-    if (notificationBtn) {
-        notificationBtn.addEventListener("click", function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            handleMenuClick("notification");
-        });
-    }
+// ========================================
+// PROFILE BUTTON
+// ========================================
 
-    // 9. All Service Cards & Secondary buttons with [data-tab]
-    document.querySelectorAll("[data-tab]").forEach(function (button) {
-        button.addEventListener("click", function (e) {
-            e.preventDefault();
-            const tab = button.getAttribute("data-tab");
+const profileButton =
+    document.getElementById("profileBtn");
+
+
+if (profileButton) {
+
+    profileButton.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+            event.stopPropagation();
+
+
+            const popup =
+                document.getElementById(
+                    "profilePopup"
+                );
+
+
+            if (!popup) {
+
+                return;
+
+            }
+
+
+            if (popup.hidden) {
+
+                popup.hidden = false;
+
+                popup.style.display =
+                    "block";
+
+            } else {
+
+                popup.hidden = true;
+
+                popup.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+// ========================================
+// CLOSE PROFILE
+// ========================================
+
+const profileClose =
+    document.getElementById(
+        "profileClose"
+    );
+
+
+if (profileClose) {
+
+    profileClose.addEventListener(
+        "click",
+        function () {
+
+            const popup =
+                document.getElementById(
+                    "profilePopup"
+                );
+
+
+            if (popup) {
+
+                popup.hidden = true;
+
+                popup.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+// ========================================
+// NOTIFICATION
+// ========================================
+
+const notificationButton =
+    document.getElementById(
+        "notificationBtn"
+    );
+
+
+if (notificationButton) {
+
+    notificationButton.addEventListener(
+        "click",
+        function () {
+
+            handleMenuClick(
+                "notification"
+            );
+
+        }
+    );
+
+}
+
+
+// ========================================
+// VIEW PROFILE
+// ========================================
+
+const viewProfileButton =
+    document.getElementById(
+        "viewProfileBtn"
+    );
+
+
+if (viewProfileButton) {
+
+    viewProfileButton.addEventListener(
+        "click",
+        function () {
+
+            const popup =
+                document.getElementById(
+                    "profilePopup"
+                );
+
+
+            if (popup) {
+
+                popup.hidden = true;
+
+                popup.style.display =
+                    "none";
+
+            }
+
+
+            handleMenuClick(
+                "profile"
+            );
+
+        }
+    );
+
+}
+
+
+// ========================================
+// HOME SERVICE CARDS
+// ========================================
+
+document.querySelectorAll(
+    "[data-tab]"
+).forEach(function (button) {
+
+    button.addEventListener(
+        "click",
+        function (event) {
+
+            event.preventDefault();
+
+
+            const tab =
+                button.getAttribute(
+                    "data-tab"
+                );
+
+
             if (tab) {
+
                 handleMenuClick(tab);
+
             }
-        });
-    });
 
-    // 10. Click outside profile popup to close
-    document.addEventListener("click", function (e) {
-        const popup = document.getElementById("profilePopup");
-        const profileBtn = document.getElementById("profileBtn");
-        if (popup && !popup.hidden && popup.style.display !== "none") {
-            if (!popup.contains(e.target) && !profileBtn.contains(e.target)) {
-                closeProfilePopup();
-            }
         }
-    });
+    );
 
-    // 11. Escape key to close any active modal/drawer
-    document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-            closeMenu();
-            closeProfilePopup();
-        }
-    });
-
-    // 12. Set default user in localStorage if not set yet
-    if (!localStorage.getItem("loggedInUser") && !localStorage.getItem("kisanSetuUser")) {
-        localStorage.setItem("loggedInUser", JSON.stringify(defaultUser));
-    }
 });
+
+
+// ========================================
+// ESCAPE KEY
+// ========================================
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (event.key === "Escape") {
+
+            closeMenu();
+
+
+            const popup =
+                document.getElementById(
+                    "profilePopup"
+                );
+
+
+            if (popup) {
+
+                popup.hidden = true;
+
+                popup.style.display =
+                    "none";
+
+            }
+
+        }
+
+    }
+);
+
+
+// ========================================
+// INITIALIZE
+// ========================================
+
+updateUserUI();
+
+createDrawerMenu();
+
+
+// ========================================
+// SAVE DEFAULT USER
+// ========================================
+
+if (
+    !localStorage.getItem(
+        "loggedInUser"
+    )
+) {
+
+    localStorage.setItem(
+        "loggedInUser",
+        JSON.stringify(defaultUser)
+    );
+
+}

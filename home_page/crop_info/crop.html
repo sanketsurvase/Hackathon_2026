@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color"
+          content="#087a43">
+
+    <title>पिकाची माहिती नोंदवा - किसानसेवा</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- IMPORTANT:
+         crop.html is inside crop_info,
+         so style.css is in the SAME folder -->
+    <link rel="stylesheet" href="style.css">
+
+</head>
+
+
+<body>
+
+    <!-- =========================================
+         PAGE TITLE
+    ========================================== -->
+
+    <div class="page-heading">
+
+        <div class="number">
+            
+        </div>
+
+        <div>
+
+            <h1>
+                पिकाची माहिती नोंदवा
+            </h1>
+
+            <p>
+                खरेदीसाठी आपल्या पिकाची माहिती भरा
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================================
+         APPLICATION
+    ========================================== -->
+
+    <div class="app">
+
+
+        <!-- =====================================
+             HEADER
+        ====================================== -->
+
+        <header class="topbar">
+
+            <div class="logo-area">
+
+                <div class="logo">
+                    🌱
+                </div>
+
+                <div>
+
+                    <h2>
+                        किसानसेवा
+                    </h2>
+
+                    <p>
+                        शेतकऱ्यांसाठी डिजिटल सेवा
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="user-area">
+
+                <span class="bell">
+                    🔔
+                </span>
+
+                <div class="user-icon">
+                    👨🏻‍🌾
+                </div>
+
+                <div class="user-info">
+
+                    <strong>
+                        संकट पाटील
+                    </strong>
+
+                    <small>
+                        शेतकरी
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =====================================
+             BODY
+        ====================================== -->
+
+        <div class="body">
+
+
+          
+
+
+            <!-- =================================
+                 MAIN CONTENT
+            ================================== -->
+
+            <main class="content">
+
+
+                <h2>
+                    पिकाची माहिती नोंदवा
+                </h2>
+
+
+                <p class="subtitle">
+                    खरेदीसाठी आपल्या घेऊन येत असलेल्या
+                    पिकाची माहिती भरा
+                </p>
+
+
+
+                <!-- =================================
+                     FORM
+                ================================== -->
+
+                <form id="cropForm">
+
+
+                    <!-- CROP TYPE -->
+
+                    <div class="form-group">
+
+                        <label for="cropType">
+
+                            पिकाचा प्रकार
+
+                            <b>*</b>
+
+                        </label>
+
+
+                        <div class="input-box">
+
+                            <span>
+                                🌾
+                            </span>
+
+
+                            <select
+                                id="cropType"
+                                required>
+
+                                <option value="">
+                                    पिक निवडा
+                                </option>
+
+                                <option value="ज्वारी">
+                                    ज्वारी
+                                </option>
+
+                                <option value="गहू">
+                                    गहू
+                                </option>
+
+                                <option value="तांदूळ">
+                                    तांदूळ
+                                </option>
+
+                                <option value="सोयाबीन">
+                                    सोयाबीन
+                                </option>
+
+                                <option value="कापूस">
+                                    कापूस
+                                </option>
+
+                                <option value="बाजरी">
+                                    बाजरी
+                                </option>
+
+                                <option value="मका">
+                                    मका
+                                </option>
+
+                            </select>
+
+
+                            <span class="dropdown">
+                                ⌄
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- VARIETY -->
+
+                    <div class="form-group">
+
+                        <label for="variety">
+
+                            वाण
+
+                            <span>
+                                (पर्यायी)
+                            </span>
+
+                        </label>
+
+
+                        <div class="input-box">
+
+
+                            <span>
+                                🌱
+                            </span>
+
+
+                            <select id="variety">
+
+                                <option value="">
+                                    जात निवडा
+                                </option>
+
+                                <option value="मालदांडी">
+                                    मालदांडी
+                                </option>
+
+                                <option value="हायब्रीड">
+                                    हायब्रीड
+                                </option>
+
+                                <option value="स्थानिक">
+                                    स्थानिक
+                                </option>
+
+                            </select>
+
+
+                            <span class="dropdown">
+                                ⌄
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- QUANTITY -->
+
+                    <div class="form-group">
+
+                        <label for="quantity">
+
+                            अंदाजित प्रमाण
+                            (क्विंटलमध्ये)
+
+                            <b>*</b>
+
+                        </label>
+
+
+                        <div class="input-box">
+
+                            <span>
+                                ⚖️
+                            </span>
+
+
+                            <input
+                                type="number"
+                                id="quantity"
+                                placeholder="उदा. 25"
+                                min="1"
+                                required>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PURCHASE DATE -->
+
+                    <div class="form-group">
+
+                        <label for="purchaseDate">
+
+                            अपेक्षित खरेदी दिनांक
+
+                            <b>*</b>
+
+                        </label>
+
+
+                        <div class="input-box">
+
+                            <span>
+                                📅
+                            </span>
+
+
+                            <input
+                                type="date"
+                                id="purchaseDate"
+                                required>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ADDITIONAL INFORMATION -->
+
+                    <div class="form-group">
+
+                        <label for="additionalInfo">
+
+                            अतिरिक्त माहिती
+
+                            <span>
+                                (पर्यायी)
+                            </span>
+
+                        </label>
+
+
+                        <div class="textarea-box">
+
+                            <span>
+                                📝
+                            </span>
+
+
+                            <textarea
+                                id="additionalInfo"
+                                rows="4"
+                                placeholder="उदा. पिकाबाबत विशेष माहिती..."></textarea>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         TIP
+                    ================================== -->
+
+                    <div class="tip">
+
+                        <div class="tip-symbol">
+                            🌱
+                        </div>
+
+
+                        <div>
+
+                            <strong>
+                                टीप :
+                            </strong>
+
+
+                            <p>
+                                अचूक माहिती दिल्यास
+                                स्लॉट नियोजन व खरेदी
+                                प्रक्रिया अधिक सुलभ होते.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- =================================
+                         SUBMIT BUTTON
+                    ================================== -->
+
+                    <button
+                        type="submit"
+                        class="save-button">
+
+                        <span>
+                            पिकाची माहिती जतन करा
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
+                    </button>
+
+
+                </form>
+
+
+
+                <!-- =================================
+                     SUCCESS MESSAGE
+                ================================== -->
+
+                <div
+                    id="success"
+                    class="success"
+                    style="display: none;">
+
+                    <div class="check">
+                        ✓
+                    </div>
+
+
+                    <div>
+
+                        <strong>
+                            माहिती यशस्वीरित्या जतन झाली!
+                        </strong>
+
+
+                        <p>
+                            तुमची पिकाची माहिती
+                            नोंदवण्यात आली आहे.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </main>
+
+        </div>
+
+
+
+        <!-- =====================================
+             FOOTER
+        ====================================== -->
+
+        <footer>
+
+            <div class="farmer">
+                👨🏻‍🌾
+            </div>
+
+
+            <div class="footer-text">
+
+                <h2>
+
+                    "समृद्ध शेतकरी<br>
+                    समृद्ध भारत"
+
+                </h2>
+
+
+                <div class="trees">
+
+                    🌳 🌳 🌳 🌳 🌳 🌳
+
+                </div>
+
+            </div>
+
+        </footer>
+
+
+    </div>
+
+
+
+    <!-- =========================================
+         JAVASCRIPT
+
+         IMPORTANT:
+         script.js is inside crop_info,
+         so use only "script.js"
+    ========================================== -->
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
