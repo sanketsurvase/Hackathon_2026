@@ -290,16 +290,7 @@ function createDrawerMenu() {
 }
 
 
-// ========================================
-// LOGOUT FUNCTION
-// ========================================
 
-function handleLogout() {
-    localStorage.removeItem("loggedInUser");
-    localStorage.removeItem("kisanSetuUser");
-    localStorage.removeItem("kisanSetuLoggedIn");
-    window.location.href = "../Login/login.html";
-}
 
 
 // ========================================
@@ -606,51 +597,10 @@ function handleMenuClick(id) {
 // ========================================
 
 function handleLogout() {
-
-    const confirmLogout =
-        confirm(
-            "तुम्हाला खात्री आहे का की तुम्हाला लॉगआउट करायचे आहे?"
-        );
-
-
-    if (!confirmLogout) {
-
-        return;
-
-    }
-
-
-    localStorage.removeItem(
-        "loggedInUser"
-    );
-
-
-    closeMenu();
-
-
-    const popup =
-        document.getElementById(
-            "profilePopup"
-        );
-
-
-    if (popup) {
-
-        popup.hidden = true;
-
-        popup.style.display =
-            "none";
-
-    }
-
-
-    alert(
-        "आपण यशस्वीरित्या लॉगआउट झाला आहात."
-    );
-
-
-    window.location.reload();
-
+    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("kisanSetuUser");
+    localStorage.removeItem("kisanSetuLoggedIn");
+    window.location.href = "../Login/login.html";
 }
 
 
