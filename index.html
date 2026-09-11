@@ -49,8 +49,12 @@
     <div class="spinner"></div>
   </div>
   <script>
-    // JS redirect as fallback (faster than meta-refresh in modern browsers)
-    window.location.replace("Login/login.html");
+    // Route to home page only if authenticated, otherwise force Login/login.html
+    if (localStorage.getItem("kisanSetuLoggedIn") === "true") {
+      window.location.replace("home_page/home.html");
+    } else {
+      window.location.replace("Login/login.html");
+    }
   </script>
 </body>
 </html>

@@ -22,11 +22,7 @@ const LOGIN_API = `${API_BASE_URL}/api/login`;
 
 window.addEventListener("DOMContentLoaded", function () {
 
-    // If user is already logged in, redirect to home page without adding login page to history
-    const isLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true" ||
-                       localStorage.getItem("loggedInUser") ||
-                       localStorage.getItem("kisanSetuUser");
-                       
+    const isLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true";
     if (isLoggedIn) {
         window.location.replace("../home_page/home.html");
         return;
