@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>किसान सहाय्यक</title>
+
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+<div class="chatbot-container">
+
+    <div class="chat-header">
+        🤖 किसान सहाय्यक
+        <span>🌾</span>
+    </div>
+
+    <div class="chat-body" id="chatBody">
+
+        <div class="bot-message">
+            नमस्कार शेतकरी मित्रा! 👋<br><br>
+            मी किसान सहाय्यक आहे.
+            तुम्ही मला शेती, पीक, स्लॉट बुकिंग,
+            पेमेंट किंवा तक्रारींबद्दल प्रश्न विचारू शकता.
+        </div>
+
+    </div>
+
+    <div class="suggestions">
+
+        <button onclick="askQuestion('मला स्लॉट कसा बुक करायचा?')">
+            स्लॉट बुकिंग
+        </button>
+
+        <button onclick="askQuestion('माझे पेमेंट आले नाही')">
+            पेमेंट
+        </button>
+
+        <button onclick="askQuestion('माझ्या पिकाची पाने पिवळी पडत आहेत')">
+            पीक समस्या
+        </button>
+
+    </div>
+
+    <div class="chat-input">
+
+        <input
+            type="text"
+            id="userInput"
+            placeholder="तुमचा प्रश्न लिहा..."
+            onkeypress="handleEnter(event)"
+        >
+
+        <button onclick="sendMessage()">
+            ➤
+        </button>
+
+    </div>
+
+</div>
+
+<script src="chatbot.js"></script>
+
+</body>
+</html>
