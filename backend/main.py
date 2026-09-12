@@ -14,7 +14,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import (
     Column, Integer, String, Date, Time, Numeric,
-    DateTime, text, create_engine
+    DateTime, Boolean, text, create_engine
 )
 from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from dotenv import load_dotenv
@@ -62,10 +62,11 @@ class Farmer(Base):
     mobile_number = Column(String)
     email = Column(String)
     gender = Column(String)
-    date_of_birth = Column(String)
+    date_of_birth = Column(Date)
     role = Column(String)
     status = Column(String)
     created_at = Column(DateTime)
+    updated_at = Column(DateTime, nullable=True)
 
 
 class FarmerAccount(Base):
@@ -73,12 +74,16 @@ class FarmerAccount(Base):
     account_id = Column(Integer, primary_key=True, index=True)
     farmer_id = Column(Integer)
     password_hash = Column(String)
+    mobile_verified = Column(Boolean, default=False)
+    verification_status = Column(String, default="pending")
+    last_login = Column(DateTime, nullable=True)
 
 
 class FarmerAddress(Base):
     __tablename__ = "farmer_addresses"
     address_id = Column(Integer, primary_key=True, index=True)
     farmer_id = Column(Integer)
+    full_address = Column(String)
     village = Column(String)
     taluka = Column(String)
     district = Column(String)
@@ -88,12 +93,13 @@ class FarmerAddress(Base):
 
 class FarmerFarmingDetail(Base):
     __tablename__ = "farmer_farming_details"
-    detail_id = Column(Integer, primary_key=True, index=True)
+    farming_id = Column(Integer, primary_key=True, index=True)
     farmer_id = Column(Integer)
-    land_area_acres = Column(Numeric)
-    primary_crop = Column(String)
-    secondary_crop = Column(String)
-    gat_number = Column(String)
+    farm_area = Column(Numeric)
+    area_unit = Column(String)
+    crop_name = Column(String)
+    expected_quantity = Column(Numeric)
+    preferred_centre = Column(String)
 
 
 class ProcurementCentre(Base):
@@ -146,31 +152,34 @@ class LoginRequest(BaseModel):
     password: str
 
 
-class RegisterRequest(BaseModel):
+class FarmerRegistration(BaseModel):
     full_name: str
     father_spouse_name: Optional[str] = ""
     mobile_number: str
     date_of_birth: Optional[str] = None
     email: Optional[str] = None
-    gender: Optional[str] = None
+    gender: Optional[str] = "पुरुष"
+    full_address: Optional[str] = ""
+    district: Optional[str] = ""
+    taluka: Optional[str] = ""
+    village: Optional[str] = ""
+    pincode: Optional[str] = ""
+    farm_area: Optional[float] = 0.0
+    area_unit: Optional[str] = "एकर"
+    crop_name: Optional[str] = ""
+    expected_quantity: Optional[float] = 0.0
+    preferred_centre: Optional[str] = None
     password: str
-    # Address
-    full_address: Optional[str] = None
-    village: Optional[str] = None
-    taluka: Optional[str] = None
-    district: Optional[str] = None
-    state: Optional[str] = None
-    pincode: Optional[str] = None
-    # Farm details
-    farm_area: Optional[float] = None
-    area_unit: Optional[str] = None
+    # Compatibility fields
     land_area_acres: Optional[float] = None
     primary_crop: Optional[str] = None
-    crop_name: Optional[str] = None
-    secondary_crop: Optional[str] = None
-    expected_quantity: Optional[float] = None
-    gat_number: Optional[str] = None
-    preferred_centre: Optional[str] = None
+    state: Optional[str] = "Maharashtra"
+    gat_number: Optional[str] = ""
+    secondary_crop: Optional[str] = ""
+
+
+# Alias for backward compatibility
+RegisterRequest = FarmerRegistration
 
 
 class BookingRequest(BaseModel):
@@ -265,7 +274,7 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
 
 # ─── REGISTER ────────────────────────────────────────────
 @app.post("/api/register")
-def register(req: RegisterRequest, db: Session = Depends(get_db)):
+def register(req: FarmerRegistration, db: Session = Depends(get_db)):
     # Validate required fields
     if not req.full_name or len(req.full_name.strip()) < 2:
         raise HTTPException(status_code=422, detail="कृपया पूर्ण नाव प्रविष्ट करा.")
@@ -276,13 +285,14 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
     if not req.password or len(req.password) < 6:
         raise HTTPException(status_code=422, detail="पासवर्ड किमान 6 अक्षरांचा असावा.")
 
-    # Check duplicate mobile
+    # Check duplicate mobile dynamically
     existing = db.query(Farmer).filter(
         Farmer.mobile_number == req.mobile_number.strip()
     ).first()
     if existing:
         raise HTTPException(status_code=409, detail="हा मोबाईल क्रमांक आधीच नोंदणीकृत आहे.")
 
+    # Check duplicate email dynamically
     if req.email and req.email.strip():
         existing_email = db.query(Farmer).filter(
             Farmer.email == req.email.strip()
@@ -295,33 +305,74 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
         try:
             db.execute(text("SELECT setval(pg_get_serial_sequence('farmers', 'farmer_id'), COALESCE((SELECT MAX(farmer_id) FROM farmers), 0) + 1, false)"))
             db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_accounts', 'account_id'), COALESCE((SELECT MAX(account_id) FROM farmer_accounts), 0) + 1, false)"))
-            db.commit()
+            db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_addresses', 'address_id'), COALESCE((SELECT MAX(address_id) FROM farmer_addresses), 0) + 1, false)"))
+            db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_farming_details', 'farming_id'), COALESCE((SELECT MAX(farming_id) FROM farmer_farming_details), 0) + 1, false)"))
         except Exception as seq_err:
-            print("Sequence sync warning:", seq_err)
-            db.rollback()
+            print("Sequence sync notice:", seq_err)
 
-        # Resolve field aliases
-        resolved_area = req.land_area_acres or req.farm_area or 0
-        resolved_crop = req.primary_crop or req.crop_name or ""
-        father_name = (req.father_spouse_name or "").strip()
-        dob_val = (req.date_of_birth or "").strip() or None
+        # Dynamic values from payload
+        father_name = (req.father_spouse_name or "").strip() or "शेतकरी"
+        resolved_area = float(req.farm_area if req.farm_area is not None and req.farm_area > 0 else (req.land_area_acres or 0.0))
+        resolved_unit = (req.area_unit or "एकर").strip()
+        resolved_crop = (req.crop_name or req.primary_crop or "").strip() or "सोयाबीन"
+        resolved_quantity = float(req.expected_quantity if req.expected_quantity is not None else 0.0)
+        resolved_centre = (req.preferred_centre or "").strip() or None
 
-        # Create farmer — pass all NOT NULL columns safely
+        resolved_full_address = (req.full_address or "").strip()
+        if not resolved_full_address:
+            resolved_full_address = f"{req.village or ''}, {req.taluka or ''}, {req.district or ''}".strip(", ") or "पत्ता उपलब्ध नाही"
+
+        # Parse date_of_birth safely into python date object (since DB column is date NOT NULL)
+        dob_val = None
+        if req.date_of_birth and req.date_of_birth.strip():
+            try:
+                dob_val = datetime.strptime(req.date_of_birth.strip(), "%Y-%m-%d").date()
+            except Exception:
+                dob_val = None
+        if not dob_val:
+            dob_val = date(1990, 1, 1)
+
+        # 1. Insert Farmer
         farmer = Farmer(
             full_name=req.full_name.strip(),
-            father_spouse_name=father_name if father_name else "",
+            father_spouse_name=father_name,
             mobile_number=req.mobile_number.strip(),
             email=(req.email.strip() if req.email and req.email.strip() else None),
-            gender=req.gender or "",
+            gender=req.gender or "पुरुष",
             date_of_birth=dob_val,
             role="farmer",
             status="active",
             created_at=datetime.utcnow()
         )
         db.add(farmer)
-        db.flush()  # get farmer_id
+        db.flush()  # Obtain the generated farmer_id
 
-        # Hash password with bcrypt
+        # 2. Insert FarmerAddress using the same farmer_id
+        address = FarmerAddress(
+            farmer_id=farmer.farmer_id,
+            full_address=resolved_full_address,
+            district=(req.district or "").strip(),
+            taluka=(req.taluka or "").strip(),
+            village=(req.village or "").strip(),
+            pincode=(req.pincode or "").strip(),
+            state=(req.state or "Maharashtra").strip()
+        )
+        db.add(address)
+        db.flush()
+
+        # 3. Insert FarmerFarmingDetail using the same farmer_id
+        details = FarmerFarmingDetail(
+            farmer_id=farmer.farmer_id,
+            farm_area=resolved_area,
+            area_unit=resolved_unit,
+            crop_name=resolved_crop,
+            expected_quantity=resolved_quantity,
+            preferred_centre=resolved_centre
+        )
+        db.add(details)
+        db.flush()
+
+        # 4. Hash password with bcrypt and insert FarmerAccount using the same farmer_id
         hashed = bcrypt.hashpw(
             req.password.encode("utf-8"),
             bcrypt.gensalt()
@@ -329,53 +380,14 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
 
         account = FarmerAccount(
             farmer_id=farmer.farmer_id,
-            password_hash=hashed
+            password_hash=hashed,
+            mobile_verified=False,
+            verification_status="pending"
         )
         db.add(account)
         db.flush()
 
-        # Address (nested savepoint so address issues never block registration)
-        full_address = (req.full_address or "").strip()
-        if any([req.village, req.taluka, req.district, full_address]):
-            try:
-                with db.begin_nested():
-                    try:
-                        db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_addresses', 'address_id'), COALESCE((SELECT MAX(address_id) FROM farmer_addresses), 0) + 1, false)"))
-                    except Exception:
-                        pass
-                    address = FarmerAddress(
-                        farmer_id=farmer.farmer_id,
-                        village=req.village or "",
-                        taluka=req.taluka or "",
-                        district=req.district or "",
-                        state=req.state or "Maharashtra",
-                        pincode=req.pincode or ""
-                    )
-                    db.add(address)
-                    db.flush()
-            except Exception as addr_err:
-                print("Address save warning:", addr_err)
-
-        # Farming details (nested savepoint)
-        if any([resolved_crop, req.gat_number, resolved_area]):
-            try:
-                with db.begin_nested():
-                    try:
-                        db.execute(text("SELECT setval(pg_get_serial_sequence('farmer_farming_details', 'detail_id'), COALESCE((SELECT MAX(detail_id) FROM farmer_farming_details), 0) + 1, false)"))
-                    except Exception:
-                        pass
-                    details = FarmerFarmingDetail(
-                        farmer_id=farmer.farmer_id,
-                        land_area_acres=resolved_area,
-                        primary_crop=resolved_crop,
-                        secondary_crop=req.secondary_crop or "",
-                        gat_number=req.gat_number or ""
-                    )
-                    db.add(details)
-                    db.flush()
-            except Exception as farm_err:
-                print("Farming details save warning:", farm_err)
-
+        # 5. Commit all four table inserts atomically
         db.commit()
         db.refresh(farmer)
 
@@ -395,7 +407,7 @@ def register(req: RegisterRequest, db: Session = Depends(get_db)):
         print("Registration Error:", str(e))
         raise HTTPException(
             status_code=500,
-            detail=f"नोंदणी त्रुटी: {str(e)}"
+            detail="नोंदणी पूर्ण करता आली नाही. कृपया सर्व माहिती तपासून पुन्हा प्रयत्न करा."
         )
 
 
@@ -699,21 +711,30 @@ def get_farmer_profile(farmer_id: int, db: Session = Depends(get_db)):
         FarmerFarmingDetail.farmer_id == farmer_id
     ).first()
 
+    farm_area_val = float(str(farming.farm_area)) if farming and farming.farm_area is not None else 0.0
+    crop_val = farming.crop_name if farming and farming.crop_name else ""
+
     return {
         "success": True,
         "farmer": {
             "farmer_id": farmer.farmer_id,
             "full_name": farmer.full_name,
+            "father_spouse_name": farmer.father_spouse_name or "",
             "mobile_number": farmer.mobile_number,
             "email": farmer.email or "",
+            "gender": farmer.gender or "",
+            "full_address": address.full_address if address else "",
             "village": address.village if address else "",
             "taluka": address.taluka if address else "",
             "district": address.district if address else "",
             "state": address.state if address else "",
             "pincode": address.pincode if address else "",
-            "land_area_acres": float(str(farming.land_area_acres)) if farming and farming.land_area_acres else 0,
-            "primary_crop": farming.primary_crop if farming else "",
-            "secondary_crop": farming.secondary_crop if farming else "",
-            "gat_number": farming.gat_number if farming else ""
+            "farm_area": farm_area_val,
+            "land_area_acres": farm_area_val,
+            "area_unit": farming.area_unit if farming and farming.area_unit else "एकर",
+            "crop_name": crop_val,
+            "primary_crop": crop_val,
+            "expected_quantity": float(str(farming.expected_quantity)) if farming and farming.expected_quantity is not None else 0.0,
+            "preferred_centre": farming.preferred_centre if farming and farming.preferred_centre else ""
         }
     }

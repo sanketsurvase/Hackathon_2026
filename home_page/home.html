@@ -50,22 +50,14 @@
 
       <div class="header-actions">
 
-        <button
-          class="header-button"
-          id="notificationBtn"
-          aria-label="सूचना"
-          type="button">
+        <button class="header-button" id="notificationBtn" aria-label="सूचना" type="button">
 
           🔔
 
         </button>
 
 
-        <button
-          class="profile-button"
-          id="profileBtn"
-          aria-label="प्रोफाइल"
-          type="button">
+        <button class="profile-button" id="profileBtn" aria-label="प्रोफाइल" type="button">
 
           👨🏻‍🌾
 
@@ -82,11 +74,7 @@
 
     <div class="mobile-menu-bar">
 
-      <button
-        class="mobile-menu-button"
-        id="menuBtn"
-        aria-label="मेनू उघडा"
-        type="button">
+      <button class="mobile-menu-button" id="menuBtn" aria-label="मेनू उघडा" type="button">
 
         ☰
 
@@ -103,10 +91,7 @@
          PROFILE POPUP
     ====================================== -->
 
-    <div
-      class="profile-popup"
-      id="profilePopup"
-      hidden>
+    <div class="profile-popup" id="profilePopup" hidden>
 
       <div class="profile-popup-header">
 
@@ -123,16 +108,13 @@
           <p>
             User ID:
             <span id="profileUserId">
-              KS10245
+              -
             </span>
           </p>
 
         </div>
 
-        <button
-          class="profile-close"
-          id="profileClose"
-          type="button">
+        <button class="profile-close" id="profileClose" type="button">
 
           ×
 
@@ -150,7 +132,7 @@
           </span>
 
           <strong id="profileInfoUserId">
-            KS10245
+            -
           </strong>
 
         </div>
@@ -163,7 +145,46 @@
           </span>
 
           <strong id="profileMobile">
-            9876543210
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="profile-info-item" id="profileLocationRow" style="display:none;">
+
+          <span>
+            📍 गाव / जिल्हा
+          </span>
+
+          <strong id="profileLocation">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="profile-info-item" id="profileCropRow" style="display:none;">
+
+          <span>
+            🌾 मुख्य पीक
+          </span>
+
+          <strong id="profileCrop">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="profile-info-item" id="profileEmailRow" style="display:none;">
+
+          <span>
+            ✉️ ईमेल
+          </span>
+
+          <strong id="profileEmail">
+            -
           </strong>
 
         </div>
@@ -171,10 +192,7 @@
       </div>
 
 
-      <button
-        class="view-profile-button"
-        id="viewProfileBtn"
-        type="button">
+      <button class="view-profile-button" id="viewProfileBtn" type="button">
 
         <span>
           माझी माहिती पहा
@@ -193,14 +211,9 @@
          LEFT MENU OVERLAY
     ====================================== -->
 
-    <div
-      class="menu-overlay"
-      id="menuOverlay"
-      hidden>
+    <div class="menu-overlay" id="menuOverlay" hidden>
 
-      <aside
-        class="side-drawer"
-        id="sideDrawer">
+      <aside class="side-drawer" id="sideDrawer">
 
 
         <!-- DRAWER HEADER -->
@@ -228,451 +241,431 @@
           </div>
 
 
-          <button
-            class="drawer-close"
-            id="drawerClose"
-            type="button">
+          <button class="drawer-close" id="drawerClose" type="button">
 
             ×
 
-          </button>
-
-        </div>
-
-
-        <!-- DRAWER USER -->
-
-        <div class="drawer-user">
-
-          <div class="drawer-user-avatar">
-            👨🏻‍🌾
-          </div>
-
-          <div class="drawer-user-details">
-
-            <strong id="drawerName">
-              शेतकरी मित्र
-            </strong>
-
-            <span>
-
-              ID:
-
-              <span id="drawerUserId">
-                KS10245
-              </span>
-
+            </butt <span id="drawerUserId">
+            -
+            </span>
             </span>
 
-          </div>
-
         </div>
-
-
-        <!-- =====================================
-             MENU ITEMS CREATED BY SCRIPT.JS
-        ====================================== -->
-
-        <div
-          class="drawer-menu"
-          id="drawerMenu">
-
-        </div>
-
-
-        <!-- DRAWER FOOTER -->
-
-        <div class="drawer-footer">
-
-          <p>
-            किसानसेवा
-          </p>
-
-          <span>
-            शेतकऱ्यांसाठी • शेतकऱ्यांकडून
-          </span>
-
-        </div>
-
-      </aside>
 
     </div>
 
 
     <!-- =====================================
+             MENU ITEMS CREATED BY SCRIPT.JS
+        ====================================== -->
+
+    <div class="drawer-menu" id="drawerMenu">
+
+    </div>
+
+
+    <!-- DRAWER FOOTER -->
+
+    <div class="drawer-footer">
+
+      <p>
+        किसानसेवा
+      </p>
+
+      <span>
+        शेतकऱ्यांसाठी • शेतकऱ्यांकडून
+      </span>
+
+    </div>
+
+    </aside>
+
+  </div>
+
+
+  <!-- =====================================
          MAIN CONTENT
     ====================================== -->
 
-    <main class="main-content">
+  <main class="main-content">
 
 
-      <!-- =====================================
+    <!-- =====================================
            WELCOME CARD
       ====================================== -->
 
-      <section class="welcome-card">
+    <section class="welcome-card">
 
-        <div class="welcome-content">
+      <div class="welcome-content">
 
-          <p class="welcome-small">
-            किसानसेवामध्ये आपले स्वागत आहे
-          </p>
+        <p class="welcome-small">
+          किसानसेवामध्ये आपले स्वागत आहे
+        </p>
 
-          <h2>
+        <h2>
 
-            नमस्कार,
+          नमस्कार,
 
-            <span id="welcomeName">
-              शेतकरी मित्र
+          <span id="welcomeName">
+            शेतकरी मित्र
+          </span>
+
+          ! 👋
+
+        </h2>
+
+        <p class="welcome-description">
+
+          आपल्या शेतीसाठी आवश्यक असलेल्या
+          सर्व डिजिटल सेवांचा लाभ एका ठिकाणी घ्या.
+
+        </p>
+
+
+        <div class="user-id-card">
+
+          <div class="user-id-icon">
+            🆔
+          </div>
+
+          <div>
+
+            <span>
+              आपला User ID
+            </span>
+
+            <strong id="welcomeUserId">
+              -
+            </strong>� मित्र
             </span>
 
             ! 👋
 
-          </h2>
+            </h2>
 
-          <p class="welcome-description">
+            <p class="welcome-description">
 
-            आपल्या शेतीसाठी आवश्यक असलेल्या
-            सर्व डिजिटल सेवांचा लाभ एका ठिकाणी घ्या.
+              आपल्या शेतीसाठी आवश्यक असलेल्या
+              सर्व डिजिटल सेवांचा लाभ एका ठिकाणी घ्या.
 
-          </p>
+            </p>
 
 
-          <div class="user-id-card">
+            <div class="user-id-card">
 
-            <div class="user-id-icon">
-              🆔
-            </div>
+              <div class="user-id-icon">
+                🆔
+              </div>
 
-            <div>
+              <div>
 
-              <span>
-                आपला User ID
-              </span>
+                <span>
+                  आपला User ID
+                </span>
 
-              <strong id="welcomeUserId">
-                KS10245
-              </strong>
+                <strong id="welcomeUserId">
+                  KS10245
+                </strong>
+
+              </div>
 
             </div>
 
           </div>
 
-        </div>
+
+          <div class="welcome-farmer">
+            👨🏻‍🌾
+          </div>
+
+    </section>
 
 
-        <div class="welcome-farmer">
-          👨🏻‍🌾
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
+    <!-- =====================================
            SERVICES
       ====================================== -->
 
-      <section class="services-section">
+    <section class="services-section">
 
-        <div class="section-heading">
+      <div class="section-heading">
 
-          <h2>
-            शेतकऱ्यांसाठी सेवा
-          </h2>
-
-          <p>
-            आवश्यक सेवा एका क्लिकवर
-          </p>
-
-        </div>
-
-
-        <div class="service-list">
-
-
-          <!-- =================================
-               PIKANCHI MAHITI
-          ================================== -->
-
-          <button
-            class="service-card"
-            data-tab="crops"
-            type="button">
-
-            <div class="service-icon green">
-              🌱
-            </div>
-
-            <div class="service-content">
-
-              <h3>
-                पिकांची माहिती
-              </h3>
-
-              <p>
-                आपल्या पिकांची माहिती नोंदवा
-              </p>
-
-            </div>
-
-            <span class="service-arrow">
-              →
-            </span>
-
-          </button>
-
-
-          <!-- =================================
-               SLOT BOOKING
-          ================================== -->
-
-          <button
-            class="service-card"
-            data-tab="booking"
-            type="button">
-
-            <div class="service-icon yellow">
-              🧾
-            </div>
-
-            <div class="service-content">
-
-              <h3>
-                स्लॉट बुकिंग
-              </h3>
-
-              <p>
-                आपल्या पिकांसाठी स्लॉट बुक करा
-              </p>
-
-            </div>
-
-            <span class="service-arrow">
-              →
-            </span>
-
-          </button>
-
-
-          <!-- =================================
-               MY BOOKING
-          ================================== -->
-
-          <button
-            class="service-card"
-            data-tab="myBooking"
-            type="button">
-
-            <div class="service-icon blue">
-              🧺
-            </div>
-
-            <div class="service-content">
-
-              <h3>
-                माझी बुकिंग
-              </h3>
-
-              <p>
-                आपल्या बुकिंगची माहिती पहा
-              </p>
-
-            </div>
-
-            <span class="service-arrow">
-              →
-            </span>
-
-          </button>
-
-
-          <!-- =================================
-               LIVE QUEUE
-          ================================== -->
-
-          <button
-            class="service-card"
-            data-tab="liveQueue"
-            type="button">
-
-            <div class="service-icon purple">
-              📄
-            </div>
-
-            <div class="service-content">
-
-              <h3>
-                लाईव्ह रांग
-              </h3>
-
-              <p>
-                सध्याची रांग आणि क्रमांक पहा
-              </p>
-
-            </div>
-
-            <span class="service-arrow">
-              →
-            </span>
-
-          </button>
-
-
-          <!-- =================================
-               COMPLAINT / FEEDBACK
-          ================================== -->
-<a
-    href="./complaints/complaint.html"
-    class="service-card complaint-card">
-
-    <div class="service-icon purple">
-        💬
-    </div>
-
-    <div class="service-content">
-        <h3>तक्रार / अभिप्राय</h3>
-        <p>आपली तक्रार किंवा अभिप्राय नोंदवा</p>
-    </div>
-
-    <span class="service-arrow">→</span>
-
-</a>
-
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
-           SMALL SERVICES
-      ====================================== -->
-
-      <section class="small-services">
-
-
-        <!-- =================================
-             PURCHASE STATUS
-        ================================== -->
-
-        <button
-          class="small-service-card"
-          data-tab="purchase"
-          type="button">
-
-          <div class="small-service-icon">
-            ⏱️
-          </div>
-
-          <div>
-
-            <h3>
-              खरेदीची स्थिती
-            </h3>
-
-            <p>
-              आपल्या खरेदीची स्थिती तपासा
-            </p>
-
-          </div>
-
-          <span>
-            →
-          </span>
-
-        </button>
-
-
-        <!-- =================================
-             PAYMENT STATUS
-        ================================== -->
-
-        <button
-          class="small-service-card"
-          data-tab="payment"
-          type="button">
-
-          <div class="small-service-icon notification">
-            📍
-          </div>
-
-          <div>
-
-            <h3>
-              देयक स्थिती
-            </h3>
-
-            <p>
-              आपल्या देयकाची स्थिती पहा
-            </p>
-
-          </div>
-
-          <span>
-            →
-          </span>
-
-        </button>
-
-
-      </section>
-
-
-      <!-- =====================================
-           FARMER BANNER
-      ====================================== -->
-
-      <section class="farmer-banner">
-
-        <div class="banner-farmer">
-          👨🏻‍🌾
-        </div>
-
-        <div class="banner-text">
-
-          <h2>
-
-            “समृद्ध शेतकरी<br>
-            समृद्ध भारत”
-
-          </h2>
-
-          <p>
-
-            आधुनिक तंत्रज्ञानासोबत<br>
-            शेतीला नवी दिशा.
-
-          </p>
-
-        </div>
-
-        <div class="banner-plants">
-          🌾🌱🌾
-        </div>
-
-      </section>
-
-
-      <!-- =====================================
-           MENU HINT
-      ====================================== -->
-
-      <div class="menu-hint">
-
-        <span>
-          ☰
-        </span>
+        <h2>
+          शेतकऱ्यांसाठी सेवा
+        </h2>
 
         <p>
-
-          मेनू बटणावर क्लिक करून<br>
-          सर्व सेवा पहा.
-
+          आवश्यक सेवा एका क्लिकवर
         </p>
 
       </div>
 
 
-    </main>
+      <div class="service-list">
+
+
+        <!-- =================================
+               PIKANCHI MAHITI
+          ================================== -->
+
+        <button class="service-card" data-tab="crops" type="button">
+
+          <div class="service-icon green">
+            🌱
+          </div>
+
+          <div class="service-content">
+
+            <h3>
+              पिकांची माहिती
+            </h3>
+
+            <p>
+              आपल्या पिकांची माहिती नोंदवा
+            </p>
+
+          </div>
+
+          <span class="service-arrow">
+            →
+          </span>
+
+        </button>
+
+
+        <!-- =================================
+               SLOT BOOKING
+          ================================== -->
+
+        <button class="service-card" data-tab="booking" type="button">
+
+          <div class="service-icon yellow">
+            🧾
+          </div>
+
+          <div class="service-content">
+
+            <h3>
+              स्लॉट बुकिंग
+            </h3>
+
+            <p>
+              आपल्या पिकांसाठी स्लॉट बुक करा
+            </p>
+
+          </div>
+
+          <span class="service-arrow">
+            →
+          </span>
+
+        </button>
+
+
+        <!-- =================================
+               MY BOOKING
+          ================================== -->
+
+        <button class="service-card" data-tab="myBooking" type="button">
+
+          <div class="service-icon blue">
+            🧺
+          </div>
+
+          <div class="service-content">
+
+            <h3>
+              माझी बुकिंग
+            </h3>
+
+            <p>
+              आपल्या बुकिंगची माहिती पहा
+            </p>
+
+          </div>
+
+          <span class="service-arrow">
+            →
+          </span>
+
+        </button>
+
+
+        <!-- =================================
+               LIVE QUEUE
+          ================================== -->
+
+        <button class="service-card" data-tab="liveQueue" type="button">
+
+          <div class="service-icon purple">
+            📄
+          </div>
+
+          <div class="service-content">
+
+            <h3>
+              लाईव्ह रांग
+            </h3>
+
+            <p>
+              सध्याची रांग आणि क्रमांक पहा
+            </p>
+
+          </div>
+
+          <span class="service-arrow">
+            →
+          </span>
+
+        </button>
+
+
+        <!-- =================================
+               COMPLAINT / FEEDBACK
+          ================================== -->
+        <a href="./complaints/complaint.html" class="service-card complaint-card">
+
+          <div class="service-icon purple">
+            💬
+          </div>
+
+          <div class="service-content">
+            <h3>तक्रार / अभिप्राय</h3>
+            <p>आपली तक्रार किंवा अभिप्राय नोंदवा</p>
+          </div>
+
+          <span class="service-arrow">→</span>
+
+        </a>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+           SMALL SERVICES
+      ====================================== -->
+
+    <section class="small-services">
+
+
+      <!-- =================================
+             PURCHASE STATUS
+        ================================== -->
+
+      <button class="small-service-card" data-tab="purchase" type="button">
+
+        <div class="small-service-icon">
+          ⏱️
+        </div>
+
+        <div>
+
+          <h3>
+            खरेदीची स्थिती
+          </h3>
+
+          <p>
+            आपल्या खरेदीची स्थिती तपासा
+          </p>
+
+        </div>
+
+        <span>
+          →
+        </span>
+
+      </button>
+
+
+      <!-- =================================
+             PAYMENT STATUS
+        ================================== -->
+
+      <button class="small-service-card" data-tab="payment" type="button">
+
+        <div class="small-service-icon notification">
+          📍
+        </div>
+
+        <div>
+
+          <h3>
+            देयक स्थिती
+          </h3>
+
+          <p>
+            आपल्या देयकाची स्थिती पहा
+          </p>
+
+        </div>
+
+        <span>
+          →
+        </span>
+
+      </button>
+
+
+    </section>
+
+
+    <!-- =====================================
+           FARMER BANNER
+      ====================================== -->
+
+    <section class="farmer-banner">
+
+      <div class="banner-farmer">
+        👨🏻‍🌾
+      </div>
+
+      <div class="banner-text">
+
+        <h2>
+
+          “समृद्ध शेतकरी<br>
+          समृद्ध भारत”
+
+        </h2>
+
+        <p>
+
+          आधुनिक तंत्रज्ञानासोबत<br>
+          शेतीला नवी दिशा.
+
+        </p>
+
+      </div>
+
+      <div class="banner-plants">
+        🌾🌱🌾
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+           MENU HINT
+      ====================================== -->
+
+    <div class="menu-hint">
+
+      <span>
+        ☰
+      </span>
+
+      <p>
+
+        मेनू बटणावर क्लिक करून<br>
+        सर्व सेवा पहा.
+
+      </p>
+
+    </div>
+
+
+  </main>
 
   </div>
 

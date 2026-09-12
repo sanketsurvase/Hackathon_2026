@@ -7,40 +7,6 @@
 
   const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
 
-  // Seed sample initial bookings if empty
-  function initSeedBookings() {
-    // Only seed if localStorage is empty AND no DB farmer session exists
-    const existing = localStorage.getItem("kisansetu_bookings");
-    if (!existing) {
-      const seedData = [
-        {
-          id: "BK001",
-          cropName: "गेहूं (Wheat)",
-          quantity: "50",
-          pricePerQuintal: "2200",
-          mandi: "Pune APMC",
-          slotDate: "2026-09-15",
-          slotTime: "09:00 AM",
-          status: "निश्चित (Confirmed)",
-          createdAt: new Date().toISOString()
-        },
-        {
-          id: "BK002",
-          cropName: "चावल (Rice)",
-          quantity: "30",
-          pricePerQuintal: "2800",
-          mandi: "Nashik APMC",
-          slotDate: "2026-09-18",
-          slotTime: "11:00 AM",
-          status: "पूर्ण (Completed)",
-          createdAt: new Date().toISOString()
-        }
-      ];
-
-      localStorage.setItem("kisansetu_bookings", JSON.stringify(seedData));
-    }
-  }
-
   function getBookings() {
     try {
       return JSON.parse(localStorage.getItem("kisansetu_bookings") || "[]");
@@ -281,7 +247,6 @@
 
   async function fetchApiBookings() {
     try {
-      // Get logged-in farmer's ID
       let farmerId = null;
       try {
         const ksUser = JSON.parse(localStorage.getItem("kisanSetuUser") || "{}");
@@ -289,14 +254,16 @@
         farmerId = ksUser.farmer_id || lgUser.farmer_id || null;
       } catch (e) { /* ignore */ }
 
-      const url = farmerId
-        ? `${API_BASE_URL}/api/bookings?farmer_id=${farmerId}`
-        : `${API_BASE_URL}/api/bookings`;
+      if (!farmerId) {
+        saveBookings([]);
+        renderBookings();
+        return;
+      }
 
+      const url = `${API_BASE_URL}/api/bookings?farmer_id=${farmerId}`;
       const res = await fetch(url);
       const data = await res.json();
-      if (data.success && data.bookings && data.bookings.length > 0) {
-        // Map backend rows to frontend format
+      if (data.success && Array.isArray(data.bookings)) {
         const apiBookings = data.bookings.map(b => ({
           id: `db_${b.booking_id}`,
           bookingId: b.booking_id,
@@ -318,18 +285,17 @@
           createdAt: b.created_at
         }));
 
-        // Replace localStorage with fresh DB data
         saveBookings(apiBookings);
         renderBookings();
       }
     } catch (e) {
-      console.warn("API offline, using localStorage", e);
+      console.warn("API bookings notice:", e);
+      renderBookings();
     }
   }
 
   // Init
   document.addEventListener("DOMContentLoaded", () => {
-    initSeedBookings();
     renderBookings();
     fetchApiBookings();
   });

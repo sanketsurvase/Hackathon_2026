@@ -121,50 +121,27 @@ if (loginForm) {
 
 
         try {
+            const response = await fetch(LOGIN_API, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ identifier: identifier, password: password })
+            });
 
-            let farmer = null;
-
+            let result = {};
             try {
-                const response = await fetch(LOGIN_API, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ identifier: identifier, password: password })
-                });
-
-                let result = {};
-                try { result = await response.json(); } catch (jErr) {}
-
-                if (response.ok && result.success && result.farmer) {
-                    farmer = result.farmer;
-                }
-            } catch (fetchErr) {
-                console.warn("API login note:", fetchErr);
+                result = await response.json();
+            } catch (jsonErr) {
+                console.warn("API login json parse notice:", jsonErr);
             }
 
-            // Local fallback check
-            if (!farmer) {
-                let localFarmers = [];
-                try {
-                    localFarmers = JSON.parse(localStorage.getItem("kisanSetuRegisteredFarmers") || "[]");
-                } catch (e) { localFarmers = []; }
-
-                const matched = localFarmers.find(f =>
-                    (f.mobile_number === identifier || f.email === identifier) && f.password === password
-                );
-
-                if (matched) {
-                    farmer = {
-                        farmer_id: matched.farmer_id,
-                        full_name: matched.full_name,
-                        mobile_number: matched.mobile_number,
-                        email: matched.email || ""
-                    };
-                }
+            if (!response.ok || !result.success || !result.farmer) {
+                const errorDetail =
+                    result.detail ||
+                    "मोबाईल क्रमांक, ईमेल किंवा पासवर्ड चुकीचा आहे. कृपया पुन्हा प्रयत्न करा.";
+                throw new Error(errorDetail);
             }
 
-            if (!farmer) {
-                throw new Error("मोबाईल क्रमांक, ईमेल किंवा पासवर्ड चुकीचा आहे. कृपया पुन्हा प्रयत्न करा.");
-            }
+            const farmer = result.farmer;
 
 
             /* =========================

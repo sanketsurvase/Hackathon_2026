@@ -140,13 +140,11 @@
   }
 
   function renderFallbackQueue() {
-    // Read real bookings from localStorage
     let myBookings = [];
     try {
       myBookings = JSON.parse(localStorage.getItem("kisansetu_bookings") || "[]");
     } catch (e) { /* ignore */ }
 
-    // Get logged-in user name
     let myName = "शेतकरी मित्र";
     try {
       const ksUser = JSON.parse(localStorage.getItem("kisanSetuUser") || "{}");
@@ -154,29 +152,22 @@
       myName = ksUser.full_name || lgUser.name || myName;
     } catch (e) { /* ignore */ }
 
-    // Build a waiting list from confirmed localStorage bookings
     const confirmedBookings = myBookings.filter(b =>
       b.status && (b.status.includes("Confirmed") || b.status.includes("निश्चित"))
     );
 
-    // Add a few placeholder entries before the user's booking
-    const placeholders = [
-      { token_number: "#01", farmer_name: "रमेश देशमुख", crop_name: "सोयाबीन", expected_quantity: 40, start_time: "08:00" },
-      { token_number: "#02", farmer_name: "ज्ञानेश्वर शिंदे", crop_name: "तूर", expected_quantity: 35, start_time: "08:00" }
-    ];
-
-    const myEntries = confirmedBookings.slice(0, 3).map((b, i) => ({
-      token_number: b.token || b.token_number || `#0${i + 3}`,
-      farmer_name: myName,
-      crop_name: b.crop || b.crop_name || "सोयाबीन",
+    const myEntries = confirmedBookings.map((b) => ({
+      token_number: b.token || b.token_number || "-",
+      farmer_name: b.farmerName || myName,
+      crop_name: b.crop || b.crop_name || "",
       expected_quantity: parseFloat(b.quantity || b.expected_quantity || 0),
-      start_time: b.slotTime ? b.slotTime.split(" - ")[0] : "10:00"
+      start_time: b.slotTime ? b.slotTime.split(" - ")[0] : ""
     }));
 
-    const fallbackServing = placeholders[0];
-    const waitingList = [...placeholders.slice(1), ...myEntries];
+    const nowServing = myEntries.length > 0 ? myEntries[0] : null;
+    const waitingList = myEntries.length > 1 ? myEntries.slice(1) : [];
 
-    renderLiveQueueData(fallbackServing, waitingList);
+    renderLiveQueueData(nowServing, waitingList);
   }
 
   // Initialization

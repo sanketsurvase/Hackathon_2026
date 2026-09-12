@@ -9,50 +9,59 @@
   const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
   const API_BASE = `${API_BASE_URL}/api`;
 
-  // 1. Current Farmer
-  const defaultUser = {
-    farmer_id: 3,
-    userId: "KS10245",
-    name: "शेतकरी मित्र",
-    mobile: ""
-  };
-
+  // 1. Dynamic Logged-in Farmer
   function getLoggedInUser() {
     try {
-      // Primary: loggedInUser set by login.js (has userId, name, mobile)
+      const kisanRaw = localStorage.getItem("kisanSetuUser");
       const loggedInRaw = localStorage.getItem("loggedInUser");
-      if (loggedInRaw) {
-        const parsed = JSON.parse(loggedInRaw);
-        if (parsed && (parsed.name || parsed.userId)) {
-          return {
-            farmer_id: parsed.farmer_id || defaultUser.farmer_id,
-            userId: parsed.userId || ("KS" + (parsed.farmer_id || defaultUser.farmer_id)),
-            name: parsed.name || defaultUser.name,
-            mobile: parsed.mobile || defaultUser.mobile
-          };
-        }
+      const isLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true";
+
+      if (!isLoggedIn) {
+        window.location.replace("../Login/login.html");
+        return null;
       }
 
-      // Secondary: kisanSetuUser set by login.js (has full_name, farmer_id, mobile_number)
-      const kisanRaw = localStorage.getItem("kisanSetuUser");
+      let farmerId = null;
+      let name = "शेतकरी मित्र";
+      let mobile = "";
+
       if (kisanRaw) {
         const parsed = JSON.parse(kisanRaw);
-        if (parsed) {
-          return {
-            farmer_id: parsed.farmer_id || defaultUser.farmer_id,
-            userId: "KS" + (parsed.farmer_id || defaultUser.farmer_id),
-            name: parsed.full_name || parsed.name || defaultUser.name,
-            mobile: parsed.mobile_number || parsed.mobile || defaultUser.mobile
-          };
+        if (parsed && parsed.farmer_id) {
+          farmerId = Number(parsed.farmer_id);
+          name = parsed.full_name || name;
+          mobile = parsed.mobile_number || mobile;
         }
       }
+
+      if (loggedInRaw) {
+        const parsed = JSON.parse(loggedInRaw);
+        if (parsed) {
+          if (parsed.farmer_id && !farmerId) farmerId = Number(parsed.farmer_id);
+          if (parsed.name && name === "शेतकरी मित्र") name = parsed.name;
+          if (parsed.mobile && !mobile) mobile = parsed.mobile;
+        }
+      }
+
+      if (!farmerId) {
+        window.location.replace("../Login/login.html");
+        return null;
+      }
+
+      return {
+        farmer_id: farmerId,
+        userId: "KS" + farmerId,
+        name: name,
+        mobile: mobile
+      };
     } catch (e) {
-      console.warn("Could not parse user", e);
+      console.warn("User parse warning:", e);
+      window.location.replace("../Login/login.html");
+      return null;
     }
-    return defaultUser;
   }
 
-  const currentUser = getLoggedInUser();
+  const currentUser = getLoggedInUser() || { farmer_id: 0, userId: "", name: "", mobile: "" };
 
   // 2. State for the 5 specified fields:
   // 1. पीक निवडा (crop_name)
@@ -384,7 +393,7 @@
       // 1. Try Backend API
       try {
         const payload = {
-          farmer_id: currentUser.farmer_id || 3,
+          farmer_id: currentUser.farmer_id,
           slot_id: selectedSlot.slot_id,
           crop_name: selectedCrop,
           expected_quantity: selectedQty
@@ -411,7 +420,7 @@
         const randToken = Math.floor(10 + Math.random() * 80);
         bookingResult = {
           booking_id: Math.floor(1000 + Math.random() * 9000),
-          farmer_id: currentUser.farmer_id || 3,
+          farmer_id: currentUser.farmer_id,
           slot_id: selectedSlot.slot_id,
           crop_name: selectedCrop,
           expected_quantity: selectedQty,

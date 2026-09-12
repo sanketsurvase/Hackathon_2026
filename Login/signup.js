@@ -547,132 +547,97 @@ if (registerForm) {
             }
 
 
-            const gender =
-                document.querySelector(
-                    'input[name="gender"]:checked'
-                );
+            const genderChecked =
+                document.querySelector('input[name="gender"]:checked');
 
-
-            if (!gender) {
-
+            if (!genderChecked) {
                 showMessage(
                     "कृपया लिंग निवडा.",
                     "error"
                 );
-
                 return;
             }
 
-
-            const getVal = (id) => {
+            const getTrimmed = (id) => {
                 const el = document.getElementById(id);
-                return el ? (el.value || "").trim() : "";
+                return el ? el.value.trim() : "";
             };
 
+            // Build dynamic farmer data from form fields strictly
             const farmerData = {
-                full_name: getVal("fullName"),
-                father_spouse_name: getVal("fatherSpouseName"),
-                mobile_number: getVal("mobile"),
-                date_of_birth: getVal("dob") || null,
-                email: getVal("email") || null,
-                gender: gender ? gender.value : "other",
-                full_address: getVal("address"),
-                district: getVal("district"),
-                taluka: getVal("taluka"),
-                village: getVal("village"),
-                pincode: getVal("pincode"),
-                land_area_acres: Number(getVal("farmArea") || 0),
-                primary_crop: getVal("crop") || "इतर",
+                full_name: getTrimmed("fullName"),
+                father_spouse_name: getTrimmed("fatherSpouseName"),
+                mobile_number: getTrimmed("mobile"),
+                date_of_birth: document.getElementById("dob").value || null,
+                email: getTrimmed("email") || null,
+                gender: genderChecked.value,
+                full_address: getTrimmed("address"),
+                district: document.getElementById("district").value,
+                taluka: getTrimmed("taluka"),
+                village: getTrimmed("village"),
+                pincode: getTrimmed("pincode"),
+                farm_area: Number(document.getElementById("farmArea").value || 0),
+                area_unit: document.getElementById("areaUnit").value || "एकर",
+                crop_name: document.getElementById("crop").value,
+                expected_quantity: Number(document.getElementById("quantity").value || 0),
+                preferred_centre: document.getElementById("centre").value || null,
                 password: password
             };
 
-
-            const originalBtnText =
-                submitBtn.innerHTML;
-
-
+            const originalBtnText = submitBtn.innerHTML;
             submitBtn.disabled = true;
-
-            submitBtn.innerHTML =
-                "नोंदणी प्रक्रिया सुरू आहे...";
-
+            submitBtn.innerHTML = "नोंदणी प्रक्रिया सुरू आहे...";
 
             showMessage(
                 "कृपया प्रतीक्षा करा...",
                 "success"
             );
 
-
             try {
-                let farmerId = Math.floor(1000 + Math.random() * 9000);
+                const response = await fetch(`${API_BASE_URL}/api/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(farmerData)
+                });
 
+                let result = {};
                 try {
-                    const response = await fetch(`${API_BASE_URL}/api/register`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify(farmerData)
-                    });
-
-                    let result = {};
-                    try { result = await response.json(); } catch (jErr) {}
-
-                    if (response.ok && (result.success || result.farmer_id)) {
-                        farmerId = result.farmer_id || farmerId;
-                    }
-                } catch (fetchErr) {
-                    console.warn("API registration note:", fetchErr);
+                    result = await response.json();
+                } catch (jsonErr) {
+                    console.warn("Response json parse notice:", jsonErr);
                 }
 
-                // Save registered farmer locally so user can ALWAYS log in & start using the site
-                const activeSession = {
-                    farmer_id: farmerId,
-                    full_name: farmerData.full_name,
-                    mobile_number: farmerData.mobile_number,
-                    email: farmerData.email || "",
-                    login_time: new Date().toISOString()
-                };
+                if (!response.ok) {
+                    const errorMsg =
+                        result.detail ||
+                        "नोंदणी पूर्ण करता आली नाही. कृपया सर्व माहिती तपासून पुन्हा प्रयत्न करा.";
+                    throw new Error(errorMsg);
+                }
 
-                let localFarmers = [];
-                try {
-                    localFarmers = JSON.parse(localStorage.getItem("kisanSetuRegisteredFarmers") || "[]");
-                } catch (e) { localFarmers = []; }
-
-                localFarmers.push({
-                    farmer_id: farmerId,
-                    full_name: farmerData.full_name,
-                    mobile_number: farmerData.mobile_number,
-                    email: farmerData.email || "",
-                    password: farmerData.password
-                });
-                localStorage.setItem("kisanSetuRegisteredFarmers", JSON.stringify(localFarmers));
-
-                // Save active login session
-                localStorage.setItem("kisanSetuUser", JSON.stringify(activeSession));
-                localStorage.setItem("loggedInUser", JSON.stringify({
-                    userId: "KS" + farmerId,
-                    name: farmerData.full_name,
-                    mobile: farmerData.mobile_number
-                }));
-                localStorage.setItem("kisanSetuLoggedIn", "true");
-
+                // Registration successful in PostgreSQL via Render backend
                 showMessage(
-                    "नोंदणी यशस्वी झाली! स्वागत आहे...",
+                    "नोंदणी यशस्वी झाली! कृपया लॉगिन करा...",
                     "success"
                 );
 
                 registerForm.reset();
 
+                // Redirect to actual Login page per requirement 20
                 setTimeout(function () {
-                    window.location.replace("../home_page/home.html");
-                }, 1000);
+                    window.location.replace("login.html");
+                }, 1200);
 
             } catch (error) {
                 console.error("Registration Error:", error);
-                showMessage(
-                    "नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा.",
-                    "error"
-                );
+                let errorDisplay = "नोंदणी पूर्ण करता आली नाही. कृपया पुन्हा प्रयत्न करा.";
 
+                if (error instanceof TypeError || error.message === "Failed to fetch") {
+                    errorDisplay = "सर्व्हरशी संपर्क साधता आला नाही. कृपया इंटरनेट तपासा आणि पुन्हा प्रयत्न करा.";
+                } else if (error.message) {
+                    errorDisplay = error.message;
+                }
+
+                showMessage(errorDisplay, "error");
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = originalBtnText;
             }
