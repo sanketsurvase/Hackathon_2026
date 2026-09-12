@@ -17,12 +17,35 @@ const API_BASE_URL = (typeof KISANSETU_API_BASE !== "undefined" && KISANSETU_API
     : "https://hackathon-2026-0gus.onrender.com";
 const LOGIN_API = `${API_BASE_URL}/api/login`;
 
-// Wake up Render in background as soon as login page loads
-(function prewarmServer() {
+// Multi-stage server pre-warming to minimize Render cold start
+function pingServer() {
     try {
         fetch(`${API_BASE_URL}/health`, { method: "GET", cache: "no-store", keepalive: true }).catch(() => {});
     } catch(e) {}
-})();
+}
+
+// 1. Prewarm on page load
+pingServer();
+
+// 2. Keep alive every 4 minutes while login tab is open
+setInterval(pingServer, 240000);
+
+// 3. Prewarm immediately on first user interaction (focus/input)
+let hasPrewarmedOnInput = false;
+function prewarmOnFirstInteraction() {
+    if (!hasPrewarmedOnInput) {
+        hasPrewarmedOnInput = true;
+        pingServer();
+    }
+}
+
+if (loginIdentifier) {
+    loginIdentifier.addEventListener("focus", prewarmOnFirstInteraction, { once: true });
+    loginIdentifier.addEventListener("input", prewarmOnFirstInteraction, { once: true });
+}
+if (loginPassword) {
+    loginPassword.addEventListener("focus", prewarmOnFirstInteraction, { once: true });
+}
 
 
 /* =========================================================
@@ -113,21 +136,25 @@ if (loginForm) {
 
 
         /* =========================
-           LOADING
+           LOADING WITH DYNAMIC COLD START MESSAGING
            ========================= */
 
         const originalBtnText = loginBtn.innerHTML;
 
         loginBtn.disabled = true;
+        loginBtn.innerHTML = "लॉगिन तपासणी सुरू आहे...";
+        showMessage("कृपया प्रतीक्षा करा...", "success");
 
-        loginBtn.innerHTML =
-            "लॉगिन प्रक्रिया सुरू आहे...";
+        // Inform farmer if Render cloud container is performing a cold-start
+        const coldStartTimer1 = setTimeout(function () {
+            loginBtn.innerHTML = "सर्व्हर सुरू होत आहे...";
+            showMessage("⚡ सुरक्षित क्लाऊड सर्व्हर सुरू होत आहे, कृपया १०-१५ सेकंद प्रतीक्षा करा...", "success");
+        }, 3500);
 
-        showMessage(
-            "कृपया प्रतीक्षा करा...",
-            "success"
-        );
-
+        const coldStartTimer2 = setTimeout(function () {
+            loginBtn.innerHTML = "डेटाबेस जोडणी सुरू आहे...";
+            showMessage("🔐 डेटाबेस सुरक्षितपणे जोडत आहे, लवकरच लॉगिन पूर्ण होईल...", "success");
+        }, 12000);
 
         try {
             const response = await fetch(LOGIN_API, {
@@ -135,6 +162,9 @@ if (loginForm) {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ identifier: identifier, password: password })
             });
+
+            clearTimeout(coldStartTimer1);
+            clearTimeout(coldStartTimer2);
 
             let result = {};
             try {
@@ -263,6 +293,8 @@ if (loginForm) {
 
 
         } catch (error) {
+            clearTimeout(coldStartTimer1);
+            clearTimeout(coldStartTimer2);
 
             console.error(
                 "Login Error:",
