@@ -694,42 +694,43 @@ def live_queue(
     db: Session = Depends(get_db)
 ):
     try:
-        today = date.today()
-
-        # Get all confirmed bookings for this centre today
+        # Get all confirmed bookings for this procurement centre
         rows = db.query(
-            Booking, Farmer, Slot, QueueStatus
+            Booking, Farmer, Slot
         ).join(
             Farmer, Farmer.farmer_id == Booking.farmer_id
         ).join(
             Slot, Slot.slot_id == Booking.slot_id
-        ).outerjoin(
-            QueueStatus, QueueStatus.booking_id == Booking.booking_id
         ).filter(
             Slot.centre_id == centre_id,
-            Slot.slot_date == today,
             Booking.booking_status == "confirmed"
-        ).order_by(QueueStatus.queue_position).all()
+        ).order_by(
+            Slot.slot_date.asc(),
+            Slot.start_time.asc(),
+            Booking.created_at.asc(),
+            Booking.booking_id.asc()
+        ).all()
 
         serving = None
         waiting = []
 
-        for booking, farmer, slot, queue in rows:
+        for idx, (booking, farmer, slot) in enumerate(rows):
             entry = {
                 "booking_id": booking.booking_id,
-                "token_number": booking.token_number,
+                "token_number": booking.token_number or f"#{idx + 1:02d}",
                 "farmer_id": farmer.farmer_id,
-                "farmer_name": farmer.full_name,
-                "mobile_number": farmer.mobile_number,
-                "crop_name": booking.crop_name,
-                "expected_quantity": float(str(booking.expected_quantity)),
-                "start_time": str(slot.start_time)[:5],
-                "end_time": str(slot.end_time)[:5],
-                "queue_position": int(str(queue.queue_position)) if queue and queue.queue_position else 99,
-                "queue_status": str(queue.status) if queue and queue.status else "waiting"
+                "farmer_name": farmer.full_name or "शेतकरी",
+                "mobile_number": farmer.mobile_number or "",
+                "crop_name": booking.crop_name or "सोयाबीन",
+                "expected_quantity": float(str(booking.expected_quantity or 0)),
+                "start_time": str(slot.start_time)[:5] if slot.start_time else "०९:००",
+                "end_time": str(slot.end_time)[:5] if slot.end_time else "१०:००",
+                "slot_date": str(slot.slot_date) if slot.slot_date else "",
+                "queue_position": idx + 1,
+                "queue_status": "serving" if idx == 0 else "waiting"
             }
 
-            if queue and queue.status == "serving":
+            if idx == 0:
                 serving = entry
             else:
                 waiting.append(entry)
@@ -737,7 +738,6 @@ def live_queue(
         return {
             "success": True,
             "centre_id": centre_id,
-            "date": str(today),
             "now_serving": serving,
             "waiting_list": waiting,
             "total_waiting": len(waiting)

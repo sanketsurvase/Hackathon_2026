@@ -1,34 +1,40 @@
 // ========================================================
-// KISANSETU - LIVE QUEUE JAVASCRIPT (DATABASE INTEGRATED)
+// KISANSETU - LIVE QUEUE JAVASCRIPT (REAL-TIME DATABASE INTEGRATED)
 // ========================================================
 
 (function () {
   'use strict';
 
-  const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
+  const API_BASE_URL = (typeof KISANSETU_API_BASE !== "undefined" && KISANSETU_API_BASE)
+    ? KISANSETU_API_BASE
+    : "https://hackathon-2026-0gus.onrender.com";
   const API_BASE = `${API_BASE_URL}/api`;
 
-  // 1. Get user's active token
+  // 1. Get user's active token (no fake static token fallback)
   function getUserActiveToken() {
     const urlParams = new URLSearchParams(window.location.search);
     const tokenFromUrl = urlParams.get("token");
     if (tokenFromUrl) return tokenFromUrl;
 
     try {
+      const latest = JSON.parse(localStorage.getItem("latestKisanSetuBooking") || "null");
+      if (latest && (latest.token || latest.token_number)) {
+        return latest.token || latest.token_number;
+      }
+
       const bookings = JSON.parse(localStorage.getItem("kisansetu_bookings") || "[]");
       const active = bookings.find(b => b.status && (b.status.includes("Confirmed") || b.status.includes("निश्चित")));
       if (active) return active.token || active.token_number;
     } catch (e) {
-      console.error(e);
+      console.error("Error reading token:", e);
     }
-    return "#01";
+    return null;
   }
 
-  const userToken = getUserActiveToken();
-
+  let userToken = getUserActiveToken();
   let currentCenterId = 1;
   let timerInterval = null;
-  let elapsedSec = 420;
+  let elapsedSec = 120;
 
   function startTimer() {
     if (timerInterval) clearInterval(timerInterval);
@@ -42,36 +48,98 @@
     }, 1000);
   }
 
-  // Fetch Live Queue directly from PostgreSQL DB
+  // Fetch Live Queue directly from PostgreSQL DB with fallback to verified local bookings
   async function fetchLiveQueueFromDB() {
+    userToken = getUserActiveToken();
+
+    let dbServing = null;
+    let dbWaiting = [];
+
     try {
       const res = await fetch(`${API_BASE}/live-queue?centre_id=${currentCenterId}`);
-      const data = await res.json();
-
-      if (data.success) {
-        renderLiveQueueData(data.now_serving, data.waiting_list);
-        return;
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success) {
+          dbServing = data.now_serving || null;
+          dbWaiting = Array.isArray(data.waiting_list) ? data.waiting_list : [];
+        }
       }
     } catch (err) {
-      console.warn("DB Live queue offline, using fallback", err);
+      console.warn("DB Live queue fetch notice:", err);
     }
 
-    // Fallback if server is not running
-    renderFallbackQueue();
+    // Combine DB entries with client confirmed bookings (no static fake names)
+    const combinedQueue = [];
+    const seenTokens = new Set();
+
+    if (dbServing && dbServing.token_number) {
+      combinedQueue.push(dbServing);
+      seenTokens.add(String(dbServing.token_number).trim());
+    }
+
+    dbWaiting.forEach(item => {
+      const tok = String(item.token_number).trim();
+      if (tok && !seenTokens.has(tok)) {
+        seenTokens.add(tok);
+        combinedQueue.push(item);
+      }
+    });
+
+    // Also include any confirmed bookings from localStorage made by farmers
+    try {
+      const localBookings = JSON.parse(localStorage.getItem("kisansetu_bookings") || "[]");
+      const confirmedLocal = localBookings.filter(b =>
+        b && b.status && (b.status.includes("Confirmed") || b.status.includes("निश्चित"))
+      );
+
+      let myName = "शेतकरी मित्र";
+      try {
+        const ksUser = JSON.parse(localStorage.getItem("kisanSetuUser") || "{}");
+        const lgUser = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
+        myName = ksUser.full_name || lgUser.name || myName;
+      } catch (e) {}
+
+      confirmedLocal.forEach((b) => {
+        const tok = String(b.token || b.token_number || "").trim();
+        if (tok && !seenTokens.has(tok)) {
+          seenTokens.add(tok);
+          combinedQueue.push({
+            token_number: tok,
+            farmer_name: b.farmerName || myName,
+            crop_name: b.crop || b.crop_name || "सोयाबीन",
+            expected_quantity: parseFloat(b.quantity || b.expected_quantity || 0),
+            start_time: b.slotTime ? b.slotTime.split(" - ")[0] : "०९:००",
+            booking_status: "confirmed"
+          });
+        }
+      });
+    } catch (e) {
+      console.warn("Local storage queue sync notice:", e);
+    }
+
+    const finalServing = combinedQueue.length > 0 ? combinedQueue[0] : null;
+    const finalWaiting = combinedQueue.length > 1 ? combinedQueue.slice(1) : [];
+
+    renderLiveQueueData(finalServing, finalWaiting);
   }
 
   function renderLiveQueueData(nowServing, waitingList) {
     // 1. Now Serving Board
+    const tokenDisplay = document.getElementById("nowServingToken");
+    const farmerDisplay = document.getElementById("nowServingFarmer");
+    const vehicleDisplay = document.getElementById("nowServingVehicle");
+    const cropDisplay = document.getElementById("nowServingCrop");
+
     if (nowServing) {
-      document.getElementById("nowServingToken").textContent = nowServing.token_number || "#01";
-      document.getElementById("nowServingFarmer").textContent = `शेतकरी: ${nowServing.farmer_name || 'शेतकरी'}`;
-      document.getElementById("nowServingVehicle").textContent = "🚜 वजन काटा सुरू";
-      document.getElementById("nowServingCrop").textContent = `${nowServing.crop_name} (${nowServing.expected_quantity} क्विंटल)`;
+      if (tokenDisplay) tokenDisplay.textContent = nowServing.token_number || "-";
+      if (farmerDisplay) farmerDisplay.textContent = `शेतकरी: ${nowServing.farmer_name || 'शेतकरी'}`;
+      if (vehicleDisplay) vehicleDisplay.textContent = "🚜 वजन काटा सुरू";
+      if (cropDisplay) cropDisplay.textContent = `${nowServing.crop_name || 'पीक'} (${nowServing.expected_quantity || 0} क्विंटल)`;
     } else {
-      document.getElementById("nowServingToken").textContent = "प्रतिक्षा सुरू";
-      document.getElementById("nowServingFarmer").textContent = "सध्या कोणताही माल काट्यावर नाही";
-      document.getElementById("nowServingVehicle").textContent = "काटा मोकळा";
-      document.getElementById("nowServingCrop").textContent = "-";
+      if (tokenDisplay) tokenDisplay.textContent = "काटा मोकळा";
+      if (farmerDisplay) farmerDisplay.textContent = "सध्या कोणताही माल काट्यावर नाही";
+      if (vehicleDisplay) vehicleDisplay.textContent = "प्रतिक्षा सुरू";
+      if (cropDisplay) cropDisplay.textContent = "-";
     }
 
     // 2. User status
@@ -80,28 +148,38 @@
     const uWaitTime = document.getElementById("uWaitTime");
     const uStatusMsg = document.getElementById("uStatusMsg");
 
-    if (uTokenVal) uTokenVal.textContent = userToken;
-
-    const list = waitingList || [];
-    const userIndex = list.findIndex(item => item.token_number === userToken);
-
-    if (nowServing && nowServing.token_number === userToken) {
-      if (uQueuePos) uQueuePos.textContent = "सध्या चालू!";
-      if (uWaitTime) uWaitTime.textContent = "० मिनिटे";
-      if (uStatusMsg) uStatusMsg.innerHTML = "🎉 <strong>आपले वाहन वजन काट्यावर आहे!</strong> कृपया वजन पूर्ण होईपर्यंत थांबा.";
-    } else if (userIndex !== -1) {
-      const pos = userIndex + 1;
-      if (uQueuePos) uQueuePos.textContent = `# ${pos}`;
-      if (uWaitTime) uWaitTime.textContent = `~ ${pos * 8} मिनिटे`;
-      if (uStatusMsg) uStatusMsg.innerHTML = `📢 आपल्या पुढे <strong>${pos - 1}</strong> वाहने आहेत. कृपया गेट क्रमांक २ जवळ उपस्थित राहा.`;
+    if (!userToken) {
+      if (uTokenVal) uTokenVal.textContent = "स्लॉट बुक नाही";
+      if (uQueuePos) uQueuePos.textContent = "-";
+      if (uWaitTime) uWaitTime.textContent = "-";
+      if (uStatusMsg) {
+        uStatusMsg.innerHTML = '📢 आपण अद्याप कोणताही स्लॉट बुक केलेला नाही. <a href="../slot_booking/slot-booking.html" style="color:#08783f; font-weight:700; text-decoration:underline;">येथे स्लॉट बुक करा ➔</a>';
+      }
     } else {
-      if (uQueuePos) uQueuePos.textContent = "#१";
-      if (uWaitTime) uWaitTime.textContent = "~ १० मिनिटे";
-      if (uStatusMsg) uStatusMsg.textContent = "📢 आपला क्रमांक लवकरच येणार आहे. कृपया वाहनासह प्रवेशद्वाराजवळ सज्ज राहा.";
+      if (uTokenVal) uTokenVal.textContent = userToken;
+
+      const list = waitingList || [];
+      const userIndex = list.findIndex(item => String(item.token_number).trim() === String(userToken).trim());
+      const isCurrentlyServing = nowServing && String(nowServing.token_number).trim() === String(userToken).trim();
+
+      if (isCurrentlyServing) {
+        if (uQueuePos) uQueuePos.textContent = "सध्या चालू!";
+        if (uWaitTime) uWaitTime.textContent = "० मिनिटे";
+        if (uStatusMsg) uStatusMsg.innerHTML = "🎉 <strong>आपले वाहन वजन काट्यावर आहे!</strong> कृपया वजन पूर्ण होईपर्यंत थांबा.";
+      } else if (userIndex !== -1) {
+        const pos = userIndex + 1;
+        if (uQueuePos) uQueuePos.textContent = `# ${pos}`;
+        if (uWaitTime) uWaitTime.textContent = `~ ${pos * 8} मिनिटे`;
+        if (uStatusMsg) uStatusMsg.innerHTML = `📢 आपल्या पुढे <strong>${pos}</strong> वाहन(ने) आहेत. कृपया वजन काट्यासाठी सज्ज राहा.`;
+      } else {
+        if (uQueuePos) uQueuePos.textContent = "# १";
+        if (uWaitTime) uWaitTime.textContent = "~ १० मिनिटे";
+        if (uStatusMsg) uStatusMsg.textContent = "📢 आपला क्रमांक लवकरच येणार आहे. कृपया वाहनासह प्रवेशद्वाराजवळ सज्ज राहा.";
+      }
     }
 
     // 3. Queue List Table
-    renderQueueTable(list);
+    renderQueueTable(waitingList);
   }
 
   function renderQueueTable(list) {
@@ -109,16 +187,24 @@
     const totalWaiting = document.getElementById("totalWaiting");
     if (!container) return;
 
-    if (totalWaiting) totalWaiting.textContent = `एकूण प्रतिक्षा: ${list.length} वाहने`;
+    const count = Array.isArray(list) ? list.length : 0;
+    if (totalWaiting) totalWaiting.textContent = `एकूण प्रतिक्षा: ${count} वाहने`;
     container.innerHTML = "";
 
-    if (list.length === 0) {
-      container.innerHTML = "<p style='color:#64748b; font-size:13px; padding:12px;'>सध्या रांगेत कोणतीही वाहने नाहीत.</p>";
+    if (!list || list.length === 0) {
+      container.innerHTML = `
+        <div style="text-align:center; padding: 24px 12px; color: #53695b;">
+          <p style="font-size: 15px; font-weight: 500; margin-bottom: 8px;">सध्या रांगेत इतर कोणतीही वाहने नाहीत.</p>
+          <a href="../slot_booking/slot-booking.html" style="display:inline-block; margin-top:6px; color:#08783f; font-weight:700; text-decoration:underline;">
+            नवीन स्लॉट बुक करा ➔
+          </a>
+        </div>
+      `;
       return;
     }
 
     list.forEach((item, index) => {
-      const isUser = item.token_number === userToken;
+      const isUser = userToken && String(item.token_number).trim() === String(userToken).trim();
       const row = document.createElement("div");
       row.className = `queue-row ${isUser ? 'is-user' : ''}`;
 
@@ -127,10 +213,10 @@
 
       row.innerHTML = `
         <div class="q-col-pos">#${index + 1}</div>
-        <div class="q-col-token">${item.token_number}</div>
+        <div class="q-col-token">${item.token_number || "-"}</div>
         <div class="q-col-info">
-          <strong>${item.farmer_name} ${isUser ? '(आपण)' : ''}</strong>
-          <small>${item.crop_name} (${item.expected_quantity} क्विंटल) • वेळ: ${item.start_time || '०९:००'}</small>
+          <strong>${item.farmer_name || 'शेतकरी'} ${isUser ? '(आपण)' : ''}</strong>
+          <small>${item.crop_name || 'पीक'} (${item.expected_quantity || 0} क्विंटल) • वेळ: ${item.start_time || '०९:००'}</small>
         </div>
         <div class="q-status-badge ${statusClass}">${statusText}</div>
       `;
@@ -139,44 +225,13 @@
     });
   }
 
-  function renderFallbackQueue() {
-    let myBookings = [];
-    try {
-      myBookings = JSON.parse(localStorage.getItem("kisansetu_bookings") || "[]");
-    } catch (e) { /* ignore */ }
-
-    let myName = "शेतकरी मित्र";
-    try {
-      const ksUser = JSON.parse(localStorage.getItem("kisanSetuUser") || "{}");
-      const lgUser = JSON.parse(localStorage.getItem("loggedInUser") || "{}");
-      myName = ksUser.full_name || lgUser.name || myName;
-    } catch (e) { /* ignore */ }
-
-    const confirmedBookings = myBookings.filter(b =>
-      b.status && (b.status.includes("Confirmed") || b.status.includes("निश्चित"))
-    );
-
-    const myEntries = confirmedBookings.map((b) => ({
-      token_number: b.token || b.token_number || "-",
-      farmer_name: b.farmerName || myName,
-      crop_name: b.crop || b.crop_name || "",
-      expected_quantity: parseFloat(b.quantity || b.expected_quantity || 0),
-      start_time: b.slotTime ? b.slotTime.split(" - ")[0] : ""
-    }));
-
-    const nowServing = myEntries.length > 0 ? myEntries[0] : null;
-    const waitingList = myEntries.length > 1 ? myEntries.slice(1) : [];
-
-    renderLiveQueueData(nowServing, waitingList);
-  }
-
   // Initialization
   document.addEventListener("DOMContentLoaded", () => {
     startTimer();
     fetchLiveQueueFromDB();
 
-    // Auto-refresh every 10 seconds for real-time live queuing
-    setInterval(fetchLiveQueueFromDB, 10000);
+    // Auto-refresh every 8 seconds for real-time live queuing
+    setInterval(fetchLiveQueueFromDB, 8000);
 
     const centerFilter = document.getElementById("centerFilter");
     if (centerFilter) {
