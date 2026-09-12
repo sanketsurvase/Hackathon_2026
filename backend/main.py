@@ -691,10 +691,20 @@ def cancel_booking(req: CancelBookingRequest, db: Session = Depends(get_db)):
 @app.get("/api/live-queue")
 def live_queue(
     centre_id: int = Query(...),
+    queue_date: Optional[str] = Query(None),
     db: Session = Depends(get_db)
 ):
     try:
-        # Get all confirmed bookings for this procurement centre
+        from datetime import date
+        # Default to TODAY's date so only today's active queue is displayed
+        target_date = date.today()
+        if queue_date:
+            try:
+                target_date = date.fromisoformat(queue_date)
+            except Exception:
+                target_date = date.today()
+
+        # Get confirmed bookings for this procurement centre strictly for TODAY (target_date)
         rows = db.query(
             Booking, Farmer, Slot
         ).join(
@@ -703,9 +713,9 @@ def live_queue(
             Slot, Slot.slot_id == Booking.slot_id
         ).filter(
             Slot.centre_id == centre_id,
+            Slot.slot_date == target_date,
             Booking.booking_status == "confirmed"
         ).order_by(
-            Slot.slot_date.asc(),
             Slot.start_time.asc(),
             Booking.created_at.asc(),
             Booking.booking_id.asc()
@@ -725,7 +735,7 @@ def live_queue(
                 "expected_quantity": float(str(booking.expected_quantity or 0)),
                 "start_time": str(slot.start_time)[:5] if slot.start_time else "०९:००",
                 "end_time": str(slot.end_time)[:5] if slot.end_time else "१०:००",
-                "slot_date": str(slot.slot_date) if slot.slot_date else "",
+                "slot_date": str(slot.slot_date) if slot.slot_date else str(target_date),
                 "queue_position": idx + 1,
                 "queue_status": "serving" if idx == 0 else "waiting"
             }
@@ -738,6 +748,7 @@ def live_queue(
         return {
             "success": True,
             "centre_id": centre_id,
+            "queue_date": str(target_date),
             "now_serving": serving,
             "waiting_list": waiting,
             "total_waiting": len(waiting)
