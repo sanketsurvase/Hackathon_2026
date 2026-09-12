@@ -620,12 +620,28 @@ if (registerForm) {
                     "success"
                 );
 
+                // Save locally for instant sub-second login verification
+                try {
+                    const localFarmers = JSON.parse(localStorage.getItem("kisanSetuRegisteredFarmers") || "[]");
+                    localFarmers.push({
+                        farmer_id: (result && result.farmer_id) || (1000 + localFarmers.length + 1),
+                        full_name: farmerData.full_name,
+                        mobile_number: farmerData.mobile_number,
+                        email: farmerData.email || "",
+                        password: farmerData.password
+                    });
+                    localStorage.setItem("kisanSetuRegisteredFarmers", JSON.stringify(localFarmers));
+                    localStorage.setItem("kisanSetuRememberedIdentifier", farmerData.mobile_number);
+                } catch (cacheErr) {
+                    console.warn("Local cache notice:", cacheErr);
+                }
+
                 registerForm.reset();
 
                 // Redirect to actual Login page per requirement 20
                 setTimeout(function () {
                     window.location.replace("login.html");
-                }, 1200);
+                }, 800);
 
             } catch (error) {
                 console.error("Registration Error:", error);

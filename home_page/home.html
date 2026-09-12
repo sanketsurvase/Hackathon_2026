@@ -13,10 +13,16 @@
   <!-- Authentication Guard -->
   <script>
     if (sessionStorage.getItem("kisanSetuLoggedIn") !== "true") {
-      localStorage.removeItem("kisanSetuLoggedIn");
-      localStorage.removeItem("loggedInUser");
-      localStorage.removeItem("kisanSetuUser");
-      window.location.replace("../Login/login.html");
+      if (localStorage.getItem("kisanSetuLoggedIn") === "true") {
+        sessionStorage.setItem("kisanSetuLoggedIn", "true");
+        sessionStorage.setItem("loggedInUser", localStorage.getItem("loggedInUser") || "");
+        sessionStorage.setItem("kisanSetuUser", localStorage.getItem("kisanSetuUser") || "");
+      } else {
+        localStorage.removeItem("kisanSetuLoggedIn");
+        localStorage.removeItem("loggedInUser");
+        localStorage.removeItem("kisanSetuUser");
+        window.location.replace("../Login/login.html");
+      }
     }
   </script>
 </head>

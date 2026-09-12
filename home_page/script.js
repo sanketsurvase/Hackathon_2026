@@ -3,13 +3,19 @@
 // ========================================
 
 function checkAuth() {
-    const isLoggedIn = sessionStorage.getItem("kisanSetuLoggedIn") === "true";
-    if (!isLoggedIn) {
+    const isSessionLoggedIn = sessionStorage.getItem("kisanSetuLoggedIn") === "true";
+    const isLocalLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true";
+
+    if (!isSessionLoggedIn && !isLocalLoggedIn) {
         localStorage.removeItem("loggedInUser");
         localStorage.removeItem("kisanSetuUser");
         localStorage.removeItem("kisanSetuLoggedIn");
         sessionStorage.clear();
         window.location.replace("../Login/login.html");
+    } else if (!isSessionLoggedIn && isLocalLoggedIn) {
+        sessionStorage.setItem("kisanSetuLoggedIn", "true");
+        sessionStorage.setItem("loggedInUser", localStorage.getItem("loggedInUser") || "");
+        sessionStorage.setItem("kisanSetuUser", localStorage.getItem("kisanSetuUser") || "");
     }
 }
 
