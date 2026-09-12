@@ -10,6 +10,7 @@ from datetime import date, datetime
 from typing import Optional
 
 from fastapi import FastAPI, Depends, HTTPException, Query
+from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlalchemy import (
@@ -20,8 +21,14 @@ from sqlalchemy.orm import declarative_base, sessionmaker, Session
 from dotenv import load_dotenv
 import bcrypt
 
+from pathlib import Path
+
 # ─── Load env ────────────────────────────────────────────
-load_dotenv()
+env_path = Path(__file__).resolve().parent / ".env"
+if env_path.exists():
+    load_dotenv(dotenv_path=env_path)
+else:
+    load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -699,42 +706,87 @@ def live_queue(
 # ─── FARMER PROFILE ──────────────────────────────────────
 @app.get("/api/farmer/{farmer_id}")
 def get_farmer_profile(farmer_id: int, db: Session = Depends(get_db)):
-    farmer = db.query(Farmer).filter(Farmer.farmer_id == farmer_id).first()
-    if not farmer:
-        raise HTTPException(status_code=404, detail="शेतकरी आढळला नाही.")
+    try:
+        query = text("""
+            SELECT
+                f.farmer_id,
+                f.full_name,
+                f.father_spouse_name,
+                f.mobile_number,
+                f.date_of_birth,
+                f.email,
+                f.gender,
+                f.role,
+                f.status,
 
-    address = db.query(FarmerAddress).filter(
-        FarmerAddress.farmer_id == farmer_id
-    ).first()
+                a.full_address,
+                a.district,
+                a.taluka,
+                a.village,
+                a.pincode,
+                a.state,
 
-    farming = db.query(FarmerFarmingDetail).filter(
-        FarmerFarmingDetail.farmer_id == farmer_id
-    ).first()
+                fd.farm_area,
+                fd.area_unit,
+                fd.crop_name,
+                fd.expected_quantity,
+                fd.preferred_centre,
 
-    farm_area_val = float(str(farming.farm_area)) if farming and farming.farm_area is not None else 0.0
-    crop_val = farming.crop_name if farming and farming.crop_name else ""
+                fa.mobile_verified,
+                fa.verification_status
 
-    return {
-        "success": True,
-        "farmer": {
-            "farmer_id": farmer.farmer_id,
-            "full_name": farmer.full_name,
-            "father_spouse_name": farmer.father_spouse_name or "",
-            "mobile_number": farmer.mobile_number,
-            "email": farmer.email or "",
-            "gender": farmer.gender or "",
-            "full_address": address.full_address if address else "",
-            "village": address.village if address else "",
-            "taluka": address.taluka if address else "",
-            "district": address.district if address else "",
-            "state": address.state if address else "",
-            "pincode": address.pincode if address else "",
-            "farm_area": farm_area_val,
-            "land_area_acres": farm_area_val,
-            "area_unit": farming.area_unit if farming and farming.area_unit else "एकर",
-            "crop_name": crop_val,
-            "primary_crop": crop_val,
-            "expected_quantity": float(str(farming.expected_quantity)) if farming and farming.expected_quantity is not None else 0.0,
-            "preferred_centre": farming.preferred_centre if farming and farming.preferred_centre else ""
+            FROM farmers f
+
+            LEFT JOIN farmer_addresses a
+                ON a.farmer_id = f.farmer_id
+
+            LEFT JOIN farmer_farming_details fd
+                ON fd.farmer_id = f.farmer_id
+
+            LEFT JOIN farmer_accounts fa
+                ON fa.farmer_id = f.farmer_id
+
+            WHERE f.farmer_id = :farmer_id
+            ORDER BY a.address_id DESC, fd.farming_id DESC
+            LIMIT 1
+        """)
+
+        result = db.execute(query, {"farmer_id": farmer_id}).mappings().first()
+
+        if not result:
+            return JSONResponse(
+                status_code=404,
+                content={
+                    "success": False,
+                    "message": "शेतकरी सापडला नाही.",
+                    "detail": "शेतकरी सापडला नाही."
+                }
+            )
+
+        farmer = dict(result)
+
+        # Safely serialize PostgreSQL types
+        if farmer.get("date_of_birth") is not None:
+            farmer["date_of_birth"] = str(farmer["date_of_birth"])
+        if farmer.get("farm_area") is not None:
+            farmer["farm_area"] = float(farmer["farm_area"])
+        if farmer.get("expected_quantity") is not None:
+            farmer["expected_quantity"] = float(farmer["expected_quantity"])
+
+        # Backward compatibility aliases for frontend compatibility
+        farmer["land_area_acres"] = farmer.get("farm_area")
+        farmer["primary_crop"] = farmer.get("crop_name") or ""
+
+        return {
+            "success": True,
+            "farmer": farmer
         }
-    }
+
+    except HTTPException:
+        raise
+    except Exception as e:
+        print(f"Get farmer profile error: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail="शेतकरी माहिती मिळवताना त्रुटी आली."
+        )
