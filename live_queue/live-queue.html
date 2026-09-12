@@ -29,10 +29,23 @@
 
     <!-- CONTENT -->
     <main class="page-content">
-      <!-- CENTER & SCALE SELECTOR -->
+      <!-- QUICK DATE SWITCHER TABS -->
+      <section class="date-tabs-bar">
+        <button type="button" class="date-tab-btn active" data-date-mode="today" id="tabToday">
+          ⚡ आजची थेट रांग (Today)
+        </button>
+        <button type="button" class="date-tab-btn" data-date-mode="tomorrow" id="tabTomorrow">
+          📅 उद्याची रांग (Tomorrow)
+        </button>
+        <button type="button" class="date-tab-btn" data-date-mode="all" id="tabAll">
+          📋 सर्व तारखा (All Dates)
+        </button>
+      </section>
+
+      <!-- CENTER, DATE & SCALE SELECTOR -->
       <section class="filter-box">
         <div class="form-group">
-          <label for="centerFilter">खरेदी केंद्र निवडा:</label>
+          <label for="centerFilter">🏢 खरेदी केंद्र निवडा:</label>
           <select id="centerFilter">
             <option value="pandharpur_main">कृषी उत्पन्न बाजार समिती, पंढरपूर (मुख्य यार्ड)</option>
             <option value="karkamb">उपबाजार केंद्र, करकंब - पंढरपूर</option>
@@ -41,21 +54,51 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="dateFilter">📅 तारीख निवडा (Filter by Date):</label>
+          <label for="customDatePicker">📆 विशिष्ट तारीख निवडा (Pick Any Date):</label>
+          <input type="date" id="customDatePicker" class="date-picker-input">
+        </div>
+        <div class="form-group">
+          <label for="dateFilter">📅 तारीख यादी (Date List):</label>
           <select id="dateFilter">
-            <option value="all" selected>सर्व तारखा (All Dates - सर्व शेतकरी)</option>
-            <option value="today">आजची रांग (Today)</option>
+            <option value="today" selected>आजची रांग (Today)</option>
             <option value="tomorrow">उद्याची रांग (Tomorrow)</option>
+            <option value="all">सर्व तारखा (All Dates)</option>
           </select>
         </div>
         <div class="form-group">
-          <label for="scaleFilter">वजन काटा (Weighbridge):</label>
+          <label for="scaleFilter">⚖️ वजन काटा (Weighbridge):</label>
           <select id="scaleFilter">
             <option value="scale1">काटा क्र. १ (सोयाबीन व धान्य)</option>
             <option value="scale2">काटा क्र. २ (कापूस व भुसार माल)</option>
           </select>
         </div>
       </section>
+
+      <!-- ACTIVE DATE BANNER -->
+      <div class="active-date-banner" id="activeDateBanner">
+        <div class="active-date-info">
+          <span class="date-icon">📅</span>
+          <div>
+            <h4 id="activeDateTitle">आजची थेट रांग (Today's Live Queue)</h4>
+            <p id="activeDateSubtitle">१२ सप्टेंबर २०२६ • खरेदी केंद्रानुसार थेट वाहने</p>
+          </div>
+        </div>
+        <div class="active-date-actions">
+          <span class="status-pill active-day" id="dayStatusBadge">🔴 थेट चालू</span>
+        </div>
+      </div>
+
+      <!-- USER BOOKING NOTICE (IF ON DIFFERENT DATE) -->
+      <div class="user-booking-notice" id="userBookingNotice" style="display: none;">
+        <span class="notice-icon">📢</span>
+        <div class="notice-text">
+          <strong id="userBookingNoticeTitle">आपली बुकिंग वेगळ्या तारखेला आहे!</strong>
+          <span id="userBookingNoticeMsg">आपला टोकन क्रमांक #-- हा -- तारखेसाठी निश्चित आहे.</span>
+        </div>
+        <button type="button" id="btnSwitchToMyDate" class="switch-date-btn">
+          माझ्या तारखेची रांग पहा ➔
+        </button>
+      </div>
 
       <!-- NOW SERVING BOARD -->
       <section class="serving-card">
