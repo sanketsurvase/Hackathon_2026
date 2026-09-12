@@ -1,6 +1,19 @@
 
+import sys
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = BASE_DIR.parent
+for p in [str(PROJECT_ROOT), str(BASE_DIR)]:
+    if p not in sys.path:
+        sys.path.insert(0, p)
+
 from sqlalchemy import text
-from backend.database import SessionLocal
+
+try:
+    from backend.database import SessionLocal
+except ImportError:
+    from database import SessionLocal
 
 farmer_id = 7
 
