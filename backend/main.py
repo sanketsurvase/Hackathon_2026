@@ -744,12 +744,25 @@ def live_queue(
         serving = all_bookings[0] if all_bookings else None
         waiting = all_bookings[1:] if len(all_bookings) > 1 else []
 
+        # Find all available booking dates for filter dropdown
+        date_query = db.query(Slot.slot_date).join(
+            Booking, Booking.slot_id == Slot.slot_id
+        ).filter(
+            Booking.booking_status == "confirmed"
+        )
+        if centre_id and centre_id > 0:
+            date_query = date_query.filter(Slot.centre_id == centre_id)
+        
+        raw_dates = date_query.distinct().all()
+        available_dates = sorted([str(r[0]) for r in raw_dates if r[0]])
+
         return {
             "success": True,
             "centre_id": centre_id or 0,
             "now_serving": serving,
             "waiting_list": waiting,
             "all_bookings": all_bookings,
+            "available_dates": available_dates,
             "total_bookings": len(all_bookings),
             "total_waiting": len(all_bookings)
         }

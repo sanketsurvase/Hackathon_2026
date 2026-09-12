@@ -1,5 +1,5 @@
 // ========================================================
-// KISANSETU - LIVE QUEUE JAVASCRIPT (ALL BOOKED FARMERS)
+// KISANSETU - LIVE QUEUE JAVASCRIPT (WITH DATE FILTER)
 // ========================================================
 
 (function () {
@@ -9,6 +9,41 @@
     ? KISANSETU_API_BASE
     : "https://hackathon-2026-0gus.onrender.com";
   const API_BASE = `${API_BASE_URL}/api`;
+
+  function getTodayIsoString() {
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function getTomorrowIsoString() {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  function formatMarathiDate(isoDateStr) {
+    if (!isoDateStr) return "";
+    const marathiMonths = [
+      "जानेवारी", "फेब्रुवारी", "मार्च", "एप्रिल", "मे", "जून",
+      "जुलै", "ऑगस्ट", "सप्टेंबर", "ऑक्टोबर", "नोव्हेंबर", "डिसेंबर"
+    ];
+    try {
+      const parts = isoDateStr.split("-");
+      if (parts.length === 3) {
+        const y = parts[0];
+        const m = parseInt(parts[1], 10) - 1;
+        const d = parseInt(parts[2], 10);
+        return `${d} ${marathiMonths[m] || ''} ${y}`;
+      }
+    } catch (e) {}
+    return isoDateStr;
+  }
 
   // 1. Get user's active token from URL or localStorage
   function getUserActiveBooking() {
@@ -35,8 +70,10 @@
   }
 
   let currentCenterId = 1;
+  let currentDateFilter = "all"; // 'all', 'today', 'tomorrow', or 'YYYY-MM-DD'
   let timerInterval = null;
   let elapsedSec = 120;
+  let knownAvailableDates = new Set();
 
   function startTimer() {
     if (timerInterval) clearInterval(timerInterval);
@@ -50,20 +87,77 @@
     }, 1000);
   }
 
-  // Fetch Live Queue from API and display all booked farmers
+  // Update date filter dropdown options dynamically with all booking dates
+  function updateDateFilterOptions(availableDates) {
+    const select = document.getElementById("dateFilter");
+    if (!select) return;
+
+    let hasNew = false;
+    if (Array.isArray(availableDates)) {
+      availableDates.forEach(d => {
+        if (d && !knownAvailableDates.has(d)) {
+          knownAvailableDates.add(d);
+          hasNew = true;
+        }
+      });
+    }
+
+    // Also include dates from local storage
+    try {
+      const localBookings = JSON.parse(localStorage.getItem("kisansetu_bookings") || "[]");
+      localBookings.forEach(b => {
+        const d = b.slotDate || b.date;
+        if (d && !knownAvailableDates.has(d)) {
+          knownAvailableDates.add(d);
+          hasNew = true;
+        }
+      });
+    } catch (e) {}
+
+    if (hasNew) {
+      const currentVal = select.value;
+      select.innerHTML = `
+        <option value="all">सर्व तारखा (All Dates - सर्व शेतकरी)</option>
+        <option value="today">आजची रांग (Today - ${formatMarathiDate(getTodayIsoString())})</option>
+        <option value="tomorrow">उद्याची रांग (Tomorrow - ${formatMarathiDate(getTomorrowIsoString())})</option>
+      `;
+
+      Array.from(knownAvailableDates).sort().forEach(dateStr => {
+        const opt = document.createElement("option");
+        opt.value = dateStr;
+        opt.textContent = `📅 ${formatMarathiDate(dateStr)} (${dateStr})`;
+        select.appendChild(opt);
+      });
+
+      select.value = currentVal;
+    }
+  }
+
+  // Fetch Live Queue from API according to centre and date filters
   async function fetchLiveQueueFromDB() {
     const userBooking = getUserActiveBooking();
     const userToken = userBooking ? (userBooking.token || userBooking.token_number) : null;
+
+    let effectiveDate = null;
+    if (currentDateFilter === "today") {
+      effectiveDate = getTodayIsoString();
+    } else if (currentDateFilter === "tomorrow") {
+      effectiveDate = getTomorrowIsoString();
+    } else if (currentDateFilter !== "all" && currentDateFilter) {
+      effectiveDate = currentDateFilter;
+    }
 
     let dbServing = null;
     let dbAllBookings = [];
 
     try {
-      const url = currentCenterId
-        ? `${API_BASE}/live-queue?centre_id=${currentCenterId}`
-        : `${API_BASE}/live-queue`;
+      const params = new URLSearchParams();
+      if (currentCenterId) params.append("centre_id", currentCenterId);
+      if (effectiveDate) params.append("queue_date", effectiveDate);
 
+      const url = `${API_BASE}/live-queue${params.toString() ? '?' + params.toString() : ''}`;
       const res = await fetch(url);
+
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
@@ -75,6 +169,10 @@
             if (data.now_serving) list.push(data.now_serving);
             if (Array.isArray(data.waiting_list)) list.push(...data.waiting_list);
             dbAllBookings = list;
+          }
+
+          if (Array.isArray(data.available_dates)) {
+            updateDateFilterOptions(data.available_dates);
           }
         }
       }
@@ -94,12 +192,20 @@
       }
     });
 
-    // Also include all confirmed local bookings made by farmers
+    // Also include confirmed local bookings matching date filter
     try {
       const localBookings = JSON.parse(localStorage.getItem("kisansetu_bookings") || "[]");
-      const confirmedLocal = localBookings.filter(b =>
-        b && b.status && (b.status.includes("Confirmed") || b.status.includes("निश्चित"))
-      );
+      const confirmedLocal = localBookings.filter(b => {
+        if (!b || !b.status) return false;
+        const isConf = b.status.includes("Confirmed") || b.status.includes("निश्चित");
+        if (!isConf) return false;
+
+        const bDate = b.slotDate || b.date;
+        if (effectiveDate && bDate && bDate !== effectiveDate) {
+          return false;
+        }
+        return true;
+      });
 
       let myName = "शेतकरी मित्र";
       try {
@@ -129,15 +235,19 @@
 
     const finalServing = combinedQueue.length > 0 ? combinedQueue[0] : null;
 
-    // Pass combinedQueue (ALL booked farmers) to be displayed in the queue table!
-    renderLiveQueueData(finalServing, combinedQueue, userToken);
+    // Display ALL booked farmers in the queue table
+    renderLiveQueueData(finalServing, combinedQueue, userToken, effectiveDate);
   }
 
-  function renderLiveQueueData(nowServing, allBookings, userToken) {
-    // Subtitle
+  function renderLiveQueueData(nowServing, allBookings, userToken, effectiveDate) {
+    // Header Subtitle showing active filter date
     const subtitleEl = document.querySelector(".header-title p");
     if (subtitleEl) {
-      subtitleEl.textContent = "खरेदी केंद्र व वजन काटा थेट स्थिती";
+      if (effectiveDate) {
+        subtitleEl.textContent = `तारीख: ${formatMarathiDate(effectiveDate)} • खरेदी केंद्र थेट स्थिती`;
+      } else {
+        subtitleEl.textContent = `सर्व नोंदणीकृत शेतकरी • खरेदी केंद्र थेट स्थिती`;
+      }
     }
 
     // 1. Now Serving Board
@@ -153,7 +263,7 @@
       if (cropDisplay) cropDisplay.textContent = `${nowServing.crop_name || 'पीक'} (${nowServing.expected_quantity || 0} क्विंटल)`;
     } else {
       if (tokenDisplay) tokenDisplay.textContent = "काटा मोकळा";
-      if (farmerDisplay) farmerDisplay.textContent = "सध्या कोणताही माल काट्यावर नाही";
+      if (farmerDisplay) farmerDisplay.textContent = "निवडलेल्या तारखेनुसार सध्या कोणताही माल काट्यावर नाही";
       if (vehicleDisplay) vehicleDisplay.textContent = "प्रतिक्षा सुरू";
       if (cropDisplay) cropDisplay.textContent = "-";
     }
@@ -188,13 +298,13 @@
         if (uWaitTime) uWaitTime.textContent = `~ ${pos * 8} मिनिटे`;
         if (uStatusMsg) uStatusMsg.innerHTML = `📢 रांगेत आपला क्रमांक <strong>#${pos}</strong> आहे. कृपया वजन काट्यासाठी सज्ज राहा.`;
       } else {
-        if (uQueuePos) uQueuePos.textContent = "# १";
-        if (uWaitTime) uWaitTime.textContent = "~ १० मिनिटे";
-        if (uStatusMsg) uStatusMsg.textContent = "📢 आपला क्रमांक लवकरच येणार आहे. कृपया वाहनासह प्रवेशद्वाराजवळ सज्ज राहा.";
+        if (uQueuePos) uQueuePos.textContent = "नोंदणीकृत";
+        if (uWaitTime) uWaitTime.textContent = "सज्ज राहा";
+        if (uStatusMsg) uStatusMsg.textContent = "📢 आपला स्लॉट बुक आहे. निवडलेल्या तारखेच्या रांगेत आपण पाहू शकता.";
       }
     }
 
-    // 3. Queue List Table — Displays ALL booked farmers
+    // 3. Queue List Table — Displays ALL booked farmers for the selected date
     renderQueueTable(allBookings, userToken);
   }
 
@@ -210,7 +320,8 @@
     if (!list || list.length === 0) {
       container.innerHTML = `
         <div style="text-align:center; padding: 28px 14px; color: #53695b;">
-          <p style="font-size: 15px; font-weight: 600; margin-bottom: 8px;">सध्या रांगेत इतर कोणतीही वाहने नाहीत.</p>
+          <p style="font-size: 15px; font-weight: 600; margin-bottom: 8px;">निवडलेल्या फिल्टरनुसार सध्या रांगेत इतर कोणतीही वाहने नाहीत.</p>
+          <p style="font-size: 13px; color: #718779; margin-bottom: 14px;">सर्व शेतकरी पाहण्यासाठी वरील ड्रॉपडाऊनमधून 'सर्व तारखा (All Dates)' निवडा.</p>
           <a href="../slot_booking/slot-booking.html" style="display:inline-block; padding: 8px 18px; background:#08783f; color:#ffffff; font-weight:700; border-radius:10px; text-decoration:none; font-size:13.5px;">
             नवीन स्लॉट बुक करा ➔
           </a>
@@ -235,7 +346,7 @@
         statusClass = "q-status-next";
       }
 
-      const dateInfo = item.slot_date ? ` • तारीख: ${item.slot_date}` : '';
+      const dateInfo = item.slot_date ? ` • तारीख: ${formatMarathiDate(item.slot_date)}` : '';
 
       row.innerHTML = `
         <div class="q-col-pos">#${index + 1}</div>
@@ -254,6 +365,7 @@
   // Initialization
   document.addEventListener("DOMContentLoaded", () => {
     startTimer();
+    updateDateFilterOptions();
     fetchLiveQueueFromDB();
 
     // Auto-refresh every 8 seconds for real-time live queuing
@@ -271,6 +383,14 @@
         } else {
           currentCenterId = 1;
         }
+        fetchLiveQueueFromDB();
+      });
+    }
+
+    const dateFilter = document.getElementById("dateFilter");
+    if (dateFilter) {
+      dateFilter.addEventListener("change", (e) => {
+        currentDateFilter = e.target.value || "all";
         fetchLiveQueueFromDB();
       });
     }
