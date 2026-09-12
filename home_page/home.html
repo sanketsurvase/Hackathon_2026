@@ -11,7 +11,10 @@
 
   <link rel="stylesheet" href="style.css">
   <script>
-    if (localStorage.getItem("kisanSetuLoggedIn") !== "true") {
+    if (sessionStorage.getItem("kisanSetuLoggedIn") !== "true") {
+      localStorage.removeItem("kisanSetuLoggedIn");
+      localStorage.removeItem("loggedInUser");
+      localStorage.removeItem("kisanSetuUser");
       window.location.replace("../Login/login.html");
     }
   </script>

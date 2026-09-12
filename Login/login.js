@@ -12,8 +12,17 @@ const togglePasswordBtn = document.getElementById("togglePasswordBtn");
 const forgotPasswordBtn = document.getElementById("forgotPasswordBtn");
 const rememberMe = document.getElementById("rememberMe");
 
-const API_BASE_URL = "https://hackathon-2026-0gus.onrender.com";
+const API_BASE_URL = (typeof KISANSETU_API_BASE !== "undefined" && KISANSETU_API_BASE)
+    ? KISANSETU_API_BASE
+    : "https://hackathon-2026-0gus.onrender.com";
 const LOGIN_API = `${API_BASE_URL}/api/login`;
+
+// Wake up Render in background as soon as login page loads
+(function prewarmServer() {
+    try {
+        fetch(`${API_BASE_URL}/health`, { method: "GET", cache: "no-store", keepalive: true }).catch(() => {});
+    } catch(e) {}
+})();
 
 
 /* =========================================================
@@ -187,22 +196,33 @@ if (loginForm) {
             };
 
 
+            const loggedInInfo = {
+                userId: "KS" + (farmer.farmer_id || "1001"),
+                name: farmer.full_name || "शेतकरी मित्र",
+                mobile: farmer.mobile_number || ""
+            };
+
+            sessionStorage.setItem(
+                "kisanSetuUser",
+                JSON.stringify(activeSession)
+            );
+            sessionStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(loggedInInfo)
+            );
+            sessionStorage.setItem(
+                "kisanSetuLoggedIn",
+                "true"
+            );
+
             localStorage.setItem(
                 "kisanSetuUser",
                 JSON.stringify(activeSession)
             );
-
-
             localStorage.setItem(
                 "loggedInUser",
-                JSON.stringify({
-                    userId: "KS" + (farmer.farmer_id || "1001"),
-                    name: farmer.full_name || "शेतकरी मित्र",
-                    mobile: farmer.mobile_number || ""
-                })
+                JSON.stringify(loggedInInfo)
             );
-
-
             localStorage.setItem(
                 "kisanSetuLoggedIn",
                 "true"

@@ -46,7 +46,13 @@ if "render.com" in DATABASE_URL and "sslmode" not in DATABASE_URL:
     DATABASE_URL += "?sslmode=require"
 
 # ─── SQLAlchemy ──────────────────────────────────────────
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+    pool_size=10,
+    max_overflow=20,
+    pool_recycle=300
+)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -241,26 +247,64 @@ def health(db: Session = Depends(get_db)):
 @app.post("/api/login")
 def login(req: LoginRequest, db: Session = Depends(get_db)):
     identifier = req.identifier.strip()
+    is_phone = identifier.isdigit() or (identifier.startswith("+") and identifier[1:].isdigit())
 
-    # Find farmer by mobile or email
-    farmer = db.query(Farmer).filter(
-        (Farmer.mobile_number == identifier) | (Farmer.email == identifier)
-    ).first()
+    # Fast indexed query combining Farmer and FarmerAccount into 1 network roundtrip
+    if is_phone:
+        query = text("""
+            SELECT 
+                f.farmer_id,
+                f.full_name,
+                f.mobile_number,
+                f.email,
+                fa.password_hash
+            FROM farmers f
+            LEFT JOIN farmer_accounts fa ON fa.farmer_id = f.farmer_id
+            WHERE f.mobile_number = :ident
+            LIMIT 1
+        """)
+    else:
+        query = text("""
+            SELECT 
+                f.farmer_id,
+                f.full_name,
+                f.mobile_number,
+                f.email,
+                fa.password_hash
+            FROM farmers f
+            LEFT JOIN farmer_accounts fa ON fa.farmer_id = f.farmer_id
+            WHERE f.email = :ident
+            LIMIT 1
+        """)
 
-    if not farmer:
+    row = db.execute(query, {"ident": identifier}).mappings().first()
+
+    if not row:
+        # Fallback check across both fields
+        fallback_query = text("""
+            SELECT 
+                f.farmer_id,
+                f.full_name,
+                f.mobile_number,
+                f.email,
+                fa.password_hash
+            FROM farmers f
+            LEFT JOIN farmer_accounts fa ON fa.farmer_id = f.farmer_id
+            WHERE f.mobile_number = :ident OR f.email = :ident
+            LIMIT 1
+        """)
+        row = db.execute(fallback_query, {"ident": identifier}).mappings().first()
+
+    if not row:
         raise HTTPException(status_code=401, detail="मोबाईल क्रमांक किंवा ईमेल नोंदणीकृत नाही.")
 
-    account = db.query(FarmerAccount).filter(
-        FarmerAccount.farmer_id == farmer.farmer_id
-    ).first()
-
-    if not account:
+    if not row["password_hash"]:
         raise HTTPException(status_code=401, detail="या खात्यासाठी पासवर्ड सेट नाही.")
 
     try:
         password_matches = bcrypt.checkpw(
             req.password.encode("utf-8"),
-            str(account.password_hash).encode("utf-8")
+            str(row["password_hash"]).encode("utf-8")
         )
     except Exception:
         raise HTTPException(status_code=500, detail="पासवर्ड तपासणीत त्रुटी.")
@@ -271,10 +315,10 @@ def login(req: LoginRequest, db: Session = Depends(get_db)):
     return {
         "success": True,
         "farmer": {
-            "farmer_id": farmer.farmer_id,
-            "full_name": farmer.full_name,
-            "mobile_number": farmer.mobile_number,
-            "email": farmer.email or ""
+            "farmer_id": row["farmer_id"],
+            "full_name": row["full_name"],
+            "mobile_number": row["mobile_number"],
+            "email": row["email"] or ""
         }
     }
 

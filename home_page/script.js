@@ -3,11 +3,12 @@
 // ========================================
 
 function checkAuth() {
-    const isLoggedIn = localStorage.getItem("kisanSetuLoggedIn") === "true";
+    const isLoggedIn = sessionStorage.getItem("kisanSetuLoggedIn") === "true";
     if (!isLoggedIn) {
         localStorage.removeItem("loggedInUser");
         localStorage.removeItem("kisanSetuUser");
         localStorage.removeItem("kisanSetuLoggedIn");
+        sessionStorage.clear();
         window.location.replace("../Login/login.html");
     }
 }
