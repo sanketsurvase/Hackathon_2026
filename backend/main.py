@@ -690,12 +690,11 @@ def cancel_booking(req: CancelBookingRequest, db: Session = Depends(get_db)):
 # ─── LIVE QUEUE ──────────────────────────────────────────
 @app.get("/api/live-queue")
 def live_queue(
-    centre_id: int = Query(...),
+    centre_id: Optional[int] = Query(None),
     queue_date: Optional[str] = Query(None),
     db: Session = Depends(get_db)
 ):
     try:
-        # Get all confirmed booked slots for this procurement centre
         query = db.query(
             Booking, Farmer, Slot
         ).join(
@@ -703,9 +702,11 @@ def live_queue(
         ).join(
             Slot, Slot.slot_id == Booking.slot_id
         ).filter(
-            Slot.centre_id == centre_id,
             Booking.booking_status == "confirmed"
         )
+
+        if centre_id and centre_id > 0:
+            query = query.filter(Slot.centre_id == centre_id)
 
         if queue_date:
             try:
@@ -722,9 +723,7 @@ def live_queue(
             Booking.booking_id.asc()
         ).all()
 
-        serving = None
-        waiting = []
-
+        all_bookings = []
         for idx, (booking, farmer, slot) in enumerate(rows):
             entry = {
                 "booking_id": booking.booking_id,
@@ -740,18 +739,19 @@ def live_queue(
                 "queue_position": idx + 1,
                 "queue_status": "serving" if idx == 0 else "waiting"
             }
+            all_bookings.append(entry)
 
-            if idx == 0:
-                serving = entry
-            else:
-                waiting.append(entry)
+        serving = all_bookings[0] if all_bookings else None
+        waiting = all_bookings[1:] if len(all_bookings) > 1 else []
 
         return {
             "success": True,
-            "centre_id": centre_id,
+            "centre_id": centre_id or 0,
             "now_serving": serving,
             "waiting_list": waiting,
-            "total_waiting": len(waiting)
+            "all_bookings": all_bookings,
+            "total_bookings": len(all_bookings),
+            "total_waiting": len(all_bookings)
         }
 
     except Exception as e:

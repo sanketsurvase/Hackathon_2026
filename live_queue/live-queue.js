@@ -50,21 +50,32 @@
     }, 1000);
   }
 
-  // Fetch Live Queue from PostgreSQL DB and combine with all confirmed booked slots
+  // Fetch Live Queue from API and display all booked farmers
   async function fetchLiveQueueFromDB() {
     const userBooking = getUserActiveBooking();
     const userToken = userBooking ? (userBooking.token || userBooking.token_number) : null;
 
     let dbServing = null;
-    let dbWaiting = [];
+    let dbAllBookings = [];
 
     try {
-      const res = await fetch(`${API_BASE}/live-queue?centre_id=${currentCenterId}`);
+      const url = currentCenterId
+        ? `${API_BASE}/live-queue?centre_id=${currentCenterId}`
+        : `${API_BASE}/live-queue`;
+
+      const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
         if (data.success) {
           dbServing = data.now_serving || null;
-          dbWaiting = Array.isArray(data.waiting_list) ? data.waiting_list : [];
+          if (Array.isArray(data.all_bookings) && data.all_bookings.length > 0) {
+            dbAllBookings = data.all_bookings;
+          } else {
+            const list = [];
+            if (data.now_serving) list.push(data.now_serving);
+            if (Array.isArray(data.waiting_list)) list.push(...data.waiting_list);
+            dbAllBookings = list;
+          }
         }
       }
     } catch (err) {
@@ -75,13 +86,8 @@
     const combinedQueue = [];
     const seenTokens = new Set();
 
-    if (dbServing && dbServing.token_number) {
-      combinedQueue.push(dbServing);
-      seenTokens.add(String(dbServing.token_number).trim());
-    }
-
-    dbWaiting.forEach(item => {
-      const tok = String(item.token_number).trim();
+    dbAllBookings.forEach(item => {
+      const tok = String(item.token_number || item.token || "").trim();
       if (tok && !seenTokens.has(tok)) {
         seenTokens.add(tok);
         combinedQueue.push(item);
@@ -122,12 +128,12 @@
     }
 
     const finalServing = combinedQueue.length > 0 ? combinedQueue[0] : null;
-    const finalWaiting = combinedQueue.length > 1 ? combinedQueue.slice(1) : [];
 
-    renderLiveQueueData(finalServing, finalWaiting, userToken);
+    // Pass combinedQueue (ALL booked farmers) to be displayed in the queue table!
+    renderLiveQueueData(finalServing, combinedQueue, userToken);
   }
 
-  function renderLiveQueueData(nowServing, waitingList, userToken) {
+  function renderLiveQueueData(nowServing, allBookings, userToken) {
     // Subtitle
     const subtitleEl = document.querySelector(".header-title p");
     if (subtitleEl) {
@@ -168,7 +174,7 @@
     } else {
       if (uTokenVal) uTokenVal.textContent = userToken;
 
-      const list = waitingList || [];
+      const list = allBookings || [];
       const userIndex = list.findIndex(item => String(item.token_number).trim() === String(userToken).trim());
       const isCurrentlyServing = nowServing && String(nowServing.token_number).trim() === String(userToken).trim();
 
@@ -180,7 +186,7 @@
         const pos = userIndex + 1;
         if (uQueuePos) uQueuePos.textContent = `# ${pos}`;
         if (uWaitTime) uWaitTime.textContent = `~ ${pos * 8} मिनिटे`;
-        if (uStatusMsg) uStatusMsg.innerHTML = `📢 रांगेत आपल्या पुढे <strong>${pos}</strong> वाहन(ने) आहेत. कृपया वजन काट्यासाठी सज्ज राहा.`;
+        if (uStatusMsg) uStatusMsg.innerHTML = `📢 रांगेत आपला क्रमांक <strong>#${pos}</strong> आहे. कृपया वजन काट्यासाठी सज्ज राहा.`;
       } else {
         if (uQueuePos) uQueuePos.textContent = "# १";
         if (uWaitTime) uWaitTime.textContent = "~ १० मिनिटे";
@@ -188,8 +194,8 @@
       }
     }
 
-    // 3. Queue List Table
-    renderQueueTable(waitingList, userToken);
+    // 3. Queue List Table — Displays ALL booked farmers
+    renderQueueTable(allBookings, userToken);
   }
 
   function renderQueueTable(list, activeUserToken) {
@@ -198,7 +204,7 @@
     if (!container) return;
 
     const count = Array.isArray(list) ? list.length : 0;
-    if (totalWaiting) totalWaiting.textContent = `एकूण प्रतिक्षा: ${count} वाहने`;
+    if (totalWaiting) totalWaiting.textContent = `एकूण नोंदणीकृत शेतकरी: ${count} वाहने`;
     container.innerHTML = "";
 
     if (!list || list.length === 0) {
@@ -218,8 +224,17 @@
       const row = document.createElement("div");
       row.className = `queue-row ${isUser ? 'is-user' : ''}`;
 
-      const statusText = index === 0 ? "पुढील टोकन (Next)" : "रांगेत (Waiting)";
-      const statusClass = index === 0 ? "q-status-next" : "q-status-waiting";
+      let statusText = "रांगेत (Waiting)";
+      let statusClass = "q-status-waiting";
+
+      if (index === 0) {
+        statusText = "काट्यावर सुरू (Serving)";
+        statusClass = "q-status-next";
+      } else if (index === 1) {
+        statusText = "पुढील टोकन (Next)";
+        statusClass = "q-status-next";
+      }
+
       const dateInfo = item.slot_date ? ` • तारीख: ${item.slot_date}` : '';
 
       row.innerHTML = `
@@ -247,7 +262,15 @@
     const centerFilter = document.getElementById("centerFilter");
     if (centerFilter) {
       centerFilter.addEventListener("change", (e) => {
-        currentCenterId = e.target.value === "karkamb" ? 2 : (e.target.value === "mohol" ? 3 : 1);
+        if (e.target.value === "all") {
+          currentCenterId = null;
+        } else if (e.target.value === "karkamb") {
+          currentCenterId = 2;
+        } else if (e.target.value === "mohol") {
+          currentCenterId = 3;
+        } else {
+          currentCenterId = 1;
+        }
         fetchLiveQueueFromDB();
       });
     }
