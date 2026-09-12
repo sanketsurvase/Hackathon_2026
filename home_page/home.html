@@ -731,7 +731,54 @@
     });
 
   </script>
+<!-- Floating Chatbot Button -->
+<a href="./chatbbot/chatbot.html" class="chatbot-float" title="किसान सहाय्यक">
+  <img src="../logo.png" alt="किसान सहाय्यक" class="chatbot-logo">
+</a>
 
+<style>
+    .chatbot-float {
+        position: fixed;
+        right: 25px;
+        bottom: 25px;
+        width: 65px;
+        height: 65px;
+        background: #198754;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        z-index: 9999;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+      .chatbot-logo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 50%;
+        display: block;
+      }
+
+    .chatbot-float:hover {
+        transform: scale(1.1);
+        background: #146c43;
+    }
+
+    @media (max-width: 600px) {
+        .chatbot-float {
+            width: 55px;
+            height: 55px;
+            right: 15px;
+            bottom: 15px;
+            font-size: 27px;
+        }
+    }
+</style>
 
 </body>
 

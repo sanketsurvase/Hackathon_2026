@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="mr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>किसान सहाय्यक</title>
+
+    <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+    <div class="chatbot-container">
+
+        <!-- HEADER -->
+        <div class="chat-header">
+
+            <div class="header-left">
+                <div class="bot-icon">🤖</div>
+
+                <div>
+                    <h2>किसान सहाय्यक</h2>
+                    <p>🌾 शेतकऱ्यांसाठी डिजिटल मदतनीस</p>
+                </div>
+            </div>
+
+            <div class="online-dot"></div>
+
+        </div>
+
+
+        <!-- LANGUAGE -->
+        <div class="language-section">
+
+            <label for="language">
+                भाषा:
+            </label>
+
+            <select id="language" onchange="changeLanguage()">
+
+                <option value="mr">
+                    मराठी
+                </option>
+
+                <option value="hi">
+                    हिंदी
+                </option>
+
+                <option value="en">
+                    English
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- CHAT AREA -->
+        <div class="chat-body" id="chatBody">
+
+            <div class="bot-message">
+
+                नमस्कार शेतकरी मित्रा! 👋🌾
+
+                <br><br>
+
+                मी <b>किसान सहाय्यक</b> आहे.
+
+                <br><br>
+
+                तुम्ही मला शेती, पीक समस्या,
+                स्लॉट बुकिंग, टोकन, पेमेंट
+                किंवा तक्रारींबद्दल प्रश्न विचारू शकता.
+
+            </div>
+
+        </div>
+
+
+        <!-- QUICK QUESTIONS -->
+        <div class="quick-section">
+
+            <button onclick="askQuestion('मला स्लॉट कसा बुक करायचा?')">
+                🧾 स्लॉट
+            </button>
+
+            <button onclick="askQuestion('माझे पेमेंट आले नाही')">
+                💰 पेमेंट
+            </button>
+
+            <button onclick="askQuestion('माझ्या पिकाची पाने पिवळी पडत आहेत')">
+                🌱 पीक समस्या
+            </button>
+
+            <button onclick="askQuestion('माझा टोकन नंबर काय आहे?')">
+                🎟️ टोकन
+            </button>
+
+        </div>
+
+
+        <!-- INPUT -->
+        <div class="chat-input">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="तुमचा प्रश्न लिहा..."
+                autocomplete="off"
+                onkeypress="handleEnter(event)"
+            >
+
+            <button
+                class="send-button"
+                onclick="sendMessage()"
+                title="Send"
+            >
+                ➤
+            </button>
+
+        </div>
+
+
+        <!-- FOOTER -->
+        <div class="chat-footer">
+
+            🤖 किसान सहाय्यक • Marathi AI Support
+
+        </div>
+
+    </div>
+
+
+    <script src="chatbot.js"></script>
+
+</body>
+
+</html>
