@@ -119,22 +119,19 @@ body {
     gap: 10px;
 }
 
-.logo {
-
-    width: 45px;
-    height: 45px;
-
+.brand-logo-img {
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(8, 120, 63, 0.16);
+    border: 1.5px solid #bce6ca;
+    transition: transform 0.2s ease;
+}
 
-    background: #e7f7e9;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 25px;
+.logo-area:hover .brand-logo-img {
+    transform: scale(1.05);
 }
 
 .logo-area h2 {
